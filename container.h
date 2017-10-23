@@ -1,9 +1,10 @@
 #ifndef _CONTAINER_H_
 #define _CONTAINER_H_
+using namespace std;
 
 class Container {
 	public:
-		Contrainer(string _name, int flavor_capacity, int topping capacity);
+		Container(string _name, int flavor_capacity, int topping_capacity);
 		string get_name();
 		int get_flav_capacity();
 		int get_top_capacity();

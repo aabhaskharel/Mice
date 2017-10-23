@@ -1,5 +1,6 @@
 #ifndef _FLAVOR_H_
 #define _FLAVOR_H_
+using namespace std;
 
 class Flavor {
 	public:

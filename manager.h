@@ -1,5 +1,9 @@
 #ifndef MANAGER_H
 #define MANAGER_H
+#include "container.h"
+#include  "flavor.h"
+#include "topping.h"
+
 using namespace std;
 
 class Manager{

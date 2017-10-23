@@ -1,6 +1,6 @@
 #ifndef _TOPPING_H_
 #define _TOPPING_H_
-
+using namespace std;
 class Topping {
 	public:
 		Topping(string name, int stock);

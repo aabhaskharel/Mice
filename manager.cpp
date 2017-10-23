@@ -1,6 +1,12 @@
 #include <iostream>
+#include <string>
 #include "manager.h"
+#include "container.h"
+#include "flavor.h"
+#include "topping.h"
+
 using namespace std;
+
 
 // to add a new container
 void Manager::add_new_container(Container cont){

@@ -10,6 +10,7 @@ using namespace std;
 
 Manager manager;
 
+
 int main(){
-    
+ cout << "done!" << endl;
 }

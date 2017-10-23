@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "flavor.h"
 
 using namespace std;
