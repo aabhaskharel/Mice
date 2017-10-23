@@ -1,7 +1,15 @@
 #include <iostream>
+#include <string>
+#include <vector>
+#include "manager.h"
+#include "container.h"
+#include "flavor.h"
+#include "topping.h"
 
 using namespace std;
 
-int main () {
-    cout << "Hello, Team Vektor!" << endl;
+Manager manager;
+
+int main(){
+    
 }
