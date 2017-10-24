@@ -19,20 +19,20 @@ class Items {
 		string _picture;
 };
 
-class Flavor : public Items{}
+class Flavor : public Items{};
 class Topping : public Items{
 	public:
 		Topping(string name, string description, int cost, int retail_price, int stock, string picture, string type);
 		string type();	
 	private:
 		string _type;
-}
+};
 class Container : public Items{
 	public:
 		Container(string name, string description, int cost, int retail_price, int stock, string picture, int scoop);
 		int scoops();
 	private:
 		int _scoop;
-}
+};
 
 #endif
