@@ -11,16 +11,19 @@ class Manager{
 		vector<Topping> toppings;
 	
 		void add_new_container(Container cont);
-		void list_all_containers();
-		int number_of_containers;
+		string list_container(int i);
+		string list_all_containers();
+		int number_of_containers();
 
 		void add_new_flavor(Flavor flav);
-		void list_all_flavors();
-		int number_of_flavors;
+		string list_flavor(int i);
+		string list_all_flavors();
+		int number_of_flavors();
 
 		void add_new_topping(Topping top);
-		void list_all_top();
-		int number_of_toppings;
+		string list_topping(int i);
+		string list_all_toppings();
+		int number_of_toppings();
 
 };	
 #endif
