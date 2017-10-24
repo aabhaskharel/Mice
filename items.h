@@ -1,38 +1,41 @@
 #ifndef _ITEMS_H_
 #define _ITEMS_H_
 using namespace std;
+
 class Items {
 	public:
-		Items(string name, string description, int cost, int retail_price, int stock, string picture);
+		Items(string name, string description, double cost, double retail_price, int stock);
 		string get_name();
 		string get_description();
-		int get_cost();
-		int get_retail_price();
+		double get_cost();
+		double get_retail_price();
 		int get_stock();
-		int get_picture();
-	private:
-		string _name;
+	protected:
+		string  _name;
 		string _description;
-		int _cost;
-		int _retail_cost;
+		double _cost;
+		double _retail_price;
 		int _stock;
-		string _picture;
 };
 
-class Flavor : public Items{};
+class Flavor : public Items{
+	public:
+		Flavor(string name, string description, double cost, double retail_price, int stock);
+};
 class Topping : public Items{
 	public:
-		Topping(string name, string description, int cost, int retail_price, int stock, string picture, string type);
+		Topping(string name, string description, double cost, double retail_price, int stock, string type);
 		string type();	
 	private:
 		string _type;
 };
 class Container : public Items{
 	public:
-		Container(string name, string description, int cost, int retail_price, int stock, string picture, int scoop);
+		Container(string name, string description, double cost, double retail_price, int stock, int scoop);
 		int scoops();
 	private:
 		int _scoop;
 };
+
 
 #endif

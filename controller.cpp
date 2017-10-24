@@ -3,9 +3,10 @@
 #include "dialogs.h"
 #include "main_window.h"
 #include "manager.h"
+#include "items.h"
 
 using namespace std;
-
+Manager manager;
 void Controller::execute_cmd(int cmd) {
 
     if(cmd==1) {
@@ -89,9 +90,16 @@ void Controller::execute_cmd(int cmd) {
         wholesale = stod(e_wprice.get_text());
         retail = stod(e_rprice.get_text());
         
+//flavor    
         if (result == 1)
-            cout << "Success" << endl; //this is where model code goes.
-        
+       {
+       Flavor flav(name, desc, wholesale, retail, stock);
+		manager.add_new_flavor(flav);
+			cout << "Listing all flavors:\n" << endl;
+		cout << manager.list_all_flavors() << endl;
+			cout << "First in the list:\n" << endl;
+		cout << manager.list_flavor(1) << endl;
+        }
     } else if (cmd==2) {
         string name, desc; int stock;
         double wholesale, retail;
@@ -171,7 +179,7 @@ void Controller::execute_cmd(int cmd) {
         stock = stoi(e_stock.get_text());
         wholesale = stod(e_wprice.get_text());
         retail = stod(e_rprice.get_text());
-        
+ //topping       
         if (result == 1)
             cout << "Success" << endl; //this is where model code goes.
         
@@ -266,10 +274,10 @@ void Controller::execute_cmd(int cmd) {
         size = stoi(e_size.get_text());
         wholesale = stod(e_wprice.get_text());
         retail = stod(e_rprice.get_text());
-        
-        if (result == 1)
+ //container       
+        if (result == 1){
             cout << "Success" << endl; //this is where model code goes
-        
+        }
     } else {
         cout << "Invalid Input!" << endl;
         exit(0);
