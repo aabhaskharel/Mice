@@ -1,3 +1,0 @@
-/home/student/mice/build/CMakeFiles/edit_cache.dir
-/home/student/mice/build/CMakeFiles/rebuild_cache.dir
-/home/student/mice/build/CMakeFiles/mice.dir
