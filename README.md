@@ -10,11 +10,14 @@ Team project for UTA CSE-1325 class.
 
 Just clone reposotory and use Makefile generated to compile and test code. 
 
-To compile: 
-1. Go inside build folder.
-2. Issue command "cmake .." (Note: install cmake if promted)
-3. Issue command "make"
-4. Issue command "./mice"
+[Outdated]{To compile: 
+1. (Create and)Go inside build folder.	
+2. Issue command "cmake .." (Note: install cmake if promted)	
+3. Issue command "make"	
+4. Issue command "./mice"	
+}
+
+To compile: Just issue "make" command from mice directory
 
 ### Contribution guidelines ###
 
