@@ -33,7 +33,7 @@ Main_window::Main_window() {
     filemenu->append(*menuitem_quit);
     
     //Manager to the menu bar
-    Gtk::MenuItem *menuitem_create = Gtk::manage(new Gtk::MenuItem("_Create", true));
+    Gtk::MenuItem *menuitem_create = Gtk::manage(new Gtk::MenuItem("_Manager", true));
     menubar->append(*menuitem_create);
     Gtk::Menu *create_menu = Gtk::manage(new Gtk::Menu());
     menuitem_create->set_submenu(*create_menu);
@@ -52,7 +52,32 @@ Main_window::Main_window() {
     Gtk::MenuItem *menuitem_container = Gtk::manage(new Gtk::MenuItem("_New Container", true));
     menuitem_container->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_container));
     create_menu->append(*menuitem_container);
-
+    
+    //toolbar
+    Gtk::Toolbar *toolbar = Gtk::manage(new Gtk::Toolbar);
+    vbox->add(*toolbar);
+    
+    //new flavor button
+    //Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
+    Gtk::ToolButton *new_flavor_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+    new_flavor_button->set_tooltip_markup("Add a new Flavor");
+    new_flavor_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_flavor));
+    toolbar->append(*new_flavor_button);
+    
+    //new topping button
+    //Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_topping.png"));
+    Gtk::ToolButton *new_topping_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+    new_topping_button->set_tooltip_markup("Add a new Topping");
+    new_topping_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_topping));
+    toolbar->append(*new_topping_button);
+    
+    //new container button
+    //Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_container.png"));
+    Gtk::ToolButton *new_cont_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+    new_cont_button->set_tooltip_markup("Add a new Container");
+    new_cont_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_container));
+    toolbar->append(*new_cont_button);
+    
     // Make the box and everything in it visible
     vbox->show_all();
 }

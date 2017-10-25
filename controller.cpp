@@ -91,14 +91,10 @@ void Controller::execute_cmd(int cmd) {
         retail = stod(e_rprice.get_text());
         
 //flavor    
-        if (result == 1)
-       {
-       Flavor flav(name, desc, wholesale, retail, stock);
-		manager.add_new_flavor(flav);
-			cout << "Listing all flavors:\n" << endl;
-		cout << manager.list_all_flavors() << endl;
-			cout << "First in the list:\n" << endl;
-		cout << manager.list_flavor(1) << endl;
+        if (result == 1) {
+            Flavor flav(name, desc, wholesale, retail, stock);
+		    manager.add_new_flavor(flav);
+		    Dialogs::message(manager.list_all_flavors(), "List all Flavors:");
         }
     } else if (cmd==2) {
         string name, desc; int stock;
@@ -180,8 +176,11 @@ void Controller::execute_cmd(int cmd) {
         wholesale = stod(e_wprice.get_text());
         retail = stod(e_rprice.get_text());
  //topping       
-        if (result == 1)
-            cout << "Success" << endl; //this is where model code goes.
+        if (result == 1) {
+            Topping top(name, desc, wholesale, retail, stock, "Light");
+		    manager.add_new_topping(top);
+		    Dialogs::message(manager.list_all_toppings(), "List all Toppings:");
+        }
         
     } else if (cmd==3) {
         string name, desc; int stock, size;
@@ -276,7 +275,9 @@ void Controller::execute_cmd(int cmd) {
         retail = stod(e_rprice.get_text());
  //container       
         if (result == 1){
-            cout << "Success" << endl; //this is where model code goes
+            Container cont(name, desc, wholesale, retail, stock, size);
+		    manager.add_new_container(cont);
+		    Dialogs::message(manager.list_all_containers(), "List all Containers:");
         }
     } else {
         cout << "Invalid Input!" << endl;

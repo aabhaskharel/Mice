@@ -14,10 +14,10 @@ void Manager::add_new_container(Container cont){
 	// to list a single container
 		string Manager::list_container(int i){
 			string out; --i;
-				out = "("+to_string(i+1)+") "+containers[i].get_name()+"     "
-					+containers[i].get_description()+"     "
-					+to_string(containers[i].get_cost())+"     "
-					+to_string(containers[i].get_retail_price())+"     "
+				out = "("+to_string(i+1)+") "+containers[i].get_name()+"\t\t"
+					+containers[i].get_description()+"\t\t"
+					+to_string(containers[i].get_cost())+"\t\t"
+					+to_string(containers[i].get_retail_price())+"\t\t"
 					+to_string(containers[i].get_stock())+"    "
 					+to_string(containers[i].scoops())+"\n";
 				return out;}
@@ -43,10 +43,10 @@ void Manager::add_new_flavor(Flavor flav){
 	// to list a single flavor
 		string Manager::list_flavor(int i){
 			string out; --i;
-				out = "("+to_string(i+1)+")"+flavors[i].get_name()+"     "
-					+flavors[i].get_description()+"     "
-					+to_string(flavors[i].get_cost())+"     "
-					+to_string(flavors[i].get_retail_price())+"     "
+				out = "("+to_string(i+1)+")"+flavors[i].get_name()+"\t\t"
+					+flavors[i].get_description()+"\t\t"
+					+to_string(flavors[i].get_cost())+"\t\t"
+					+to_string(flavors[i].get_retail_price())+"\t\t"
 					+to_string(flavors[i].get_stock())+"\n";
 				return out;}
 			
@@ -72,12 +72,11 @@ void Manager::add_new_topping(Topping top){
 	// to list a single topping
 		string Manager::list_topping(int i){
 			string out; --i;
-				out = "("+to_string(i+1)+")"+toppings[i].get_name()+"     "
-					+toppings[i].get_description()+"     "
-					+to_string(toppings[i].get_cost())+"     "
-					+to_string(toppings[i].get_retail_price())+"     "
-					+to_string(toppings[i].get_stock())+"     "
-					+toppings[i].type()+"\n";
+				out = "("+to_string(i+1)+")"+toppings[i].get_name()+"\t\t"
+					+toppings[i].get_description()+"\t\t"
+					+to_string(toppings[i].get_cost())+"\t\t"
+					+to_string(toppings[i].get_retail_price())+"\t\t"
+					+to_string(toppings[i].get_stock())+"\n";
 				return out;
 			}
 
