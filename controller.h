@@ -1,9 +1,15 @@
 #ifndef _CONTROLLER_H
-#define _CONTROLLER_H 2017
+#define _CONTROLLER_H
+
+#include "manager.h"
+#include "help.h"
 
 class Controller {
     public:
-        //Controller();
 	    void execute_cmd(int cmd);
+   
+   private:
+	Manager *manager;
+	Help help;
 }; 
 #endif

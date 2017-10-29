@@ -1,8 +1,8 @@
 #ifndef _DIALOGS_H
 #define _DIALOGS_H
 
-#include <iostream>
 #include <gtkmm.h>
+#include <vector>
 
 using namespace std;
 
@@ -12,7 +12,10 @@ class Dialogs {
     // A message is like cout, simply displaying information to the user
     static void message(string msg, string title = "Info");
 
-    // A question is a message that allows the user to respond with a button
+	//universal form to add new container, flavor etc.
+	static vector<string> form(string title, int id);
+    
+// A question is a message that allows the user to respond with a button
     static int question(string msg, string title = "Question",
                  vector<string> buttons = {"Cancel", "OK"});
 
