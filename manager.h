@@ -9,7 +9,7 @@ using namespace std;
 
 class Manager{
 	public:
-		void create_server(string name, int employee_id, int total_filled, int hourly_salary);
+		void create_server(Server server);
 		void add_new_container();
 		string list_container(int i);
 		string list_all_containers();

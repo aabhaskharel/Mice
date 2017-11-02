@@ -1,5 +1,6 @@
 #ifndef SERVING_H
 #define SERVER_H
+#include <vector>
 #include "items.h"
 
 using namespace std;
