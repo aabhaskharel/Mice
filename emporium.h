@@ -9,9 +9,18 @@ using namespace std;
 
 class Emporium{
 	public:
-		Emporium(vector<Container> containers, vector<Flavor> flavors, vector<Topping> toppings, vector<Order> orders, vector<Manager> managers, vector<Server> servers);
+		
+		vector<Container> get_containers();
+		vector<Topping> get_toppings();
+		vector<Flavor> get_flavors();
+		vector<Server> get_servers();
+		
+		void set_container(Container cont);
+		void set_topping(Topping top);
+		void set_flavor(Flavor flav);
+		void set_server(Server serv);
 
-	private:
+	//private:
 		vector<Container> _containers;
 		vector<Flavor> _flavors;
 		vector<Topping> _toppings;
