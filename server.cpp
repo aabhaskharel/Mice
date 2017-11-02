@@ -6,9 +6,10 @@
 
 using namespace std;
 
+Serving serving;
 //constructor
-Server::Server(string name, int employee_number, int total_filled, int hourly_salary): _name{name}, _employee_number{employee_number}, _total_filled{total_filled}, _hourly_salary{hourly_salary}{}
-
+Server::Server(string name, int employee_number, int total_filled, int hourly_salary): _name{name}, _employee_number{employee_number}, _total_filled{total_filled}, _hourly_salary{hourly_salary}{}	
+	
 //to get server's name
 string Server::get_name(){ return _name; }
 
