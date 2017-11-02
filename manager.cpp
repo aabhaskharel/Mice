@@ -121,9 +121,25 @@ int Manager::number_of_toppings(){
 	return toppings.size();}
 */
 
-	void Manager:: populate_mgmt(){
-	
-	}
+void Manager:: populate_mgmt(){
+    Container cont("Waffle Cone", "A freshly baked waffle cone.", 0.49, 0.89, 20, "picture.png", 3);
+    Container cont2("Regular Cone", "Everyone's Favroite", 0.05, 0.15, 20, "picture.png", 1);
+
+    containers.push_back(cont2);
+    containers.push_back(cont);
+
+    Flavor flav("Chocolate", "Rich Dark Chocolate", 1, 1.99, 20, "picture.png");
+    Flavor flav2("Vanilla", "Very Smooth Vanilla", 1, 1.99, 20, "picture.png");
+
+    flavors.push_back(flav);
+    flavors.push_back(flav2);
+
+    Topping top("Whipped Cream", "An Irrestible topping", 0.05, 0.25, 20, "picture.png", "light");
+    Topping top2("Hot Fudge", "Hot & Fresh chocolate", 0.25, 0.75, 20, "picture.png", "Drenched");
+
+    toppings.push_back(top);
+    toppings.push_back(top2);
+}
 
 
 
