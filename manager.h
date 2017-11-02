@@ -1,14 +1,15 @@
 #ifndef MANAGER_H
 #define MANAGER_H
-
 #include <vector>
 #include "items.h"
+#include "server.h"
 #include "dialogs.h"
 
 using namespace std;
 
 class Manager{
 	public:
+		void create_server(string name, int employee_id, int total_filled, int hourly_salary);
 		void add_new_container();
 		string list_container(int i);
 		string list_all_containers();

@@ -12,6 +12,7 @@ class Server{
 	public:
 		vector<Serving> serving;
 		Server(string name, int employee_number, int total_filled, int hourly_salary);
+		void create_serving(Container cont, vector<Flavor> flav, vector<Topping> top);
 		string get_name();
 		int get_employee_number();
 		int get_total_filled();

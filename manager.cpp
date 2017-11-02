@@ -5,7 +5,14 @@ using std::vector;
 vector<Container> containers;
 vector<Flavor> flavors;
 vector<Topping> toppings;
+vector<Server> server;
 
+//create new server
+void Manager::create_server(string name, int employee_id, int total_filled, int hourly_salary) {
+		Server serr(name, employee_id, total_filled, hourly_salary);
+		server.push_back(serr);
+}
+	
 // to add a new container
 void Manager::add_new_container() {
 	vector<string> res = Dialogs::form("Add a new container", 1);

@@ -1,9 +1,5 @@
-#include <iostream>
-#include <string>
 #include <vector>
-#include "manager.h"
 #include "serving.h"
-#include "items.h"
 
 using namespace std;
 
