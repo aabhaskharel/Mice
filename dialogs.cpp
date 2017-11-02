@@ -1,4 +1,7 @@
 #include "dialogs.h"
+#include "items.h"
+#include "serving.h"
+#include "manager.h"
 
 
 // A message is like cout, simply displaying information to the user
@@ -241,6 +244,192 @@ string Dialogs::input(string msg, string title, string default_text,
         return cancel_text;
 }
 
+void Dialogs::serving(Emporium emp) {
+
+	vector<Container> cont = emp.get_containers();
+	vector<Flavor> flav = emp.get_flavors();
+	vector<Toppings> top = emp.get_toppings();
+	top.push_back("None");
+	 vector<Flavor> flavors;
+        vector<Toppings> toppings;
+	
+	Gtk::Dialog *dialog = new Gtk::Dialog();
+    dialog->set_title("Create a Serving");
+   
+    Gtk::HBox b_cont;
+    
+    Gtk::Label l_cont("Pick a container");
+    
+    Gtk::ComboBoxText c_cont;
+        c_cont.set_size_request(50);
+        c_cont.set_active(0);
+        for(string s: containers) {   c_cont.append(s); }
+        b_cont.pack_start(c_cont, Gtk::PACK_SHRINK);      
+        dialog->get_vbox()->pack_start(b_cont, Gtk::PACK_SHRINK);
+     
+    
+       
+        
+        for(int i= 0; i<c_cont.get_scoop(); i++)
+        {
+          Gtk::HBox b_flav;
+        
+       Gtk::ComboBoxText c_flav;
+        c_flav.set_size_request(50);
+        if (i = 0) {        c_flav.set_active(0); }
+        else { c_flav.set_active(flav.size()-1); }
+        for(string s: flav) {   c_flav.append(s); }
+        flav.push_back("None");
+          b_flav.pack_start(c_flav, Gtk::PACK_SHRINK); 
+          dialog->get_vbox()->pack_start(b_flav, Gtk::PACK_SHRINK);
+          
+          
+        }
+        
+        
+        for(int i = 0;i<3; i++)
+        {
+          
+          Gtk::HBox b_top;
+        
+       Gtk::ComboBoxText c_top;
+        c_top.set_size_request(50);
+        c_top.set_active(top.size()-1);
+        for(string s: a) {   c_top.append(s); }
+          b_top.pack_start(c_top, Gtk::PACK_SHRINK); 
+          dialog->get_vbox()->pack_start(b_top, Gtk::PACK_SHRINK);
+            
+      }
+          
+      dialog->add_button("Cancel", 0);
+    dialog->add_button("Done", 1);
+    dialog->set_default_response(1);
+    dialog->show_all();
+    
+    
+        
+      int result = dialog->run();  
+      if (result == 1)
+      {
+      Containers container = containers.[c_cont.get_active_row_number()];
+      int n1 = c_flav.get_active_row_number();
+          if (!(i== 0) && (n1 == flav.size()-1) { break;} 
+          flavors.push_back(flav.[n1];
+          
+            int n2 = c_top.get_active_row_number();  
+          if (n2 == top.size()-1) {break;}
+          toppings.push_back(top.[n2];
+          
+          Serving ser(container, flavors, toppings);
+          return ser;
+      
+      }
+      else
+      {
+      
+      } 
+  
+  delete dialog;   
+}
+
+Server Dialogs::add_server(Emporium emp)
+{
+	Gtk::Dialog *dialog = new Gtk::Dialog();
+        dialog->set_title("Add a new Server");
+        
+        // name
+        Gtk::HBox b_name;
+        Gtk::Label l_name{"Name: "};
+        l_name.set_width_chars(20);
+        b_name.pack_start(l_name, Gtk::PACK_SHRINK);
+        
+        Gtk::Entry e_name;
+        e_name.set_max_length(50);
+        b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+        dialog->get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
+        
+        Gtk::HBox b_wage;
+        Gtk::Label l_wage{"Hourly Salary: "};
+        l_wage.set_width_chars(20);
+        b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
+        
+        Gtk::SpinButton e_wage(0,0);
+        e_wage.set_increments(0.1,0.01);
+        e_wage.set_increments(0.1,0.01);
+        e_wage.set_range(0.00,99999.00);
+        e_wage.set_digits(2);
+        e_wage.set_wrap(true);
+        e_wage.set_numeric();
+        b_wage.pack_start(e_wage, Gtk::PACK_SHRINK);
+        dialog->get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
+        
+         dialog->add_button("Cancel", 0);
+    dialog->add_button("Done", 1);
+    dialog->set_default_response(1);
+    dialog->show_all();
+    
+    int result = dialog.run();
+    vector<Server> servers = emp.get_servers();
+    if (result == 1)
+        {
+        	
+        	Server ser(e_name.get_text(), servers.size()+30, 0,  e_wage.get_value());
+        	return ser;
+        }
+        else
+        {
+        	Server ser("",0,0, 0);
+        }
+}
+
+Customer Dialogs::add_customer(Emporium emp)
+{
+	Gtk::Dialog *dialog = new Gtk::Dialog();
+        dialog->set_title("Add a new Customer");
+        
+        // name
+        Gtk::HBox b_name;
+        Gtk::Label l_name{"Name: "};
+        l_name.set_width_chars(20);
+        b_name.pack_start(l_name, Gtk::PACK_SHRINK);
+        
+        Gtk::Entry e_name;
+        e_name.set_max_length(50);
+        b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+        dialog->get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
+        
+        Gtk::HBox b_wage;
+        Gtk::Label l_wage{"Phone Number: "};
+        l_wage.set_width_chars(20);
+        b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
+        
+        Gtk::Entry e_no;
+        e_no.set_max_length(50);
+        b_no.pack_start(e_no, Gtk::PACK_SHRINK);
+        dialog->get_vbox()->pack_start(b_no, Gtk::PACK_SHRINK);
+        
+        
+         dialog->add_button("Cancel", 0);
+    dialog->add_button("Done", 1);
+    dialog->set_default_response(1);
+    dialog->show_all();
+    
+    int result = dialog.run();
+    vector<Customer> customers = emp.get_customers();
+    if (result == 1)
+        {
+        	
+        	Customer cust(e_name.get_text(), customers.size()+40, e_no.get_text());       		return cust;
+        }
+        else
+        {
+        	Server ser("",0,0, 0);
+        }
+}
+
+
+
+
 // Display an image from a disk file
 void Dialogs::image(string filename, string title, string msg) {
     Gtk::Dialog *dialog = new Gtk::Dialog();
@@ -269,5 +458,7 @@ void Dialogs::image(string filename, string title, string msg) {
 
     return;
 }
+
+
 
 

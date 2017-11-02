@@ -101,6 +101,11 @@ Main_window::Main_window() {
     new_cont_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_container));
     toolbar->append(*new_cont_button);
     
+     Gtk::ToolButton *create_serving_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+    create_serving_button->set_tooltip_markup("Create a new Serving");
+    create_serving_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_create_server));
+    toolbar->append(*create_serving_button);
+    
     Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
 	sep->set_expand(true);
 	toolbar->append(*sep);
@@ -151,6 +156,10 @@ void Main_window::on_about_click() {   //shows company description
 
 void Main_window::on_quit_click() {
     ctrl.execute_cmd(0);
+}
+
+void Main_window::on_create_server() {
+	ctrl.execute_cmd(21);
 }
 
 

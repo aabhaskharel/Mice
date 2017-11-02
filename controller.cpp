@@ -18,7 +18,11 @@ void Controller::execute_cmd(int cmd) {
 		break;
 	case 42:manager->populate_mgmt();
 		break;
+	case 21:Dialogs::serving();
+		break;
+		
 	case 0:	exit(0);
+
 		break;
 	}
 }

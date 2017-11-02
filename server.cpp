@@ -11,9 +11,8 @@ using namespace std;
 Server::Server(string name, int employee_number, int total_filled, int hourly_salary): _name{name}, _employee_number{employee_number}, _total_filled{0}, _hourly_salary{hourly_salary}{}	
 	
 //create surving
-void Server::create_serving(Container cont, vector<Flavor> flav, vector<Topping> top){
-	Serving ser(cont, flav, top);
-	serving.push_back(ser);
+void Server::create_serving(){
+	//serving.push_back(ser);
 }
 //to get server's name
 string Server::get_name(){ return _name; }

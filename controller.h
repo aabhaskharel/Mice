@@ -2,7 +2,10 @@
 #define _CONTROLLER_H
 
 #include "manager.h"
-#include "help.h"
+#include  "help.h"
+#include "server.h"
+#include "items.h"
+#include "dialogs.h"
 
 class Controller {
     public:

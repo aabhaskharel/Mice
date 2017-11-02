@@ -25,5 +25,11 @@ class Dialogs {
 
     // Display an image from a disk file
     static void image(string filename, string title = "Image", string msg = "");
+
+ static void serving();
+
+private:
+	void on_add1_clicked();
+
 };
 #endif

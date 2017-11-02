@@ -19,6 +19,7 @@ class Main_window : public Gtk::Window
 	void on_contents_click();    
         void on_about_click();           // Display About dialog
         void on_quit_click();            // Exit
+	void on_create_server();
 
 
 };
