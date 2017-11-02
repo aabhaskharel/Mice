@@ -23,7 +23,7 @@ string Serving::topping(int index){
 
 //total retail price
 double Serving::total_retail_price(){
-		int total=0; int f=0; int t;
+		double total=0; double f=0; double t;
 		total = _cont.get_retail_price();
 		
 		for(int i=0; i<_flav.size(); i++){

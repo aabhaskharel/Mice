@@ -9,7 +9,7 @@ Items::Items(string name, string description, double wholesale_price, double ret
 Flavor::Flavor(string name, string description, double wholesale_price, double retail_price, int stock, string image_path) : Items(name, description, wholesale_price, retail_price, stock, image_path){}
 
 //Topping class constructor
-Topping::Topping(string name, string description, double wholesale_price, double retail_price, int stock, string image_path, string type) : Items(name, description, wholesale_price, retail_price, stock, image_path),_type{type}{}
+Topping::Topping(string name, string description, double wholesale_price, double retail_price, int stock, string image_path, string amount) : Items(name, description, wholesale_price, retail_price, stock, image_path),_amount{amount}{}
 
 //Container class constructor
 Container::Container(string name, string description, double wholesale_price, double retail_price, int stock, string image_path, int scoop) : Items(name, description, wholesale_price, retail_price, stock, image_path), _scoop{scoop}{}
@@ -32,9 +32,13 @@ int Items::get_stock(){return _stock;}
 string Items::get_image_path(){return _image_path;}
 
 //get Topping's type
-string Topping::get_type(){return _type;}
+string Topping::get_amount(){return _amount;}
 
 //get Container's capacity
 int Container::get_scoop(){return _scoop;}
 
-
+//return's what kind of item
+string Items::get_type() {return "Item";}
+string Container::get_type() {return "Container";}
+string Flavor::get_type() {return "Flavor";}
+string Topping::get_type() {return "Topping";}

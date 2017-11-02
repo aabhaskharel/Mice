@@ -1,17 +1,21 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
+#include<string>
+#include "serving.h"
+using namespace std;
 
 class Customer{
-
 	public:
 		Customer(std::string name, int id, std::string phone);
-		std::string get_name();
+		vector<Serving> servings;
+		void create_serving(Serving serivng);
+		string get_name();
 		int get_id();
-		std::string get_phone();
+		string get_phone();
 	private:
-		std::string _name;
+		string _name;
 		int _id;
-		std::string _phone;
+		string _phone;
 		
 };
 #endif
