@@ -238,13 +238,13 @@ string Dialogs::input(string msg, string title, string default_text,
 }
 
 Serving Dialogs::create_serving(Emporium emp) {
-	vector<Container> cont = emp.get_containers();
+	/*vector<Container> cont = emp.get_containers();
 	vector<Flavor> flav = emp.get_flavors();
-	vector<Toppings> top = emp.get_toppings();
+	vector<Topping> top = emp.get_toppings();
 	
 	top.push_back("None");
 	 vector<Flavor> flavors;
-        vector<Toppings> toppings;
+        vector<Topping> toppings;
 	
 	Gtk::Dialog *dialog = new Gtk::Dialog();
     dialog->set_title("Create a Serving");
@@ -252,6 +252,7 @@ Serving Dialogs::create_serving(Emporium emp) {
     Gtk::HBox b_cont;
     
     Gtk::Label l_cont("Pick a container");
+    b_cont.pack_start(l_cont, Gtk::PACK_SHRINK);
     
     Gtk::ComboBoxText c_cont;
         c_cont.set_size_request(50);
@@ -260,37 +261,72 @@ Serving Dialogs::create_serving(Emporium emp) {
         b_cont.pack_start(c_cont, Gtk::PACK_SHRINK);      
         dialog->get_vbox()->pack_start(b_cont, Gtk::PACK_SHRINK);
      
-        for(int i= 0; i<c_cont.get_scoop(); i++)
-        {
+        
           Gtk::HBox b_flav;
+           Gtk::Label l_cont("Pick a flavor");
+    b_flav.pack_start(l_cont, Gtk::PACK_SHRINK,5);
         
        Gtk::ComboBoxText c_flav;
         c_flav.set_size_request(50);
-        if (i = 0) {        c_flav.set_active(0); }
-        else { c_flav.set_active(flav.size()-1); }
+        c_flav.set_active(0); }
         for(string s: flav) {   c_flav.append(s); }
         flav.push_back("None");
           b_flav.pack_start(c_flav, Gtk::PACK_SHRINK); 
           dialog->get_vbox()->pack_start(b_flav, Gtk::PACK_SHRINK);
           
+          Gtk::HBox b_flav1;
+        
+       Gtk::ComboBoxText c_flav1;
+        c_flav1.set_size_request(50);
+        c_flav1.set_active(flav.size()-1); }
+        for(string s: flav) {   c_flav1.append(s); }
+          b_flav1.pack_start(c_flav1, Gtk::PACK_SHRINK); 
+          dialog->get_vbox()->pack_start(b_flav1, Gtk::PACK_SHRINK);
           
-        }
+          Gtk::HBox b_flav2;
+        
+       Gtk::ComboBoxText c_flav2;
+        c_flav2.set_size_request(50);
+        c_flav2.set_active(flav.size()-1); }
+        for(string s: flav) {   c_flav2.append(s); }
+          b_flav2.pack_start(c_flav2, Gtk::PACK_SHRINK); 
+          dialog->get_vbox()->pack_start(b_flav2, Gtk::PACK_SHRINK);
+          
+          Gtk::HBox b_flav3;
+        
+       Gtk::ComboBoxText c_flav3;
+        c_flav3.set_size_request(50);
+        c_flav3.set_active(flav.size()-1); }
+        for(string s: flav) {   c_flav3.append(s); }
+          b_flav3.pack_start(c_flav3, Gtk::PACK_SHRINK); 
+          dialog->get_vbox()->pack_start(b_flav3, Gtk::PACK_SHRINK);
+          
+          
+          
         
         
-        for(int i = 0;i<3; i++)
-        {
+        
+       
           
           Gtk::HBox b_top;
-        
+         Gtk::Label l_top("Pick a Topping");
+    b_top.pack_start(l_top, Gtk::PACK_SHRINK,5);
+    
        Gtk::ComboBoxText c_top;
         c_top.set_size_request(50);
-        c_top.set_active(top.size()-1);
+        c_top.set_active(0);
         for(string s: top) {   c_top.append(s); }
           b_top.pack_start(c_top, Gtk::PACK_SHRINK); 
           dialog->get_vbox()->pack_start(b_top, Gtk::PACK_SHRINK);
-            
-      }
           
+          Gtk::ComboBoxText c_top1;
+        c_top1.set_size_request(50);
+        c_top1.set_active(0);
+        for(string s: top) {   c_top1.append(s); }
+          b_top1.pack_start(c_top1, Gtk::PACK_SHRINK); 
+          dialog->get_vbox()->pack_start(b_top1, Gtk::PACK_SHRINK);
+            
+        
       dialog->add_button("Cancel", 0);
     dialog->add_button("Done", 1);
     dialog->set_default_response(1);
@@ -302,13 +338,15 @@ Serving Dialogs::create_serving(Emporium emp) {
       if (result == 1)
       {
       Container container = containers.[c_cont.get_active_row_number()];
-      int n1 = c_flav.get_active_row_number();
-          if (!(i== 0) && (n1 == flav.size()-1) { break;} 
-          flavors.push_back(flav.[n1];
-          
-            int n2 = c_top.get_active_row_number();  
-          if (n2 == top.size()-1) {break;}
-          toppings.push_back(top.[n2];
+     flavors.push_back(flav[c_flav.get_active_row_number()]);
+     flavors.push_back(flav[c_flav1.get_active_row_number()]);
+     flavors.push_back(flav[c_flav2.get_active_row_number()]);
+     flavors.push_back(flav[c_flav3.get_active_row_number()]);
+     
+     toppings.push_back(top[c_top.get_active_row_number()]);
+     toppings.push_back(top[c_top1.get_active_row_number()]);
+        
+    
           
           Serving ser(container, flavors, toppings);
           return ser;
