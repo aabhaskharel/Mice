@@ -1,38 +1,40 @@
-CXXFLAGS += --std=c++11
+#compiler options
+CXXFLAGS+=--std=c++11
 
-all: div main
-rebuild: div clean main
+#source files
+SOURCES=$(wildcard *.cpp)
 
-debug: CXXFLAGS += -g
-debug: rebuild
+#object files
+OBJECTS=$(SOURCES:.cpp=.o)
 
-main:
-	$(CXX) $(CXXFLAGS) -o mice main.cpp items.cpp controller.cpp main_window.cpp manager.cpp dialogs.cpp help.cpp `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
-	./mice
-main.o: main.cpp 
-	$(CXX) $(CXXFLAGS) -c main.cpp `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
-items.o: items.cpp *.h
-	$(CXX) $(CXXFLAGS) -c items.cpp `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
-manager.o: manager.cpp *.h
-	$(CXX) $(CXXFLAGS) -c manager.cpp `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
-dialogs.o: dialogs.cpp *.h
-	$(CXX) $(CXXFLAGS) -c dialogs.o `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
-controller.o: controller.cpp *.h
-	$(CXX) $(CXXFLAGS) -c controller.o `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
-help.o: help.cpp
-	$(CXX) $(CXXFLAGS) -c help.o `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
-main_window.o:	main_window.cpp *.h
-	$(CXX) $(CXXFLAGS) -c main_window.cpp `/usr/bin/pkg-config gtkmm-3.0 --cflags --libs` 
+#main link objects
+MOBJECTS=$(filter-out test%,$(OBJECTS))
+
+#test link objects
+TOBJECTS=$(filter-out main.o,$(OBJECTS))
+
+#included libraries
+INCLUDE=`/usr/bin/pkg-config gtkmm-3.0 --cflags --libs`
+
+#executable filename
+EXECUTABLE=mice
+
+#Special symbols used:
+#$^ - is all the dependencies (in this case =$(OBJECTS) )
+#$@ - is the result name (in this case =$(EXECUTABLE) )
+
+$(EXECUTABLE): $(MOBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+
+test: CXXFLAGS+= -g
+test: $(TOBJECTS)
+	$(CXX) $(CXXFLAGS) $^ -o $@ $(INCLUDE)
+
+debug: CXXFLAGS+= -g
+debug: $(EXECUTABLE)
+
+%.o: %.cpp *.h
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
+
 clean:
-	-rm -f *.o *~ mice
-	
-div:
-	@echo
-	@echo 'X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-'
-	@echo '-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X'
-	@echo 'X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-'
-	@echo '-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X-X'
-	@echo
-
-	
-
+	-rm -f $(EXECUTABLE) test $(OBJECTS)
