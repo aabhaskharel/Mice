@@ -4,6 +4,7 @@
 class Customer{
 
 	public:
+		Customer(std::string name, int id, std::string phone);
 		std::string get_name();
 		int get_id();
 		std::string get_phone();

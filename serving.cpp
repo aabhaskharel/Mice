@@ -8,10 +8,10 @@
 using namespace std;
 
 //constructor
-Serving::Serving(Container cont, Flavor<vector> flav, Topping<vector> top): _cont{cont}, _flav{flav}, _top{top}{}
+Serving::Serving(Container cont, vector<Flavor> flav, vector<Topping> top): _cont{cont}, _flav{flav}, _top{top}{}
 
 //which container
-string Serving::contianer(){
+string Serving::container(){
 		return _cont.get_name();
 		}
 
@@ -34,7 +34,7 @@ double Serving::total_retail_price(){
 				f+=_flav[i].get_retail_price();	
 		}
 		
-		for(int i=0; i<top.size(); i++){
+		for(int i=0; i<_top.size(); i++){
 				t+=_top[i].get_retail_price();
 		}
 		
