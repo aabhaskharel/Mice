@@ -2,6 +2,8 @@
 #define ORDER_H
 #include <vector>
 #include "server.h"
+#include "customer.h"
+#include "serving.h"
 
 using namespace std;
 

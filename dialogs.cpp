@@ -1,7 +1,5 @@
 #include "dialogs.h"
-#include "items.h"
-#include "serving.h"
-#include "manager.h"
+
 
 
 // A message is like cout, simply displaying information to the user
@@ -16,12 +14,18 @@ void Dialogs::message(string msg, string title) {
     delete dialog;
 }
 
-vector<string> Dialogs::form(string title, int id) {
+vector<string> Dialogs::form(int id) {
 	vector<string> result;
 	
         Gtk::Dialog *dialog = new Gtk::Dialog();
-      // dialog->set_transient_for(win); // Solve this Safal, please
-        dialog->set_title(title);
+        string title = "Add a new ";
+        switch (id)
+        {
+        	case 1: title+= "Container"; break;
+        	case 2: title+= "Flavor"; break;
+        	case 3: title+= "Topping"; break;
+        }
+       	dialog->set_title(title);
         
         // name
         Gtk::HBox b_name;
@@ -94,16 +98,6 @@ vector<string> Dialogs::form(string title, int id) {
         b_type.pack_start(l_type, Gtk::PACK_SHRINK);
         
         
-        Gtk::ComboBoxText c_type;
-        c_type.set_size_request(50);
-        vector<string> types = {"Light", "Normal", "Extra", "Drenched"};
-        c_type.set_active(0);
-        for(string s: types) {   c_type.append(s); }
-        b_type.pack_start(c_type, Gtk::PACK_SHRINK);
-        dialog->get_vbox()->pack_start(b_type, Gtk::PACK_SHRINK);
-          if (id !=2) {c_type.set_sensitive(false);}
-        
-        
         // wholesale price
         Gtk::HBox b_wprice;
         Gtk::Label l_wprice{"Wholesale Price: "};
@@ -165,14 +159,13 @@ vector<string> Dialogs::form(string title, int id) {
         result.push_back(std::to_string(e_stock.get_value_as_int()));
         result.push_back(f_image.get_filename());
         if (id ==1) {   result.push_back(std::to_string(e_scoop.get_value_as_int())); }
-        if (id ==2) {   result.push_back(types[c_type.get_active_row_number()]); }
          
          for(string s: result)
          {
          if (s == "")
          {
          result.clear();
-        Gtk::MessageDialog dlg("You did not enter all the fields." , true, Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
+        Gtk::MessageDialog dlg("You did not enter all the fields." , true, 		Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
 	dlg.run();
 	dlg.hide();
          }
@@ -244,11 +237,11 @@ string Dialogs::input(string msg, string title, string default_text,
         return cancel_text;
 }
 
-void Dialogs::serving(Emporium emp) {
-
+Serving Dialogs::create_serving(Emporium emp) {
 	vector<Container> cont = emp.get_containers();
 	vector<Flavor> flav = emp.get_flavors();
 	vector<Toppings> top = emp.get_toppings();
+	
 	top.push_back("None");
 	 vector<Flavor> flavors;
         vector<Toppings> toppings;
@@ -267,9 +260,6 @@ void Dialogs::serving(Emporium emp) {
         b_cont.pack_start(c_cont, Gtk::PACK_SHRINK);      
         dialog->get_vbox()->pack_start(b_cont, Gtk::PACK_SHRINK);
      
-    
-       
-        
         for(int i= 0; i<c_cont.get_scoop(); i++)
         {
           Gtk::HBox b_flav;
@@ -295,7 +285,7 @@ void Dialogs::serving(Emporium emp) {
        Gtk::ComboBoxText c_top;
         c_top.set_size_request(50);
         c_top.set_active(top.size()-1);
-        for(string s: a) {   c_top.append(s); }
+        for(string s: top) {   c_top.append(s); }
           b_top.pack_start(c_top, Gtk::PACK_SHRINK); 
           dialog->get_vbox()->pack_start(b_top, Gtk::PACK_SHRINK);
             
@@ -311,7 +301,7 @@ void Dialogs::serving(Emporium emp) {
       int result = dialog->run();  
       if (result == 1)
       {
-      Containers container = containers.[c_cont.get_active_row_number()];
+      Container container = containers.[c_cont.get_active_row_number()];
       int n1 = c_flav.get_active_row_number();
           if (!(i== 0) && (n1 == flav.size()-1) { break;} 
           flavors.push_back(flav.[n1];
@@ -326,14 +316,15 @@ void Dialogs::serving(Emporium emp) {
       }
       else
       {
-      
+      return ser;
       } 
   
-  delete dialog;   
+  delete dialog;   */
 }
 
-Server Dialogs::add_server(Emporium emp)
+vector<string> Dialogs::add_server()
 {
+	vector<string> result;
 	Gtk::Dialog *dialog = new Gtk::Dialog();
         dialog->set_title("Add a new Server");
         
@@ -368,22 +359,36 @@ Server Dialogs::add_server(Emporium emp)
     dialog->set_default_response(1);
     dialog->show_all();
     
-    int result = dialog.run();
-    vector<Server> servers = emp.get_servers();
-    if (result == 1)
-        {
-        	
-        	Server ser(e_name.get_text(), servers.size()+30, 0,  e_wage.get_value());
-        	return ser;
-        }
-        else
-        {
-        	Server ser("",0,0, 0);
-        }
+    int x = dialog->run();
+
+        
+        //missing some exception handeling
+      
+    
+
+         if (x == 1) {
+         
+        result.push_back(e_name.get_text());
+        result.push_back(std::to_string(e_wage.get_value()));    
+         for(string s: result)
+         {
+         if (s == "")
+         {
+         result.clear();
+        Gtk::MessageDialog dlg("You did not enter all the fields." , true, 		Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
+	dlg.run();
+	dlg.hide();
+         }
+         }
+	
+	}
+	delete dialog;
+	return result;
 }
 
-Customer Dialogs::add_customer(Emporium emp)
+vector<string> Dialogs::add_customer()
 {
+	vector<string> result;
 	Gtk::Dialog *dialog = new Gtk::Dialog();
         dialog->set_title("Add a new Customer");
         
@@ -405,26 +410,39 @@ Customer Dialogs::add_customer(Emporium emp)
         
         Gtk::Entry e_no;
         e_no.set_max_length(50);
-        b_no.pack_start(e_no, Gtk::PACK_SHRINK);
-        dialog->get_vbox()->pack_start(b_no, Gtk::PACK_SHRINK);
+        b_wage.pack_start(e_no, Gtk::PACK_SHRINK);
+        dialog->get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
         
         
          dialog->add_button("Cancel", 0);
     dialog->add_button("Done", 1);
     dialog->set_default_response(1);
     dialog->show_all();
+   int x = dialog->run();
+
+        
+        //missing some exception handeling
+      
     
-    int result = dialog.run();
-    vector<Customer> customers = emp.get_customers();
-    if (result == 1)
-        {
-        	
-        	Customer cust(e_name.get_text(), customers.size()+40, e_no.get_text());       		return cust;
-        }
-        else
-        {
-        	Server ser("",0,0, 0);
-        }
+
+         if (x == 1) {
+         
+        result.push_back(e_name.get_text());
+        result.push_back(e_no.get_text());    
+         for(string s: result)
+         {
+         if (s == "")
+         {
+         result.clear();
+        Gtk::MessageDialog dlg("You did not enter all the fields." , true, 		Gtk::MESSAGE_WARNING, Gtk::BUTTONS_OK, true);
+	dlg.run();
+	dlg.hide();
+         }
+         }
+	
+	}
+	delete dialog;
+	return result;
 }
 
 

@@ -25,12 +25,7 @@ Main_window::Main_window() {
     menubar->append(*menuitem_file);
     Gtk::Menu *filemenu = Gtk::manage(new Gtk::Menu());
     menuitem_file->set_submenu(*filemenu);
-    
-    //	New Management
-    Gtk::MenuItem *menuitem_new_mgmt = Gtk::manage(new Gtk::MenuItem("_New Management", true));
-    menuitem_new_mgmt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_mgmt_click));
-    filemenu->append(*menuitem_new_mgmt);
-    
+  
      Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Management", true));
     menuitem_pop_mgmt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pop_mgmt_click));
     filemenu->append(*menuitem_pop_mgmt);
@@ -61,6 +56,38 @@ Main_window::Main_window() {
     Gtk::MenuItem *menuitem_container = Gtk::manage(new Gtk::MenuItem("_Add New Container", true));
     menuitem_container->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_container));
     manager_menu->append(*menuitem_container);
+    
+    // new server menu
+    Gtk::MenuItem *menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_Add New Server", true));
+    menuitem_add_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_server));
+    manager_menu->append(*menuitem_add_server);
+    
+    // Create a Server menu and add to the menu bar
+    Gtk::MenuItem *menuitem_server = Gtk::manage(new Gtk::MenuItem("_Server", true));
+    menubar->append(*menuitem_server);
+    Gtk::Menu *server_menu = Gtk::manage(new Gtk::Menu());
+    menuitem_server->set_submenu(*server_menu);
+    
+    // new serving menu
+    Gtk::MenuItem *menuitem_serving = Gtk::manage(new Gtk::MenuItem("_New Serving", true));
+    menuitem_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_serving));
+    server_menu->append(*menuitem_serving);
+    
+    // new customer menu
+    Gtk::MenuItem *menuitem_add_customer = Gtk::manage(new Gtk::MenuItem("_Add New Customer", true));
+    menuitem_add_customer->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_customer));
+    server_menu->append(*menuitem_add_customer);
+    
+    // Create a Customer menu and add to the menu bar
+    Gtk::MenuItem *menuitem_customer = Gtk::manage(new Gtk::MenuItem("_Customer", true));
+    menubar->append(*menuitem_customer);
+    Gtk::Menu *customer_menu = Gtk::manage(new Gtk::Menu());
+    menuitem_customer->set_submenu(*customer_menu);
+    
+    // new customer serving menu
+    Gtk::MenuItem *menuitem_serving1 = Gtk::manage(new Gtk::MenuItem("_New Serving", true));
+    menuitem_serving1->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_serving));
+    customer_menu->append(*menuitem_serving1);
     
      Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
     menubar->append(*menuitem_help);
@@ -101,11 +128,6 @@ Main_window::Main_window() {
     new_cont_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_container));
     toolbar->append(*new_cont_button);
     
-     Gtk::ToolButton *create_serving_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
-    create_serving_button->set_tooltip_markup("Create a new Serving");
-    create_serving_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_create_server));
-    toolbar->append(*create_serving_button);
-    
     Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
 	sep->set_expand(true);
 	toolbar->append(*sep);
@@ -126,9 +148,6 @@ Main_window::Main_window() {
 
 Main_window::~Main_window() { }
 
-void Main_window::on_new_mgmt_click() {
-    ctrl.execute_cmd(1);
-}
 
 void Main_window::on_pop_mgmt_click() {
 	ctrl.execute_cmd(42);
@@ -146,6 +165,18 @@ void Main_window::on_new_container() {
     ctrl.execute_cmd(4);
 }
 
+void Main_window::on_new_server() {
+    ctrl.execute_cmd(5);
+}
+
+void Main_window::on_new_serving() {
+    ctrl.execute_cmd(6);
+}
+
+void Main_window::on_new_customer() {
+    ctrl.execute_cmd(7);
+}
+
 void Main_window::on_contents_click() {   //shows help or program documentation
 	ctrl.execute_cmd(8);
 }
@@ -156,10 +187,6 @@ void Main_window::on_about_click() {   //shows company description
 
 void Main_window::on_quit_click() {
     ctrl.execute_cmd(0);
-}
-
-void Main_window::on_create_server() {
-	ctrl.execute_cmd(21);
 }
 
 

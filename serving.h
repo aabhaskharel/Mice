@@ -1,5 +1,5 @@
 #ifndef SERVING_H
-#define SERVER_H
+#define SERVING_H
 #include <vector>
 #include "items.h"
 
@@ -7,7 +7,7 @@ using namespace std;
 
 class Serving{
 	private:
-		Container _cont; //index numbers
+		Container _cont; 
 		vector<Flavor>  _flav;
 		vector<Topping> _top;
 

@@ -6,6 +6,7 @@
 #include "items.h"
 #include "server.h"
 #include "emporium.h"
+#include "dialogs.h"
 
 class Controller {
     public:
@@ -13,8 +14,8 @@ class Controller {
 	    //void create_emporium();
    
    private:
-	Manager *manager;
 	Emporium emp;
 	Help help;
+	vector<string> res;
 }; 
 #endif

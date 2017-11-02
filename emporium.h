@@ -3,8 +3,10 @@
 #include <vector>
 #include "items.h"
 #include "server.h"
+#include "serving.h"
 #include "order.h"
 #include "manager.h"
+#include "customer.h"
 using namespace std;
 
 class Emporium{
@@ -14,7 +16,17 @@ class Emporium{
 		vector<Topping> get_toppings();
 		vector<Flavor> get_flavors();
 		vector<Server> get_servers();
-		
+		vector<Customer> get_customers();
+
+		void add_new_container(Container cont);
+	void add_new_flavor(Flavor flav);
+	void add_new_topping(Topping flav);
+	void add_new_server(Server server);
+	void add_new_customer(Customer customer);
+	void create_servings(Serving ser);
+
+void populate_emporium();
+
 		void set_container(Container cont);
 		void set_topping(Topping top);
 		void set_flavor(Flavor flav);
@@ -27,7 +39,8 @@ class Emporium{
 		vector<Order> _orders;
 		vector<Manager> _managers;
 		vector<Server> _servers;
-	
+	vector<Customer> _customers;
+
 		double cash_register = 0;
 };
 #endif
