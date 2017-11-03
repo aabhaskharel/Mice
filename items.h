@@ -7,14 +7,14 @@ using namespace std;
 class Items {
 	public:
 		Items(string name, string description, double wholesale_price, double retail_price, int stock, string image_path);
-		string get_name();
-		string get_description();
-		double get_wholesale_price();
-		double get_retail_price();
-		int get_stock();
+		string get_name() const;
+		string get_description() const;
+		double get_wholesale_price() const;
+		double get_retail_price() const;
+		int get_stock() const;
 		string get_image_path();
 		
-		virtual string get_type();
+		virtual string get_type() const;
 
 	protected:
 		string  _name;
@@ -25,24 +25,28 @@ class Items {
 		string _image_path;
 };
 
+//Operator Overloading
+std::ostream& operator<<(std::ostream& os, const Items& item);
+
 class Flavor : public Items{
 	public:
 		Flavor(string name, string description, double wholesale_price, double retail_price, int stock, string image_path);
-		string get_type() override;
+		string get_type() const override;
 };
 class Topping : public Items{
 	public:
 		Topping(string name, string description, double cost, double retail_price, int stock, string image_path, string type);
-		string get_amount();	
-		string get_type() override;
+		string get_amount() const;	
+		string get_type() const override;
 	private:
+		void _set_amount(string amount);
 		string _amount;
 };
 class Container : public Items{
 	public:
 		Container(string name, string description, double cost, double retail_price, int stock, string image_path, int scoop);
-		int get_scoop();
-		string get_type() override;
+		int get_scoop() const;
+		string get_type() const override;
 	private:
 		int _scoop;
 };

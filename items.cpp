@@ -1,4 +1,6 @@
 #include "items.h"
+#include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -15,30 +17,40 @@ Topping::Topping(string name, string description, double wholesale_price, double
 Container::Container(string name, string description, double wholesale_price, double retail_price, int stock, string image_path, int scoop) : Items(name, description, wholesale_price, retail_price, stock, image_path), _scoop{scoop}{}
 
 //get item's name
-string Items::get_name(){return _name;}
+string Items::get_name() const {return _name;}
 
 //get item's description
-string Items::get_description(){return _description;}
+string Items::get_description() const {return _description;}
 
 //get item's wholesale cost
-double Items::get_wholesale_price(){return _wholesale_price;}
+double Items::get_wholesale_price() const {return _wholesale_price;}
 
 //get item's retail_price
-double Items::get_retail_price(){return _retail_price;}
+double Items::get_retail_price() const {return _retail_price;}
 
 //get item's stock
-int Items::get_stock(){return _stock;}
+int Items::get_stock() const {return _stock;}
 
 string Items::get_image_path(){return _image_path;}
 
 //get Topping's type
-string Topping::get_amount(){return _amount;}
+string Topping::get_amount() const {return _amount;}
+
+//set topping amount
+void Topping::_set_amount(string amount) {_amount = amount;}
 
 //get Container's capacity
-int Container::get_scoop(){return _scoop;}
+int Container::get_scoop()const {return _scoop;}
 
 //return's what kind of item
-string Items::get_type() {return "Item";}
-string Container::get_type() {return "Container";}
-string Flavor::get_type() {return "Flavor";}
-string Topping::get_type() {return "Topping";}
+string Items::get_type() const {return "Item";}
+string Container::get_type() const {return "Container";}
+string Flavor::get_type() const {return "Flavor";}
+string Topping::get_type() const {return "Topping";}
+
+std::ostream& operator<<(std::ostream& os, const Items& item) {
+    os << std::setw(40) << item.get_type() + ": " + item.get_name() << " $" 
+       << std::setprecision(2) << std::fixed << item.get_retail_price(); 
+    return os;
+}
+
