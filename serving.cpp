@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 #include "serving.h"
 
 using namespace std;
@@ -7,22 +8,16 @@ using namespace std;
 Serving::Serving(Container container): _container{container} {}
 
 //return container
-Container Serving::get_container(){
-		return _container;
-}
+Container Serving::get_container() const {return _container;}
 
 //return flavors
-vector<Flavor> Serving::get_flavors(){
-		return _flavors;
-}
+vector<Flavor> Serving::get_flavors() const {return _flavors;}
 		
 //return toppings
-vector<Topping> Serving::get_toppings(){
-		return _toppings;
-		}
+vector<Topping> Serving::get_toppings() const {return _toppings;}
 
 //total retail price
-double Serving::total_retail_price(){
+double Serving::total_retail_price() const {
 		double total=0; double f=0; double t;
 		total = _container.get_retail_price();
 		
@@ -40,7 +35,7 @@ double Serving::total_retail_price(){
 }
 
 //total wholesale price
-double Serving::total_wholesale_price(){
+double Serving::total_wholesale_price() const {
 		double total=0; double f=0; double t;
 		total = _container.get_wholesale_price();
 		
@@ -55,5 +50,12 @@ double Serving::total_wholesale_price(){
 	total = total + f + t;
 	
 	return total;
+}
+
+std::ostream& operator<<(std::ostream& os, const Serving& serving) {
+    os << serving.get_container();
+    for (Flavor s : serving.get_flavors()) os << std::endl << s;
+    for (Topping t : serving.get_toppings()) os << std::endl << t;
+    return os;
 }
 
