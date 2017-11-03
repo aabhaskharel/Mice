@@ -7,7 +7,7 @@ Main_window::Main_window() {
     // G U I   S E T U P
     // /////////////////
 
-    set_default_size(800, 600);
+    set_default_size(500, 250);
 
     // Put a vertical box container as the Window contents
     Gtk::Box *vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
