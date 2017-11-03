@@ -3,7 +3,7 @@
 using namespace std;
 
 //setters
-void Emporium::add_new_container(Container cont){
+void Emporium::add_new_container(Containr cont){
 	_containers.push_back(cont);
 }
 
@@ -28,7 +28,7 @@ void Emporium::create_servings(Serving ser) {
 }
 
 //getters
-vector<Container> Emporium::get_containers() {
+vector<Containr> Emporium::get_containers() {
     return _containers;
 }
 vector<Topping> Emporium::get_toppings() {
@@ -45,8 +45,8 @@ vector<Customer> Emporium::get_customers(){
 }
 
 void Emporium:: populate_emporium(){
-    Container cont("Waffle Cone", "A freshly baked waffle cone.", 0.49, 0.89, 20, "picture.png", 3);
-    Container cont2("Regular Cone", "Everyone's Favroite", 0.05, 0.15, 20, "picture.png", 1);
+    Containr cont("Waffle Cone", "A freshly baked waffle cone.", 0.49, 0.89, 20, "picture.png", 3);
+    Containr cont2("Regular Cone", "Everyone's Favroite", 0.05, 0.15, 20, "picture.png", 1);
 
     _containers.push_back(cont2);
     _containers.push_back(cont);

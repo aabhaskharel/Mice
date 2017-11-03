@@ -5,10 +5,10 @@
 using namespace std;
 
 //constructor
-Serving::Serving(Container container): _container{container} {}
+Serving::Serving(Containr container): _container{container} {}
 
 //return container
-Container Serving::get_container() const {return _container;}
+Containr Serving::get_container() const {return _container;}
 
 //return flavors
 vector<Flavor> Serving::get_flavors() const {return _flavors;}

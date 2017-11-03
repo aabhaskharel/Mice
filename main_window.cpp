@@ -1,6 +1,6 @@
 #include "main_window.h"
 
-Controller ctrl;
+Emporium emp;
 
 Main_window::Main_window() {
     // /////////////////
@@ -150,43 +150,69 @@ Main_window::~Main_window() { }
 
 
 void Main_window::on_pop_mgmt_click() {
-	ctrl.execute_cmd(42);
-}
-
-void Main_window::on_new_flavor() {
-    ctrl.execute_cmd(2);
-}
-
-void Main_window::on_new_topping() {
-    ctrl.execute_cmd(3);
+	emp.populate_emporium();
 }
 
 void Main_window::on_new_container() {
-    ctrl.execute_cmd(4);
+    vector<string> res;
+    res = Dialogs::form(1);
+	if (res.size() == 7) {
+	Containr cont(res[0], res[1], stod(res[2]), stod(res[3]), stoi(res[4]), res[5], stoi(res[6]));
+	emp.add_new_container(cont);
+	}
+}
+
+void Main_window::on_new_flavor() {
+    vector<string> res;
+    res = Dialogs::form(2);
+	if (res.size() == 6) {
+		Flavor flav(res[0], res[1], stod(res[2]), stod(res[3]), stoi(res[4]), res[5]);
+	    emp.add_new_flavor(flav);
+    }
+}
+
+void Main_window::on_new_topping() {
+    vector<string> res;
+    res = Dialogs::form(3);
+	if (res.size() == 6) {
+		Topping top(res[0], res[1], stod(res[2]), stod(res[3]), stoi(res[4]), res[5], "Light");
+	    emp.add_new_topping(top);
+    }
 }
 
 void Main_window::on_new_server() {
-    ctrl.execute_cmd(5);
+    vector<string> res;
+    res = Dialogs::add_server();
+	if (res.size() == 2) {
+		Server ser(res[0], emp.get_servers().size()+1, 0, stod(res[1]));
+	    emp.add_new_server(ser);
+    }
 }
 
 void Main_window::on_new_serving() {
-    ctrl.execute_cmd(6);
+    //TODO
+    
 }
 
 void Main_window::on_new_customer() {
-    ctrl.execute_cmd(7);
+    vector<string> res;
+    res = Dialogs::add_customer();
+	if (res.size() == 2) {
+		Customer cust(res[0], emp.get_customers().size()+1, res[2]);
+	    emp.add_new_customer(cust);
+    }
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation
-	ctrl.execute_cmd(8);
+	
 }
 
 void Main_window::on_about_click() {   //shows company description
-	ctrl.execute_cmd(9);
+	
 }
 
 void Main_window::on_quit_click() {
-    ctrl.execute_cmd(0);
+    hide();
 }
 
 

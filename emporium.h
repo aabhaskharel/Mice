@@ -12,13 +12,13 @@ using namespace std;
 class Emporium{
 	public:
 		
-		vector<Container> get_containers();
+		vector<Containr> get_containers();
 		vector<Topping> get_toppings();
 		vector<Flavor> get_flavors();
 		vector<Server> get_servers();
 		vector<Customer> get_customers();
 
-		void add_new_container(Container cont);
+		void add_new_container(Containr cont);
 		void add_new_flavor(Flavor flav);
 		void add_new_topping(Topping flav);
 		void add_new_server(Server server);
@@ -28,7 +28,7 @@ class Emporium{
 		void populate_emporium();
 
 	private:
-		vector<Container> _containers;
+		vector<Containr> _containers;
 		vector<Flavor> _flavors;
 		vector<Topping> _toppings;
 		vector<Order> _orders;

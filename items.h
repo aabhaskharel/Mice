@@ -28,6 +28,15 @@ class Items {
 //Operator Overloading
 std::ostream& operator<<(std::ostream& os, const Items& item);
 
+class Containr : public Items{
+	public:
+		Containr(string name, string description, double cost, double retail_price, int stock, string image_path, int scoop);
+		int get_scoop() const;
+		string get_type() const override;
+	private:
+		int _scoop;
+};
+
 class Flavor : public Items{
 	public:
 		Flavor(string name, string description, double wholesale_price, double retail_price, int stock, string image_path);
@@ -42,14 +51,5 @@ class Topping : public Items{
 		void _set_amount(string amount);
 		string _amount;
 };
-class Container : public Items{
-	public:
-		Container(string name, string description, double cost, double retail_price, int stock, string image_path, int scoop);
-		int get_scoop() const;
-		string get_type() const override;
-	private:
-		int _scoop;
-};
-
 
 #endif

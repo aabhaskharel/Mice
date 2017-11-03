@@ -14,7 +14,7 @@ Flavor::Flavor(string name, string description, double wholesale_price, double r
 Topping::Topping(string name, string description, double wholesale_price, double retail_price, int stock, string image_path, string amount) : Items(name, description, wholesale_price, retail_price, stock, image_path),_amount{amount}{}
 
 //Container class constructor
-Container::Container(string name, string description, double wholesale_price, double retail_price, int stock, string image_path, int scoop) : Items(name, description, wholesale_price, retail_price, stock, image_path), _scoop{scoop}{}
+Containr::Containr(string name, string description, double wholesale_price, double retail_price, int stock, string image_path, int scoop) : Items(name, description, wholesale_price, retail_price, stock, image_path), _scoop{scoop}{}
 
 //get item's name
 string Items::get_name() const {return _name;}
@@ -40,11 +40,11 @@ string Topping::get_amount() const {return _amount;}
 void Topping::_set_amount(string amount) {_amount = amount;}
 
 //get Container's capacity
-int Container::get_scoop()const {return _scoop;}
+int Containr::get_scoop()const {return _scoop;}
 
 //return's what kind of item
 string Items::get_type() const {return "Item";}
-string Container::get_type() const {return "Container";}
+string Containr::get_type() const {return "Container";}
 string Flavor::get_type() const {return "Flavor";}
 string Topping::get_type() const {return "Topping";}
 

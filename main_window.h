@@ -2,7 +2,11 @@
 #define MAIN_WINDOW_H
 
 #include <gtkmm.h>
-#include "controller.h"
+#include <string>
+#include "emporium.h"
+#include "dialogs.h"
+#include "items.h"
+#include "server.h"
 
 class Main_window : public Gtk::Window
 {

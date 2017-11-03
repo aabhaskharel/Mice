@@ -7,15 +7,15 @@ using namespace std;
 
 class Serving{
 	private:
-		Container _container; 
+		Containr _container; 
 		vector<Flavor>  _flavors;
 		vector<Topping> _toppings;
 
 	public:
-		Serving(Container container);
+		Serving(Containr container);
 		void set_topping(Topping topping);
 		void set_flavor(Flavor flavor);
-		Container get_container() const;
+		Containr get_container() const;
 		vector<Flavor> get_flavors() const;
 		vector<Topping> get_toppings() const;
 		double total_retail_price() const;

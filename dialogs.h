@@ -7,6 +7,7 @@
 #include "items.h"
 #include "serving.h"
 #include "manager.h"
+#include "main_window.h"
 
 using namespace std;
 
@@ -16,7 +17,6 @@ class Dialogs {
     // A message is like cout, simply displaying information to the user
     static void message(string msg, string title = "Info");
 
-	
 	static vector<string> form(int id);
 	static vector<string> add_server();
 	static vector<string> add_customer();
