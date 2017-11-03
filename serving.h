@@ -7,17 +7,19 @@ using namespace std;
 
 class Serving{
 	private:
-		Container _cont; 
-		vector<Flavor>  _flav;
-		vector<Topping> _top;
+		Container _container; 
+		vector<Flavor>  _flavors;
+		vector<Topping> _toppings;
 
 	public:
-		Serving(Container cont, vector<Flavor>  flav, vector<Topping> top);
-		string container();
-		string flavor(int index);
-		string topping(int index);
+		Serving(Container container);
+		void set_topping(Topping topping);
+		void set_flavor(Flavor flavor);
+		Container get_container();
+		vector<Flavor> get_flavors();
+		vector<Topping> get_toppings();
 		double total_retail_price();
-		
+		double total_wholesale_price();		
 };
 #endif
 
