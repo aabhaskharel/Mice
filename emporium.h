@@ -19,28 +19,22 @@ class Emporium{
 		vector<Customer> get_customers();
 
 		void add_new_container(Container cont);
-	void add_new_flavor(Flavor flav);
-	void add_new_topping(Topping flav);
-	void add_new_server(Server server);
-	void add_new_customer(Customer customer);
-	void create_servings(Serving ser);
+		void add_new_flavor(Flavor flav);
+		void add_new_topping(Topping flav);
+		void add_new_server(Server server);
+		void add_new_customer(Customer customer);
+		void create_servings(Serving ser);
 
-void populate_emporium();
+		void populate_emporium();
 
-		void set_container(Container cont);
-		void set_topping(Topping top);
-		void set_flavor(Flavor flav);
-		void set_server(Server serv);
-
-	//private:
+	private:
 		vector<Container> _containers;
 		vector<Flavor> _flavors;
 		vector<Topping> _toppings;
 		vector<Order> _orders;
 		vector<Manager> _managers;
 		vector<Server> _servers;
-	vector<Customer> _customers;
-
+		vector<Customer> _customers;
 		double cash_register = 0;
 };
 #endif

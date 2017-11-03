@@ -2,47 +2,32 @@
 
 using namespace std;
 
-
-void Emporium::set_container(Container cont){
-    _containers.push_back(cont);
-}
-void Emporium::set_topping(Topping top){
-    _toppings.push_back(top);
-}
-void Emporium::set_flavor(Flavor flav){
-    _flavors.push_back(flav);
-}
-void Emporium::set_server(Server serv){
-    _servers.push_back(serv);
-}
-
-
+//setters
 void Emporium::add_new_container(Container cont){
 	_containers.push_back(cont);
 }
 
-	void Emporium::add_new_flavor(Flavor flav) {
-	_flavors.push_back(flav);
-	}
-	
-	void Emporium::add_new_topping(Topping top){
-	_toppings.push_back(top);
-	}
-	
-	
-	void Emporium::add_new_server(Server server){
-	_servers.push_back(server);
-	}
-	
-	void Emporium::add_new_customer(Customer customer){
-	_customers.push_back(customer);
-	}
-	
-	void Emporium::create_servings(Serving ser) {
-	
-	}
+void Emporium::add_new_flavor(Flavor flav) {
+    _flavors.push_back(flav);
+}
 
-//professional programmer
+void Emporium::add_new_topping(Topping top){
+    _toppings.push_back(top);
+}
+
+void Emporium::add_new_server(Server server){
+    _servers.push_back(server);
+}
+
+void Emporium::add_new_customer(Customer customer){
+    _customers.push_back(customer);
+}
+
+void Emporium::create_servings(Serving ser) {
+
+}
+
+//getters
 vector<Container> Emporium::get_containers() {
     return _containers;
 }
@@ -78,7 +63,4 @@ void Emporium:: populate_emporium(){
     _toppings.push_back(top);
     _toppings.push_back(top2);
 }
-
-
-
 
