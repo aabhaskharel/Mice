@@ -9,7 +9,12 @@ using namespace std;
 
 class Order{
 	public:
-		Order(int id, vector<Serving> servings, Server server, Customer customer); 
+		Order(int id); 
+		
+		void add_serving(Serving serving);
+		//void add_server(Server server);
+		//void add_customer(Customer customer);
+		
 		double get_total_price();
 		void fill();
 		void pay();
@@ -17,8 +22,8 @@ class Order{
 	private:
 		int _id;
 		vector <Serving> _servings;
-		Server _server;
-		Customer _customer;
+		//Server _server;
+		//Customer _customer;
 		string _state = "Unfilled";
 		
 };

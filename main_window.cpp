@@ -69,8 +69,8 @@ Main_window::Main_window() {
     menuitem_server->set_submenu(*server_menu);
     
     // new serving menu
-    Gtk::MenuItem *menuitem_serving = Gtk::manage(new Gtk::MenuItem("_New Serving", true));
-    menuitem_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_serving));
+    Gtk::MenuItem *menuitem_serving = Gtk::manage(new Gtk::MenuItem("_New Order", true));
+    menuitem_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
     server_menu->append(*menuitem_serving);
     
     // new customer menu
@@ -85,8 +85,8 @@ Main_window::Main_window() {
     menuitem_customer->set_submenu(*customer_menu);
     
     // new customer serving menu
-    Gtk::MenuItem *menuitem_serving1 = Gtk::manage(new Gtk::MenuItem("_New Serving", true));
-    menuitem_serving1->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_serving));
+    Gtk::MenuItem *menuitem_serving1 = Gtk::manage(new Gtk::MenuItem("_New Order", true));
+    menuitem_serving1->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
     customer_menu->append(*menuitem_serving1);
     
      Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
@@ -189,7 +189,18 @@ void Main_window::on_new_server() {
     }
 }
 
-void Main_window::on_new_serving() {
+void Main_window::on_new_order() {
+
+    //Order order{1};
+    
+    try {
+        Serving serving = create_serving();
+        //order.add_serving(serving);
+    } catch (std::runtime_error e) {}
+    
+}
+
+Serving Main_window::create_serving() {
     //get vectors
     vector<Containr> _containers = emp.get_containers();
     vector<Flavor> _flavors = emp.get_flavors();
@@ -223,7 +234,7 @@ void Main_window::on_new_serving() {
         else serving.set_topping(_toppings[topping]);
     }
 
-    emp.create_serving(serving);
+    return serving;
 }
 
 void Main_window::on_new_customer() {

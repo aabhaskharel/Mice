@@ -3,7 +3,6 @@
 #include <vector>
 #include "items.h"
 #include "server.h"
-#include "serving.h"
 #include "order.h"
 #include "manager.h"
 #include "customer.h"
@@ -23,7 +22,9 @@ class Emporium{
 		void add_new_topping(Topping flav);
 		void add_new_server(Server server);
 		void add_new_customer(Customer customer);
-		void create_serving(Serving ser);
+
+		void add_new_order(Order order);
+		int get_order_id();
 
 		void populate_emporium();
 

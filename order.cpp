@@ -2,7 +2,18 @@
 using namespace std;
 
 //constructor
-Order::Order(int id, vector<Serving> servings, Server server, Customer customer): _id{id}, _servings{servings}, _server{server}, _customer{customer} {}
+Order::Order(int id): _id{id} {}
+
+//add a serving to order
+void Order::add_serving(Serving serving) {
+    _servings.push_back(serving);
+}
+
+//add a server who took the order
+//void Order::add_server(Server server) {_server=server;}
+
+//add a customer who took the order
+//void Order::add_customer(Customer customer) {_customer=customer;}
 
 //to get total price
 double Order::get_total_price(){
@@ -15,12 +26,14 @@ double Order::get_total_price(){
 	return total;
 }
 
-//pay status
-
-
-//who filled
+//check if it can be filled?
 void Order::fill(){
 	_state = "Filled";
+}
+
+//pay status
+void Order::pay() {
+
 }
 
 //cancle order

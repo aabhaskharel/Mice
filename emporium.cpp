@@ -23,8 +23,8 @@ void Emporium::add_new_customer(Customer customer){
     _customers.push_back(customer);
 }
 
-void Emporium::create_serving(Serving ser) {
-
+void Emporium::add_new_order(Order order) {
+    _orders.push_back(order);
 }
 
 //getters
@@ -42,6 +42,10 @@ vector<Server> Emporium::get_servers() {
 }
 vector<Customer> Emporium::get_customers(){
 	return _customers;
+}
+//get order id
+int Emporium::get_order_id() {
+    return _orders.size();
 }
 
 void Emporium:: populate_emporium(){
