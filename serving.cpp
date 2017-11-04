@@ -16,6 +16,16 @@ vector<Flavor> Serving::get_flavors() const {return _flavors;}
 //return toppings
 vector<Topping> Serving::get_toppings() const {return _toppings;}
 
+//set toppings
+void Serving::set_topping(Topping topping) {
+    _toppings.push_back(topping);
+}
+
+//set flavors
+void Serving::set_flavor(Flavor flavor) {
+    _flavors.push_back(flavor);
+}
+
 //total retail price
 double Serving::total_retail_price() const {
 		double total=0; double f=0; double t;

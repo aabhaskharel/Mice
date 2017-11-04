@@ -23,7 +23,7 @@ class Emporium{
 		void add_new_topping(Topping flav);
 		void add_new_server(Server server);
 		void add_new_customer(Customer customer);
-		void create_servings(Serving ser);
+		void create_serving(Serving ser);
 
 		void populate_emporium();
 

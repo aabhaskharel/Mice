@@ -15,6 +15,7 @@ class Serving{
 		Serving(Containr container);
 		void set_topping(Topping topping);
 		void set_flavor(Flavor flavor);
+
 		Containr get_container() const;
 		vector<Flavor> get_flavors() const;
 		vector<Topping> get_toppings() const;

@@ -23,7 +23,7 @@ void Emporium::add_new_customer(Customer customer){
     _customers.push_back(customer);
 }
 
-void Emporium::create_servings(Serving ser) {
+void Emporium::create_serving(Serving ser) {
 
 }
 

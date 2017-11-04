@@ -190,8 +190,40 @@ void Main_window::on_new_server() {
 }
 
 void Main_window::on_new_serving() {
-    //TODO
+    //get vectors
+    vector<Containr> _containers = emp.get_containers();
+    vector<Flavor> _flavors = emp.get_flavors();
+    vector<Topping> _toppings = emp.get_toppings();
+
+    std::vector<std::string> names;
+    for (Containr c : _containers) names.push_back(c.get_name());
+    int container = select_from_vector(names, "Container");
+   
+    if (container == -1) throw std::runtime_error("Canceled");
+
+    Serving serving{_containers[container]};
     
+    bool has_no_flavors = true;
+    for (int i=0; i<_containers[container].get_scoop(); ++i) {
+        names.clear();
+        for (Flavor s : _flavors) names.push_back(s.get_name());
+        int flavor = select_from_vector(names, "Flavor");
+        if (flavor == -1) break;
+        serving.set_flavor(_flavors[flavor]);
+        has_no_flavors = false;
+    }
+    if (has_no_flavors) throw std::runtime_error("Canceled");
+
+    while (true) {
+        names.clear();
+        for (Topping t : _toppings) names.push_back(t.get_name());
+        int topping = select_from_vector(names, "Topping");
+        //int topping = select_topping();
+        if (topping == -1) break;
+        else serving.set_topping(_toppings[topping]);
+    }
+
+    emp.create_serving(serving);
 }
 
 void Main_window::on_new_customer() {
@@ -213,6 +245,38 @@ void Main_window::on_about_click() {   //shows company description
 
 void Main_window::on_quit_click() {
     hide();
+}
+
+int Main_window::select_from_vector(std::vector<std::string> names, std::string title) {
+
+    Gtk::Dialog dialog_index{"Select " + title, *this};
+    const int WIDTH = 15;
+
+    // Container
+    Gtk::HBox b_index;
+
+    Gtk::Label l_index{title + ":"};
+    l_index.set_width_chars(WIDTH);
+    b_index.pack_start(l_index, Gtk::PACK_SHRINK);
+
+    // Create dropdown list
+    Gtk::ComboBoxText c_index;
+    c_index.set_size_request(WIDTH*10);
+    for (std::string s : names) c_index.append(s);
+    b_index.pack_start(c_index, Gtk::PACK_SHRINK);
+    dialog_index.get_vbox()->pack_start(b_index, Gtk::PACK_SHRINK);
+
+    // Show dialog_index
+    dialog_index.add_button("Cancel", 0);
+    dialog_index.add_button("OK", 1);
+    dialog_index.show_all();
+    if (dialog_index.run() != 1) return -1;
+
+    int index = c_index.get_active_row_number();
+
+    dialog_index.close();
+
+    return index;
 }
 
 

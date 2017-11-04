@@ -7,6 +7,7 @@
 #include "dialogs.h"
 #include "items.h"
 #include "server.h"
+#include "serving.h"
 
 class Main_window : public Gtk::Window
 {
@@ -27,6 +28,7 @@ class Main_window : public Gtk::Window
         void on_about_click();           // Display About dialog
         void on_quit_click();            // Exit
 
+	int select_from_vector(std::vector<std::string> names, std::string title);
 
 };
 #endif 
