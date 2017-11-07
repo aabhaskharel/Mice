@@ -43,6 +43,9 @@ vector<Server> Emporium::get_servers() {
 vector<Customer> Emporium::get_customers(){
 	return _customers;
 }
+vector<Order> Emporium::get_orders() {
+    return _orders;
+}
 //get order id
 int Emporium::get_order_id() {
     return _orders.size();

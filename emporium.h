@@ -16,6 +16,7 @@ class Emporium{
 		vector<Flavor> get_flavors();
 		vector<Server> get_servers();
 		vector<Customer> get_customers();
+		vector<Order> get_orders();
 
 		void add_new_container(Containr cont);
 		void add_new_flavor(Flavor flav);

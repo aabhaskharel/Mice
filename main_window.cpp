@@ -270,7 +270,13 @@ void Main_window::on_new_customer() {
 
 void Main_window::on_contents_click() {   //shows help or program documentation
 	Gtk::Label l_greeting{"Your Order:"};
-	add(l_greeting);
+	
+	vector<Order> order = emp.get_orders();
+
+    Gtk::MessageDialog *dialog(*this, order.list_serving(0));
+    dialog->run();
+    dialog->close();
+	
 }
 
 void Main_window::on_about_click() {   //shows company description
