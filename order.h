@@ -19,6 +19,8 @@ class Order{
 		void fill();
 		void pay();
 		void cancel();
+		string list_serving();
+		string list_order();
 	private:
 		int _id;
 		vector <Serving> _servings;
