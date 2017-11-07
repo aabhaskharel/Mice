@@ -191,13 +191,35 @@ void Main_window::on_new_server() {
 
 void Main_window::on_new_order() {
 
-    //Order order{1};
+    Order order{emp.get_order_id()};
     
-    try {
-        Serving serving = create_serving();
-        //order.add_serving(serving);
-    } catch (std::runtime_error e) {}
+    Gtk::Dialog order_dialog{"New Order", *this};
     
+    Gtk::Label l_greeting{"Your Order:"};
+    order_dialog.get_vbox()->pack_start(l_greeting, Gtk::PACK_SHRINK);
+    //vbox->add(l_greeting);
+    
+    //buttons
+    order_dialog.add_button("Cancel Order", 0);
+    order_dialog.add_button("New Serving", 1);
+    order_dialog.add_button("Finish Order", 2);
+    
+    //show dialog, and result
+    order_dialog.show_all();
+    int result = order_dialog.run();
+    
+    //TODO fix this later
+    //if(result==0) return;
+    
+    //new serving
+    if(result == 1) {
+        try {
+            Serving serving = create_serving();
+            order.add_serving(serving);
+        } catch (std::runtime_error e) {}
+    }
+    
+    if(result==2) order_dialog.close();
 }
 
 Serving Main_window::create_serving() {
@@ -247,11 +269,24 @@ void Main_window::on_new_customer() {
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation
-	
+	Gtk::Label l_greeting{"Your Order:"};
+	add(l_greeting);
 }
 
 void Main_window::on_about_click() {   //shows company description
-	
+	Gtk::AboutDialog dialog{};
+    dialog.set_transient_for(*this);
+    dialog.set_program_name("Mav's Ice Cream Emporium");
+    auto logo = Gdk::Pixbuf::create_from_file("logo.png");
+    dialog.set_logo(logo);
+    dialog.set_version("Sprint 3");
+    dialog.set_copyright("Copyright 2017");
+    dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
+    std::vector< Glib::ustring > authors = {"Safal Lamsal, Aabhas Kharel, Roshan Shrestha, Bibek Sapkota"};
+    dialog.set_authors(authors);
+    std::vector< Glib::ustring > artists = {"Logo by weewilliewinkie https://pixabay.com/en/ice-cream-cup-summer-glass-wafer-2109460/"};
+    dialog.set_artists(artists);
+    dialog.run();
 }
 
 void Main_window::on_quit_click() {

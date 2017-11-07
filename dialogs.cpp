@@ -76,8 +76,9 @@ vector<string> Dialogs::form(int id) {
     e_scoop.set_wrap(true);
     e_scoop.set_numeric();
     b_scoop.pack_start(e_scoop, Gtk::PACK_SHRINK);
-    dialog->get_vbox()->pack_start(b_scoop, Gtk::PACK_SHRINK);
-    if (id !=1) {e_scoop.set_sensitive(false);}
+    if(id == 1)
+        dialog->get_vbox()->pack_start(b_scoop, Gtk::PACK_SHRINK);
+    //if (id !=1) {e_scoop.set_sensitive(false);}
     
     // id 2 refers to toppings
     Gtk::HBox b_type;
