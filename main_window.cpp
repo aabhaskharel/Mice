@@ -273,9 +273,9 @@ void Main_window::on_contents_click() {   //shows help or program documentation
 	
 	vector<Order> order = emp.get_orders();
 
-    Gtk::MessageDialog *dialog(*this, order.list_serving(0));
-    dialog->run();
-    dialog->close();
+    //Gtk::MessageDialog *dialog(*this, order.list_serving(0));
+    //dialog->run();
+    //dialog->close();
 	
 }
 
