@@ -309,19 +309,19 @@ void Main_window::on_new_customer() {
 
 //report callbacks
 void Main_window::on_servers_report() {
-
+    string res = emp.get_servers_report();
 }
 void Main_window::on_customers_report() {
-
+    string res = emp.get_customers_report();
 }
 void Main_window::on_inventory_report() {
-
+    string res = emp.get_inventory_report();
 }
 void Main_window::on_orders_report() {
-
+    string res = emp.get_orders_report();
 }
 void Main_window::on_pnl_report() {
-
+    string res = emp.get_pnl_report();
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation

@@ -27,6 +27,13 @@ class Emporium{
 		void add_new_order(Order order);
 		int get_order_id();
 
+		//report calls
+		string get_server_report();
+		string get_customers_report();
+		string get_inventory_report();
+		string get_orders_report();
+		string get_pnl_report();
+
 		void populate_emporium();
 
 	private:
