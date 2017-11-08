@@ -17,6 +17,7 @@ class Order{
 		
 		double get_total_price();
 		vector<Serving> get_servings();
+		int get_servings_size();
 
 		void fill();
 		void pay();

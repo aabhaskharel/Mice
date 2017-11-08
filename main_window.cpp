@@ -1,5 +1,6 @@
 #include "main_window.h"
 #include <iostream>
+#include <sstream>
 
 Emporium emp;
 
@@ -221,11 +222,16 @@ void Main_window::on_new_order() {
     
     if(result == 0) return;
     if(result == 2) {
-        emp.add_new_order(order);
-        cout << order << endl;
-        Gtk::MessageDialog dialog(*this, "Your order is added, please wait in line!");
-        dialog.run();
-        dialog.close();
+        if (order.get_servings_size()!=0) { 
+            emp.add_new_order(order);
+            stringstream buf;
+            buf << order ;
+            string out = buf.str();
+            cout << order << endl;
+            Gtk::MessageDialog dialog(*this, out);
+            dialog.run();
+            dialog.close();
+        }
     }
 }
 
@@ -277,23 +283,6 @@ void Main_window::on_new_customer() {
 
 void Main_window::on_contents_click() {   //shows help or program documentation
 
-    Gtk::HBox hbox;
-    add(hbox);
-	Gtk::Label l_greeting{"Your Order:"};
-	hbox.pack_start(l_greeting, Gtk::PACK_SHRINK);
-	
-	vector<Order> order = emp.get_orders();
-	
-	//for (int i=0; i<emp.get_order_id(); i++) {
-	  //  for (int j=0; i<orders.get_servingssize(); j++){
-	        cout << order[0].list_serving(0) << endl;
-	    //}
-	//}
-
-    //Gtk::MessageDialog *dialog(*this, order.list_serving(0));
-    //dialog->run();
-    //dialog->close();
-	
 }
 
 void Main_window::on_about_click() {   //shows company description
