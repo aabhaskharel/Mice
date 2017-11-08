@@ -1,4 +1,6 @@
 #include "order.h"
+#include <iostream>
+#include <iomanip>
 using namespace std;
 
 //constructor
@@ -14,6 +16,8 @@ void Order::add_serving(Serving serving) {
 
 //add a customer who took the order
 //void Order::add_customer(Customer customer) {_customer=customer;}
+
+vector<Serving> Order::get_servings() { return _servings;}
 
 //to get total price
 double Order::get_total_price(){
@@ -67,6 +71,12 @@ string Order::list_order(){
 
 }
 
-	
+std::ostream& operator<<(std::ostream& os, Order& order) {
+    os << "Your order:";
+    for (Serving s : order.get_servings()) os << std::endl << s;
+    os << std::endl << std::setw(45) << "----------------------------" 
+    << std::endl << std::setw(40) << "Order Total: $ " << order.get_total_price();
+    return os;
+}
 
 

@@ -207,29 +207,26 @@ void Main_window::on_new_order() {
     
     //show dialog, and result
     order_dialog.show_all();
-od:
     int result = order_dialog.run();
     
-    //TODO fix this later
-    if(result==0) return;
-    
-    //new serving
-    if(result == 1) {
+    while(result==1) {
         try {
             Serving serving = create_serving();
             cout << serving << endl;
-            cout << "\nServing Total: " << serving.total_retail_price() << endl;
-            Gtk::Label l_sp{to_string(serving.total_retail_price())};
-            order_dialog.get_vbox()->pack_start(l_sp, Gtk::PACK_SHRINK);
             order.add_serving(serving);
         } catch (std::runtime_error e) {}
+        
+        result = order_dialog.run();
     }
     
-    if(result!=2) goto od;
-    
-    emp.add_new_order(order);
-    
-    
+    if(result == 0) return;
+    if(result == 2) {
+        emp.add_new_order(order);
+        cout << order << endl;
+        Gtk::MessageDialog dialog(*this, "Your order is added, please wait in line!");
+        dialog.run();
+        dialog.close();
+    }
 }
 
 Serving Main_window::create_serving() {

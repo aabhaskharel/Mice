@@ -16,6 +16,8 @@ class Order{
 		//void add_customer(Customer customer);
 		
 		double get_total_price();
+		vector<Serving> get_servings();
+
 		void fill();
 		void pay();
 		void cancel();
@@ -29,4 +31,7 @@ class Order{
 		string _state = "Unfilled";
 		
 };
+
+std::ostream& operator<<(std::ostream& os, Order& order);
+
 #endif

@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include "serving.h"
 
 using namespace std;
@@ -66,6 +67,8 @@ std::ostream& operator<<(std::ostream& os, const Serving& serving) {
     os << serving.get_container();
     for (Flavor s : serving.get_flavors()) os << std::endl << s;
     for (Topping t : serving.get_toppings()) os << std::endl << t;
+    os << std::endl << std::setw(45) << "----------------------------" 
+    << std::endl << std::setw(40) << "Serving Total: $ " << serving.total_retail_price();
     return os;
 }
 
