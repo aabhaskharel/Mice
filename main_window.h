@@ -18,13 +18,21 @@ class Main_window : public Gtk::Window
 
     protected:
 	void on_new_mgmt_click();
-	void on_pop_mgmt_click();	//still to be coded
+	void on_pop_mgmt_click();	
         void on_new_container();
         void on_new_flavor();        
         void on_new_topping();
 	void on_new_server();
 	void on_new_order();
-	void on_new_customer();    
+	void on_new_customer();
+
+	//report callbacks
+	void on_servers_report();
+	void on_customers_report();
+	void on_inventory_report();
+	void on_orders_report();
+	void on_pnl_report();
+    
 	void on_contents_click();    
         void on_about_click();           // Display About dialog
         void on_quit_click();            // Exit

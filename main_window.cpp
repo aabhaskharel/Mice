@@ -91,16 +91,42 @@ Main_window::Main_window() {
     menuitem_serving1->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
     customer_menu->append(*menuitem_serving1);
     
-     Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
+    //REPORTS
+    Gtk::MenuItem *menuitem_reports = Gtk::manage(new Gtk::MenuItem("_Reports", true));
+    menubar->append(*menuitem_reports);
+    Gtk::Menu *report_menu = Gtk::manage(new Gtk::Menu());
+    menuitem_reports->set_submenu(*report_menu);
+    
+    Gtk::MenuItem *menuitem_servers = Gtk::manage(new Gtk::MenuItem("_Servers Report", true));
+    menuitem_servers->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_servers_report));
+    report_menu->append(*menuitem_servers);
+    
+    Gtk::MenuItem *menuitem_customers = Gtk::manage(new Gtk::MenuItem("_Customers Report", true));
+    menuitem_customers->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_customers_report));
+    report_menu->append(*menuitem_customers);
+    
+    Gtk::MenuItem *menuitem_inventory = Gtk::manage(new Gtk::MenuItem("_Inventory Report", true));
+    menuitem_inventory->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_inventory_report));
+    report_menu->append(*menuitem_inventory);
+    
+    Gtk::MenuItem *menuitem_orders = Gtk::manage(new Gtk::MenuItem("_Orders Report", true));
+    menuitem_orders->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_orders_report));
+    report_menu->append(*menuitem_orders);
+    
+    Gtk::MenuItem *menuitem_pnl = Gtk::manage(new Gtk::MenuItem("_Profit & Loss Report", true));
+    menuitem_pnl->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pnl_report));
+    report_menu->append(*menuitem_pnl);
+    
+    //help menu
+    Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
     menubar->append(*menuitem_help);
     Gtk::Menu *help_menu = Gtk::manage(new Gtk::Menu());
     menuitem_help->set_submenu(*help_menu);
     
-     Gtk::MenuItem *menuitem_contents = Gtk::manage(new Gtk::MenuItem("_Contents", true));
+    Gtk::MenuItem *menuitem_contents = Gtk::manage(new Gtk::MenuItem("_Contents", true));
     menuitem_contents->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_contents_click));
     help_menu->append(*menuitem_contents);
     
-    // new container menu
     Gtk::MenuItem *menuitem_about = Gtk::manage(new Gtk::MenuItem("_About", true));
     menuitem_about->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_about_click));
     help_menu->append(*menuitem_about);
@@ -279,6 +305,23 @@ void Main_window::on_new_customer() {
 		Customer cust(res[0], emp.get_customers().size()+1, res[2]);
 	    emp.add_new_customer(cust);
     }
+}
+
+//report callbacks
+void Main_window::on_servers_report() {
+
+}
+void Main_window::on_customers_report() {
+
+}
+void Main_window::on_inventory_report() {
+
+}
+void Main_window::on_orders_report() {
+
+}
+void Main_window::on_pnl_report() {
+
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation
