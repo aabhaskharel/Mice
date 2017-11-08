@@ -38,11 +38,11 @@ void Items::restock(int value){
 
 //consume
 bool Items::consume(int value){
-	if(_stock!=0){
-		_stock -= value; return true;
-		}
-		
+	if(_stock==0){
 		return false;
+	}
+	_stock-=value;
+	return true;
 }
 
 //get image's path

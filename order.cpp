@@ -5,7 +5,6 @@ using namespace std;
 
 //constructor
 Order::Order(int id): _id{id} {}
-
 //add a serving to order
 void Order::add_serving(Serving serving) {
     _servings.push_back(serving);
@@ -76,7 +75,7 @@ std::ostream& operator<<(std::ostream& os, Order& order) {
     os << "Your order:";
     for (Serving s : order.get_servings()) os << std::endl << s;
     os << std::endl << std::setw(50) << "----------------------------" 
-    << std::endl << std::setw(40) << "Order Total: $ " << order.get_total_price();
+    << std::endl << std::setw(40) << "Order Total: $ " << order.get_total_price() << endl;
     return os;
 }
 
