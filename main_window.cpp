@@ -282,7 +282,37 @@ void Main_window::on_new_customer() {
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation
-
+    Gtk::Dialog dialog{"Store Contents", *this};
+    
+    //flavor contents
+    Gtk::Image c_img{"f_chocolate.png"};
+    Gtk::Button but{"", 1};
+    but.set_image(c_img);
+    dialog.get_vbox()->pack_start(but, Gtk::PACK_SHRINK);
+    
+    Gtk::Image v_img{"f_vanilla.png"};
+    Gtk::Button but1{"", 2};
+    but1.set_image(v_img);
+    dialog.get_vbox()->pack_start(but1, Gtk::PACK_SHRINK);
+    
+    Gtk::Image s_img{"f_strawberry.png"};
+    Gtk::Button but2{"", 3};
+    but2.set_image(s_img);
+    dialog.get_vbox()->pack_start(but2, Gtk::PACK_SHRINK);
+    
+    //toppings contents
+    Gtk::Image thf_img{"t_hot_fudge.png"};
+    Gtk::Button but3{"", 4};
+    but3.set_image(thf_img);
+    dialog.get_vbox()->pack_start(but3, Gtk::PACK_SHRINK);
+    
+    Gtk::Image tc_img{"t_caramel.png"};
+    Gtk::Button but4{"", 5};
+    but4.set_image(tc_img);
+    dialog.get_vbox()->pack_start(but4, Gtk::PACK_SHRINK);
+    
+    dialog.show_all();
+    dialog.run();
 }
 
 void Main_window::on_about_click() {   //shows company description
@@ -296,7 +326,7 @@ void Main_window::on_about_click() {   //shows company description
     dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
     std::vector< Glib::ustring > authors = {"Safal Lamsal, Aabhas Kharel, Roshan Shrestha, Bibek Sapkota"};
     dialog.set_authors(authors);
-    std::vector< Glib::ustring > artists = {"Logo by weewilliewinkie https://pixabay.com/en/ice-cream-cup-summer-glass-wafer-2109460/"};
+    std::vector< Glib::ustring > artists = {"Logo by weewilliewinkie https://pixabay.com/en/ice-cream-cup-summer-glass-wafer-2109460/\nStore Contents design by Jeevan Gyawali"};
     dialog.set_artists(artists);
     dialog.run();
 }
