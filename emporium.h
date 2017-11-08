@@ -28,7 +28,7 @@ class Emporium{
 		int get_order_id();
 
 		//report calls
-		string get_server_report();
+		string get_servers_report();
 		string get_customers_report();
 		string get_inventory_report();
 		string get_orders_report();

@@ -98,6 +98,23 @@ int Emporium::get_order_id() {
     return _orders.size();
 }
 
+//report calls
+string Emporium::get_servers_report() {
+
+}
+string Emporium::get_customers_report() {
+
+}
+string Emporium::get_inventory_report() {
+
+}
+string Emporium::get_orders_report() {
+
+}
+string Emporium::get_pnl_report() {
+
+}
+
 void Emporium:: populate_emporium(){
     Containr cont("Waffle Cone", "A freshly baked waffle cone.", 0.49, 0.89, 0, "picture.png", 3);
     Containr cont2("Regular Cone", "Everyone's Favroite", 0.05, 0.15, 0, "picture.png", 1);
