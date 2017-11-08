@@ -31,6 +31,21 @@ double Items::get_retail_price() const {return _retail_price;}
 //get item's stock
 int Items::get_stock() const {return _stock;}
 
+//restock
+void Items::restock(int value){
+	_stock = value;
+}
+
+//consume
+bool Items::consume(int value){
+	if(_stock!=0){
+		_stock -= value; return true;
+		}
+		
+		return false;
+}
+
+//get image's path
 string Items::get_image_path(){return _image_path;}
 
 //get Topping's type

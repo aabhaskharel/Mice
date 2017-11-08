@@ -12,6 +12,8 @@ class Items {
 		double get_wholesale_price() const;
 		double get_retail_price() const;
 		int get_stock() const;
+		void restock(int value = 25);
+		bool consume(int value = 1);
 		string get_image_path();
 		
 		virtual string get_type() const;

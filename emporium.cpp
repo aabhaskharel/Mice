@@ -24,6 +24,40 @@ void Emporium::add_new_customer(Customer customer){
 }
 
 void Emporium::add_new_order(Order order) {
+
+	for(Serving s : order.get_servings()) {
+	
+		for(Flavor f : s.get_flavors()) {
+			if(!f.consume()){
+				f.restock();
+				cash_register -= f.get_wholesale_price()*25;
+			}
+			
+			f.consume();
+			cash_register += f.get_retail_price();
+		}
+
+		for(Topping t : s.get_toppings()) {
+			if(!t.consume()){
+				t.restock(); 
+				cash_register -= t.get_wholesale_price()*25;
+			}
+			
+			t.consume();
+			cash_register += t.get_retail_price();
+		}
+		
+		Containr c = s.get_container();
+		if(!c.consume()){
+	    	c.restock();
+	    	cash_register -= s.get_wholesale_price()*25;
+	    }
+	    
+		c.consume();
+		cash_register += s.get_retail_price();
+	}
+	order.fill();
+
     _orders.push_back(order);
 }
 

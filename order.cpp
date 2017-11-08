@@ -33,7 +33,7 @@ double Order::get_total_price(){
 
 //check if it can be filled?
 void Order::fill(){
-	_state = "Filled";
+	_state = "filled";
 }
 
 //pay status
