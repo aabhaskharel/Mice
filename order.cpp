@@ -44,19 +44,21 @@ void Order::cancel(){
 //list a serving
 string Order::list_serving(int index){
 	int i; string out;
+/*
 	i = _servings.size();
 	out = to_string(i);
-	/*out = "("+to_string(index)+")"+"\t"+"Container: "+(_servings[index].get_container()).get_name()+"\t"+"$"+to_string((_servings[index].get_container()).get_retail_price())+"\n";
-	out+="Flavor: ";
+*/
+    out = "("+to_string(index)+")"+"\t"+"Container: "+(_servings[index].get_container()).get_name()+"\t"+"$"+to_string((_servings[index].get_container()).get_retail_price())+"\n";
+	out+="\t\tFlavor: ";
 	for(int i=0; i<(_servings[index].get_flavors()).size(); i++)
 		{
-		out+="\t\t"+(_servings[index].get_flavors())[i].get_name()+"\t"+"$"+to_string((_servings[index].get_flavors())[i].get_retail_price())+"\n";
+		out+="\t"+(_servings[index].get_flavors())[i].get_name()+"\t"+"$"+to_string((_servings[index].get_flavors())[i].get_retail_price())+"\n";
 		}
-	out+="Topping: ";
+	out+="\t\tTopping: ";
 	for(int i=0; i<(_servings[index].get_toppings()).size(); i++)
 		{
-		out+="\t\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"$"+to_string((_servings[index].get_toppings())[i].get_retail_price())+"\n";
-		} */
+		out+="\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"$"+to_string((_servings[index].get_toppings())[i].get_retail_price())+"\n";
+		} 
 	return out;
 }
 

@@ -19,7 +19,7 @@ class Order{
 		void fill();
 		void pay();
 		void cancel();
-		string list_serving();
+		string list_serving(int index);
 		string list_order();
 	private:
 		int _id;

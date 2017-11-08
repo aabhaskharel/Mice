@@ -1,4 +1,5 @@
 #include "main_window.h"
+#include <iostream>
 
 Emporium emp;
 
@@ -26,7 +27,7 @@ Main_window::Main_window() {
     Gtk::Menu *filemenu = Gtk::manage(new Gtk::Menu());
     menuitem_file->set_submenu(*filemenu);
   
-     Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Management", true));
+    Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Management", true));
     menuitem_pop_mgmt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pop_mgmt_click));
     filemenu->append(*menuitem_pop_mgmt);
 
@@ -206,20 +207,29 @@ void Main_window::on_new_order() {
     
     //show dialog, and result
     order_dialog.show_all();
+od:
     int result = order_dialog.run();
     
     //TODO fix this later
-    //if(result==0) return;
+    if(result==0) return;
     
     //new serving
     if(result == 1) {
         try {
             Serving serving = create_serving();
+            cout << serving << endl;
+            cout << "\nServing Total: " << serving.total_retail_price() << endl;
+            Gtk::Label l_sp{to_string(serving.total_retail_price())};
+            order_dialog.get_vbox()->pack_start(l_sp, Gtk::PACK_SHRINK);
             order.add_serving(serving);
         } catch (std::runtime_error e) {}
     }
     
-    if(result==2) order_dialog.close();
+    if(result!=2) goto od;
+    
+    emp.add_new_order(order);
+    
+    
 }
 
 Serving Main_window::create_serving() {
@@ -269,9 +279,19 @@ void Main_window::on_new_customer() {
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation
+
+    Gtk::HBox hbox;
+    add(hbox);
 	Gtk::Label l_greeting{"Your Order:"};
+	hbox.pack_start(l_greeting, Gtk::PACK_SHRINK);
 	
 	vector<Order> order = emp.get_orders();
+	
+	//for (int i=0; i<emp.get_order_id(); i++) {
+	  //  for (int j=0; i<orders.get_servingssize(); j++){
+	        cout << order[0].list_serving(0) << endl;
+	    //}
+	//}
 
     //Gtk::MessageDialog *dialog(*this, order.list_serving(0));
     //dialog->run();
