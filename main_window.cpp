@@ -230,13 +230,33 @@ void Main_window::on_new_server() {
 
 void Main_window::on_new_order() {
 
-	Order order{emp.get_order_id()};
+    vector<Server> _servers = emp.get_servers();
+    vector<Customer> _customers = emp.get_customers();
+    vector<string> names;
+    
+    for(Server s: _servers) names.push_back(s.get_name());
+    int s_c = select_from_vector(names, "Server");
+   
+    names.clear(); 
+    for(Customer c: _customers) names.push_back(c.get_name());
+    int c_c = select_from_vector(names, "Customer");
+
+	Order order{emp.get_order_id(), _servers[s_c], _customers[c_c]};
 
 	Gtk::Dialog order_dialog{"New Order", *this};
-
-	Gtk::Label l_greeting{"Your Order:"};
-	order_dialog.get_vbox()->pack_start(l_greeting, Gtk::PACK_SHRINK);
-	//vbox->add(l_greeting);
+	
+	//vector<int> persona = set_order();
+    
+    /*
+    Gtk::HBox sc_box;
+    Gtk::Button b_server{"Server?"};
+    Gtk::Button b_customer{"Customer?"};
+    sc_box.pack_start(b_server, Gtk::PACK_EXPAND_PADDING);
+    sc_box.pack_start(b_customer, Gtk::PACK_EXPAND_PADDING);
+    
+    order_dialog.get_vbox()->pack_start(sc_box, Gtk::PACK_SHRINK);
+    
+    */
 
 	//buttons
 	order_dialog.add_button("Cancel Order", 0);

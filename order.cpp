@@ -4,7 +4,7 @@
 using namespace std;
 
 //constructor
-Order::Order(int id): _id{id} {}
+Order::Order(int id, Server server, Customer customer): _id{id}, _server{server}, _customer{customer} {}
 //add a serving to order
 void Order::add_serving(Serving serving) {
     _servings.push_back(serving);

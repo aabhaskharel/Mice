@@ -9,7 +9,7 @@ using namespace std;
 
 class Order{
 	public:
-		Order(int id); 
+		Order(int id, Server server, Customer customer); 
 		
 		void add_serving(Serving serving);
 		Server get_server();
