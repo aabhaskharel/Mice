@@ -19,12 +19,14 @@ class Emporium{
 		vector<Server> get_servers();
 		vector<Customer> get_customers();
 		vector<Order> get_orders();
+		vector<Manager> get_managers();
 
 		void add_new_container(Containr cont);
 		void add_new_flavor(Flavor flav);
 		void add_new_topping(Topping flav);
 		void add_new_server(Server server);
 		void add_new_customer(Customer customer);
+		void add_new_manager(Manager manager);
 
 		void add_new_order(Order order);
 		int get_order_id();
