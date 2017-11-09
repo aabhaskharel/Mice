@@ -12,7 +12,7 @@ class Server{
 		double _hourly_salary;
 		double _total_earned = 0;
 	public:
-		Server(string name, int employee_number, int total_filled, double hourly_salary);
+		Server(string name, int employee_number, double hourly_salary);
 		string get_name();
 		int get_employee_number();
 		int get_total_filled();
