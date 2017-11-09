@@ -25,6 +25,7 @@ class Main_window : public Gtk::Window
 	void on_new_server();
 	void on_new_order();
 	void on_new_customer();
+	void on_new_manager();
 
 	//report callbacks
 	void on_servers_report();
