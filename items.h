@@ -17,7 +17,7 @@ class Items {
 		string get_image_path();
 		
 		virtual string get_type() const;
-
+	 	
 	protected:
 		string  _name;
 		string _description;
@@ -35,6 +35,7 @@ class Containr : public Items{
 		Containr(string name, string description, double cost, double retail_price, int stock, string image_path, int scoop);
 		int get_scoop() const;
 		string get_type() const override;
+		void edit_container(string name, string description, double cost, double retail_price, string image_path, int scoop);
 	private:
 		int _scoop;
 };
@@ -43,12 +44,15 @@ class Flavor : public Items{
 	public:
 		Flavor(string name, string description, double wholesale_price, double retail_price, int stock, string image_path);
 		string get_type() const override;
+		void edit_flavor(string name, string description, double wholesale_price, double retail_price, string image_path);
 };
+
 class Topping : public Items{
 	public:
 		Topping(string name, string description, double cost, double retail_price, int stock, string image_path, string type);
 		string get_amount() const;	
 		string get_type() const override;
+		void edit_topping(string name, string description, double cost, double retail_price, string image_path);
 	private:
 		void _set_amount(string amount);
 		string _amount;

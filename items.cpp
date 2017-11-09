@@ -48,6 +48,22 @@ bool Items::consume(int value){
 //get image's path
 string Items::get_image_path(){return _image_path;}
 
+
+//Flavor edit
+void Flavor::edit_flavor(string name, string description, double wholesale_price, double retail_price, string image_path){
+	_name = name; _description = description; _wholesale_price = wholesale_price; _retail_price = retail_price, _image_path = image_path;
+}
+
+//Topping edit
+void Topping::edit_topping(string name, string description, double wholesale_price, double retail_price, string image_path){
+	_name = name; _description = description; _wholesale_price = wholesale_price; _retail_price = retail_price, _image_path = image_path;
+}
+
+//Container edit
+void Containr::edit_container(string name, string description, double wholesale_price, double retail_price, string image_path, int scoop){
+	_name = name; _description = description; _wholesale_price = wholesale_price; _retail_price = retail_price, _image_path = image_path; _scoop = scoop;
+}
+
 //get Topping's type
 string Topping::get_amount() const {return _amount;}
 
