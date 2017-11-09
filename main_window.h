@@ -9,6 +9,7 @@
 #include "server.h"
 #include "serving.h"
 #include "order.h"
+#include "manager.h"
 
 class Main_window : public Gtk::Window
 {

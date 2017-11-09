@@ -333,6 +333,47 @@ void Main_window::on_new_customer() {
 }
 
 void Main_window::on_new_manager() {
+    Gtk::Dialog m_dialog{"Add New Manager", *this};
+    
+    Gtk::HBox hbox1;
+    Gtk::Label l_name{"Name: "};
+    l_name.set_width_chars(15);
+    Gtk::Entry e_name;
+    e_name.set_max_length(50);
+    
+    hbox1.pack_start(l_name, Gtk::PACK_SHRINK);
+    hbox1.pack_start(e_name, Gtk::PACK_SHRINK);
+    
+    Gtk::HBox hbox2;
+    Gtk::Label l_phone{"Phone: "};
+    l_phone.set_width_chars(15);
+    Gtk::Entry e_phone;
+    e_phone.set_max_length(50);
+    
+    hbox2.pack_start(l_phone, Gtk::PACK_SHRINK);
+    hbox2.pack_start(e_phone, Gtk::PACK_SHRINK);
+    
+    m_dialog.get_vbox()->pack_start(hbox1, Gtk::PACK_SHRINK);
+    m_dialog.get_vbox()->pack_start(hbox2, Gtk::PACK_SHRINK);
+    
+    m_dialog.add_button("Cancel", 0);
+    m_dialog.add_button("Ok", 1);
+    
+    m_dialog.show_all();
+    
+    string name, phone;
+    if(m_dialog.run() == 1) {
+        name = e_name.get_text();
+        phone = e_phone.get_text();
+        
+        if (name == "" || phone == "") {
+            Gtk::MessageDialog dlg{*this, "Invalid Input"};
+            dlg.run(); dlg.close();
+            return;
+        }
+        int size = emp.get_managers().size();
+        emp.add_new_manager(Manager{name, size, phone});
+    }
     
 }
 

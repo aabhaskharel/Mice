@@ -23,6 +23,10 @@ void Emporium::add_new_customer(Customer customer){
     _customers.push_back(customer);
 }
 
+void Emporium::add_new_manager(Manager manager) {
+    _managers.push_back(manager);
+}
+
 void Emporium::add_new_order(Order order) {
 
     _orders.push_back(order);
@@ -93,6 +97,9 @@ vector<Server> Emporium::get_servers() {
 }
 vector<Customer> Emporium::get_customers(){
 	return _customers;
+}
+vector<Manager> Emporium::get_managers() {
+    return _managers;
 }
 vector<Order> Emporium::get_orders() {
     return _orders;
