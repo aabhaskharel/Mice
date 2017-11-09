@@ -206,7 +206,7 @@ void Emporium::change_salary(int server_id, double salary){
 
 //write to a file
 void Emporium::write(){
-/*
+
 	string filename;
 	cout << "Enter file name: " << endl;
 	cin >> filename;
@@ -214,8 +214,28 @@ void Emporium::write(){
 	ofstream ofs {filename};
 	if(!ofs) throw runtime_error("can't open output file " + filename);
 	
-	cout << _managers[0] << endl; 
-*/
+	//writing containers data
+	for(int i=0; i<_containers.size(); i++){
+		ofs << _containers[i] << endl; 
+	}
+	
+	//writing flavors data
+	for(int i=0; i<_flavors.size(); i++){
+		ofs << _flavors[i] << endl;
+	}
+	
+	//writing toppings data
+	for(int i=0; i<_toppings.size(); i++){
+		ofs << _toppings[i] << endl;
+	}
+	
+	//writing servings data
+	for(int i=0; i<_orders.size(); i++){
+		for(int j=0; j<(_orders[i].get_servings_size()); j++){
+			ofs << (_orders[i].get_servings())[j] << endl;
+		}
+	}
+
 }
 
 
