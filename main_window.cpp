@@ -190,6 +190,10 @@ Main_window::~Main_window() { }
 
 void Main_window::on_pop_mgmt_click() {
 	emp.populate_emporium();
+	
+	Gtk::MessageDialog dialog{*this, "Populate Succesful"};
+    dialog.run();
+    dialog.close();
 }
 
 void Main_window::on_new_container() {
@@ -223,7 +227,7 @@ void Main_window::on_new_server() {
 	vector<string> res;
 	res = Dialogs::add_server();
 	if (res.size() == 2) {
-		Server ser(res[0], emp.get_servers().size(), 0, stod(res[1]));
+		Server ser(res[0], emp.get_servers().size(), stod(res[1]));
 		emp.add_new_server(ser);
 	}
 }
@@ -240,6 +244,8 @@ void Main_window::on_new_order() {
     names.clear(); 
     for(Customer c: _customers) names.push_back(c.get_name());
     int c_c = select_from_vector(names, "Customer");
+    
+    if(s_c==-1 || c_c==-1) return;
 
 	Order order{emp.get_order_id(), _servers[s_c], _customers[c_c]};
 
@@ -333,23 +339,58 @@ void Main_window::on_new_manager() {
 //report callbacks
 void Main_window::on_servers_report() {
 	string res = emp.get_servers_report();
-	cout << res << endl;
+
+	Gtk::Dialog s_dialog{"Servers Report", *this};
+	Gtk::Label l_text{res};
+	s_dialog.get_vbox()->pack_start(l_text, Gtk::PACK_SHRINK);
+	
+	s_dialog.add_button("Ok", 1);
+	s_dialog.show_all();
+	s_dialog.run();
 }
 void Main_window::on_customers_report() {
 	string res = emp.get_customers_report();
-	cout << res << endl;
+	
+	Gtk::Dialog c_dialog{"Customers Report", *this};
+	Gtk::Label lc_text{res};
+	c_dialog.get_vbox()->pack_start(lc_text, Gtk::PACK_SHRINK);
+	
+	c_dialog.add_button("Ok", 1);
+	c_dialog.show_all();
+	c_dialog.run();
 }
 void Main_window::on_inventory_report() {
 	string res = emp.get_inventory_report();
-	cout << res << endl;
+
+    Gtk::Dialog i_dialog{"Inventory Report", *this};
+	Gtk::Label li_text{res};
+	i_dialog.get_vbox()->pack_start(li_text, Gtk::PACK_SHRINK);
+	
+	i_dialog.add_button("Ok", 1);
+	i_dialog.show_all();
+	i_dialog.run();
 }
 void Main_window::on_orders_report() {
 	string res = emp.get_orders_report();
-	cout << res << endl;
+
+    Gtk::Dialog o_dialog{"Orders Report", *this};
+	Gtk::Label lo_text{res};
+	o_dialog.get_vbox()->pack_start(lo_text, Gtk::PACK_SHRINK);
+	
+	o_dialog.add_button("Ok", 1);
+	o_dialog.show_all();
+	o_dialog.run();
 }
 void Main_window::on_pnl_report() {
 	string res = emp.get_pnl_report();
-	cout << res << endl;
+	
+	Gtk::Dialog p_dialog{"Profit & Loss Report", *this};
+	Gtk::Label lp_text{res};
+	p_dialog.get_vbox()->pack_start(lp_text, Gtk::PACK_SHRINK);
+	
+	p_dialog.add_button("Ok", 1);
+	p_dialog.show_all();
+	p_dialog.run();
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation

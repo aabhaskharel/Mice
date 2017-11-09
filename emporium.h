@@ -1,6 +1,8 @@
 #ifndef EMPORIUM_H
 #define EMPORIUM_H
 #include <vector>
+#include<iostream>
+
 #include "items.h"
 #include "server.h"
 #include "order.h"

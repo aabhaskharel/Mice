@@ -17,9 +17,8 @@ int Server::get_total_filled(){ return _total_filled; }
 //to increment totall orders filled
 void Server::filled(){
 	_total_filled++;
-	if(_total_filled == 10){
+	if(_total_filled % 10 == 0 && _total_filled!=0){
 		pay_server();
-		_total_filled == 0;
 	}
 }
 

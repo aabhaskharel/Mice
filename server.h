@@ -8,7 +8,7 @@ class Server{
 	private:
 		string _name;
 		int _employee_number;
-		int _total_filled; //total orders filled in career
+		int _total_filled = 0; //total orders filled in career
 		double _hourly_salary;
 		double _total_earned = 0;
 	public:
