@@ -222,7 +222,7 @@ void Main_window::on_pop_mgmt_click() {
 }
 
 void Main_window::on_save_click() {
-
+    emp.write();
 }
 
 void Main_window::on_edit_item_click() {
@@ -273,9 +273,9 @@ void Main_window::on_edit_item_click() {
     // Define Item
 
     Gtk::Dialog dialog;
-    if (type == CONTAINER) dialog.set_title("Create Container");
-    else if (type == SCOOP) dialog.set_title("Create Flavor");
-    else dialog.set_title("Create Topping");
+    if (type == CONTAINER) dialog.set_title("Edit Container");
+    else if (type == SCOOP) dialog.set_title("Edit Flavor");
+    else dialog.set_title("Edit Topping");
     dialog.set_transient_for(*this);
 
     // Name 
@@ -284,6 +284,10 @@ void Main_window::on_edit_item_click() {
     Gtk::Label l_name{"Name:"};
     l_name.set_width_chars(WIDTH);
     b_name.pack_start(l_name, Gtk::PACK_SHRINK);
+    
+    //edit magic
+    Gtk::ComboBoxText c_index;
+    
 
     Gtk::Entry e_name;
     e_name.set_max_length(WIDTH*4);

@@ -32,7 +32,7 @@ class Emporium{
 		int get_order_id();
 
 		void change_salary(int server_id, double salary);
-		//void write();
+		void write();
 
 		//report calls
 		string get_servers_report();

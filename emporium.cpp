@@ -205,7 +205,8 @@ void Emporium::change_salary(int server_id, double salary){
 }
 
 //write to a file
-/*void Emporium::write(){
+void Emporium::write(){
+/*
 	string filename;
 	cout << "Enter file name: " << endl;
 	cin >> filename;
@@ -214,7 +215,8 @@ void Emporium::change_salary(int server_id, double salary){
 	if(!ofs) throw runtime_error("can't open output file " + filename);
 	
 	cout << _managers[0] << endl; 
-}*/
+*/
+}
 
 
 void Emporium:: populate_emporium(){
