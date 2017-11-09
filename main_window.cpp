@@ -639,6 +639,8 @@ void Main_window::on_change_salary() {
     for(Server s: _servers) names.push_back(s.get_name());
     int s_c = select_from_vector(names, "Server");
     
+    if(s_c == -1) return;
+    
     Gtk::Dialog dlg{"New Salary Input", *this};
     
     Gtk::HBox b_wage;
