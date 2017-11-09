@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
@@ -198,8 +199,13 @@ string Emporium::get_pnl_report() {
 	return out;
 }
 
+//change server's salary
+void Emporium::change_salary(int server_id, double salary){
+	_servers[server_id].change_salary(salary);
+}
+
 //write to a file
-void Emporium::write(){
+/*void Emporium::write(){
 	string filename;
 	cout << "Enter file name: " << endl;
 	cin >> filename;
@@ -207,8 +213,8 @@ void Emporium::write(){
 	ofstream ofs {filename};
 	if(!ofs) throw runtime_error("can't open output file " + filename);
 	
-	ofs << _managers[0] << endl;
-}
+	cout << _managers[0] << endl; 
+}*/
 
 
 void Emporium:: populate_emporium(){

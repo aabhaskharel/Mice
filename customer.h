@@ -2,6 +2,7 @@
 #define CUSTOMER_H
 #include<string>
 #include "serving.h"
+
 using namespace std;
 
 class Customer{
@@ -18,4 +19,7 @@ class Customer{
 		string _phone;
 		
 };
+
+std::ostream& operator<<(std::ostream& os, const Customer& customer);
+
 #endif

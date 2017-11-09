@@ -20,6 +20,9 @@ class Server{
 		void pay_server();
 		double get_total_earned();
 		void filled();
-		void change_salary(int salary);
+		void change_salary(double salary);
 };
+
+std::ostream& operator<<(std::ostream& os, const Server& server);
+
 #endif
