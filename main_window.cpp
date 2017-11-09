@@ -27,7 +27,13 @@ Main_window::Main_window() {
 	menubar->append(*menuitem_file);
 	Gtk::Menu *filemenu = Gtk::manage(new Gtk::Menu());
 	menuitem_file->set_submenu(*filemenu);
-
+	
+	//save to a file
+	Gtk::MenuItem *menuitem_save = Gtk::manage(new Gtk::MenuItem("_Save", true));
+	menuitem_save->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_save_click));
+	filemenu->append(*menuitem_save);
+	
+    //easter egg
 	Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Management", true));
 	menuitem_pop_mgmt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pop_mgmt_click));
 	filemenu->append(*menuitem_pop_mgmt);
@@ -37,6 +43,20 @@ Main_window::Main_window() {
 	Gtk::MenuItem *menuitem_quit = Gtk::manage(new Gtk::MenuItem("_Quit", true));
 	menuitem_quit->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_quit_click));
 	filemenu->append(*menuitem_quit);
+	
+	// EDIT
+	Gtk::MenuItem *menuitem_edit = Gtk::manage(new Gtk::MenuItem("_Edit", true));
+	menubar->append(*menuitem_edit);
+	Gtk::Menu *editmenu = Gtk::manage(new Gtk::Menu());
+	menuitem_edit->set_submenu(*editmenu);
+	
+	// edit item
+	Gtk::MenuItem *menuitem_eitem = Gtk::manage(new Gtk::MenuItem("_Edit Item", true));
+	menuitem_eitem->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_item_click));
+	editmenu->append(*menuitem_eitem);
+	
+	//edit manager
+	//TODO
 	
 	//owner menu
 	Gtk::MenuItem *menuitem_owner = Gtk::manage(new Gtk::MenuItem("_Owner", true));
@@ -194,6 +214,14 @@ void Main_window::on_pop_mgmt_click() {
 	Gtk::MessageDialog dialog{*this, "Populate Succesful"};
     dialog.run();
     dialog.close();
+}
+
+void Main_window::on_save_click() {
+
+}
+
+void Main_window::on_edit_item_click() {
+    
 }
 
 void Main_window::on_new_container() {

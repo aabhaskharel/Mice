@@ -62,7 +62,7 @@ vector<string> Dialogs::form(int id) {
     e_stock.set_numeric();
     e_stock.update();
     b_stock.pack_start(e_stock, Gtk::PACK_SHRINK);
-    dialog->get_vbox()->pack_start(b_stock, Gtk::PACK_SHRINK);
+    //dialog->get_vbox()->pack_start(b_stock, Gtk::PACK_SHRINK);
     
     //size  it can hold, id 1 refers to container and 0 refers to flavor and topping 
     Gtk::HBox b_scoop;
