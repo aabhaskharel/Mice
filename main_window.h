@@ -19,7 +19,9 @@ class Main_window : public Gtk::Window
 
     protected:
 	void on_new_mgmt_click();
-	void on_pop_mgmt_click();	
+	void on_pop_mgmt_click();
+
+	void on_new_item();
         void on_new_container();
         void on_new_flavor();        
         void on_new_topping();
@@ -27,6 +29,8 @@ class Main_window : public Gtk::Window
 	void on_new_order();
 	void on_new_customer();
 	void on_new_manager();
+
+	void on_change_salary();
 
 	//file calls
 	void on_save_click();
