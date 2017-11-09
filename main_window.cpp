@@ -244,19 +244,6 @@ void Main_window::on_new_order() {
 	Order order{emp.get_order_id(), _servers[s_c], _customers[c_c]};
 
 	Gtk::Dialog order_dialog{"New Order", *this};
-	
-	//vector<int> persona = set_order();
-    
-    /*
-    Gtk::HBox sc_box;
-    Gtk::Button b_server{"Server?"};
-    Gtk::Button b_customer{"Customer?"};
-    sc_box.pack_start(b_server, Gtk::PACK_EXPAND_PADDING);
-    sc_box.pack_start(b_customer, Gtk::PACK_EXPAND_PADDING);
-    
-    order_dialog.get_vbox()->pack_start(sc_box, Gtk::PACK_SHRINK);
-    
-    */
 
 	//buttons
 	order_dialog.add_button("Cancel Order", 0);
@@ -334,7 +321,7 @@ void Main_window::on_new_customer() {
 	vector<string> res;
 	res = Dialogs::add_customer();
 	if (res.size() == 2) {
-		Customer cust(res[0], emp.get_customers().size(), res[2]);
+		Customer cust(res[0], emp.get_customers().size(), res[1]);
 		emp.add_new_customer(cust);
 	}
 }

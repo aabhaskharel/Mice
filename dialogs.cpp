@@ -1,4 +1,5 @@
 #include "dialogs.h"
+#include <iostream>
 
 // A message is like cout, simply displaying information to the user
 void Dialogs::message(string msg, string title) {
