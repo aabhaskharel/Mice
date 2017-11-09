@@ -45,5 +45,6 @@ class Emporium{
 		vector<Server> _servers;
 		vector<Customer> _customers;
 		double cash_register = 0;
+		double _stocking_cost = 0;
 };
 #endif

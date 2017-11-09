@@ -34,6 +34,7 @@ void Emporium::add_new_order(Order order) {
 		        if(f.get_name() == _flavors[i].get_name()){
 		            if(!_flavors[i].consume(0)){
 		            	_flavors[i].restock();
+		            	_stocking_cost += f.get_wholesale_price()*25;
 		            	cash_register -= _flavors[i].get_wholesale_price()*25;
 		            }
 		            
@@ -47,6 +48,7 @@ void Emporium::add_new_order(Order order) {
 		        if(t.get_name() == _toppings[i].get_name()) {
 			        if(!_toppings[i].consume()){
 				        _toppings[i].restock(); 
+				        _stocking_cost += t.get_wholesale_price()*25;
 				        cash_register -= t.get_wholesale_price()*25;
 			        }
 			
@@ -61,6 +63,7 @@ void Emporium::add_new_order(Order order) {
 		    if(c.get_name() == _containers[i].get_name()){
 		        if(!_containers[i].consume()){
 	            	_containers[i].restock();
+	            	_stocking_cost += c.get_wholesale_price()*25;
 	            	cash_register -= c.get_wholesale_price()*25;
 	            }
 	            
@@ -70,6 +73,8 @@ void Emporium::add_new_order(Order order) {
 		}
 	}
 	_orders[_orders.size()-1].fill();
+	(_orders[_orders.size()-1].get_server()).filled();
+	cash_register -= (_orders[_orders.size()-1].get_server()).get_hourly_salary();
 	
 	cout << "Cash Balance : " << cash_register << endl;
 }
@@ -147,10 +152,7 @@ string Emporium::get_orders_report() {
 	
 	for(int i=0; i<_orders.size(); i++){
 		out += "\nOrder #"+to_string(_orders[i].get_id())+"  State:"+_orders[i].get_state()+"\n";
-		
-		for(int j=0; j<_orders[i].get_servings_size(); j++){	
-			out +="\t"+_orders[i].list_serving(j)+"\n";
-		}
+		out +="\tWholesale cost: "+_orders[i].get_wholesale_price()+"\n\tRetail cost: "+_orders[i].get_total_price()+"\n\n";
 	}
 	
 	return out;
@@ -159,20 +161,33 @@ string Emporium::get_orders_report() {
 string Emporium::get_pnl_report() {
 	double orders_retail=0;
 	double orders_wholesale=0;
+	double total_paid=0;
 	string out = "Profit & Loss Statement:\n\n";
 	
 	for(int i=0; i<_orders.size(); i++){
 		orders_retail+=_orders[i].get_total_price();
 	}
 	
-	out += "\tFrom Orders:\n\t\tTotal retail: " + to_string(orders_retail);
-	
 	for(int i=0; i<_orders.size(); i++){
 		orders_wholesale += _orders[i].get_wholesale_price();
 	}
 	
-	out += "\n\t\tTotal wholesale cost:" + to_string(orders_wholesale) + "\n\tToal income from all Orders: " + to_string(orders_retail-orders_wholesale);
+	//orders
+	out += "\t\tProfit\tExpenses\nOrders\t" + to_string(orders_retail-orders_wholesale)+ "\n";
+		
+	for(int i=0; i<_servers.size(); i++){
+		total_paid += _servers[i].get_total_earned();
+	}
 	
+	//server's salar
+ 	out += "\nSalaries\t\t" + to_string(total_paid) + "\n";
+	
+	//Items stock cost
+	out += "Items\t\t" + to_string(_stocking_cost);
+	
+	//total and profit
+	out += "\n-------------------------------------------------------------";
+	out += "\nNet Total\t$ "+to_string(orders_retail-orders_wholesale)+"\t$ "+to_string(total_paid+_stocking_cost)+" = $ "+to_string(orders_retail-orders_wholesale-total_paid-_stocking_cost);
 	
 	return out;
 }

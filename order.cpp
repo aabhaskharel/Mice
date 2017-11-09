@@ -10,13 +10,12 @@ void Order::add_serving(Serving serving) {
     _servings.push_back(serving);
 }
 
-//add a server who took the order
-//void Order::add_server(Server server) {_server=server;}
+Server Order::get_server(){ return _server; }
 
-//add a customer who took the order
-//void Order::add_customer(Customer customer) {_customer=customer;}
+Customer Order::get_customer(){ return _customer;}
 
 vector<Serving> Order::get_servings() { return _servings;}
+
 int Order::get_servings_size() {return _servings.size();}
 
 //to get total price

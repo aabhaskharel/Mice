@@ -12,9 +12,9 @@ class Order{
 		Order(int id); 
 		
 		void add_serving(Serving serving);
-		//void add_server(Server server);
-		//void add_customer(Customer customer);
-		
+		Server get_server();
+		Customer get_customer();		
+
 		double get_total_price();
 		double get_wholesale_price();
 		vector<Serving> get_servings();
@@ -30,8 +30,8 @@ class Order{
 	private:
 		int _id;
 		vector <Serving> _servings;
-		//Server _server;
-		//Customer _customer;
+		Server _server;
+		Customer _customer;
 		string _state = "Unfilled";
 		
 };
