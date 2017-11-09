@@ -28,6 +28,12 @@ class Main_window : public Gtk::Window
 	void on_new_customer();
 	void on_new_manager();
 
+	//file calls
+	void on_save_click();
+
+	//edit calls
+	void on_edit_item_click();
+
 	//report callbacks
 	void on_servers_report();
 	void on_customers_report();
