@@ -36,7 +36,7 @@ class Emporium{
 		void edit_topping(int id, Topping topping);
 
 		void change_salary(int server_id, double salary);
-		void write();
+		void write(string filename);
 
 		//report calls
 		string get_servers_report();

@@ -222,7 +222,22 @@ void Main_window::on_pop_mgmt_click() {
 }
 
 void Main_window::on_save_click() {
-    emp.write();
+    
+    Gtk::Dialog dlg{"Enter File Name", *this};
+    Gtk::Entry e;
+    dlg.get_vbox()->pack_start(e, Gtk::PACK_SHRINK);
+    
+    dlg.add_button("Save", 1);
+    
+    dlg.show_all();
+    dlg.run();
+    
+    string s = e.get_text();
+    
+    emp.write(s);
+    
+    dlg.close();
+    
 }
 
 void Main_window::on_edit_item_click() {
@@ -417,17 +432,17 @@ void Main_window::on_edit_item_click() {
     // Instance item
     if (type == CONTAINER) {
         Containr cont(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png", i_max_scoops);
-       //emp.edit_container(index, cont);
+        emp.edit_container(index, cont);
         
        //std::cout << c << std::endl;
     } else if (type == SCOOP) {
         Flavor f(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png");
-        //emp.edit_flavor(index, flav);
+        emp.edit_flavor(index, f);
         
         //std::cout << f << std::endl;
     } else {
         Topping t(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png", "light");
-        //emp.edit_flavor(index, top);
+        emp.edit_topping(index, t);
         
         //std::cout << t << std::endl;
     }
@@ -738,7 +753,7 @@ void Main_window::on_new_order() {
 		if (order.get_servings_size()!=0) { 
 			emp.add_new_order(order);
 			stringstream buf;
-			buf << order ;
+			buf << order ;		//OPERATOR OVERLOADING
 			string out = buf.str();
 			//cout << order << endl;
 			//Gtk::MessageDialog dialog(*this, out);

@@ -205,11 +205,7 @@ void Emporium::change_salary(int server_id, double salary){
 }
 
 //write to a file
-void Emporium::write(){
-
-	string filename;
-	cout << "Enter file name: " << endl;
-	cin >> filename;
+void Emporium::write(string filename){
 	
 	ofstream ofs {filename};
 	if(!ofs) throw runtime_error("can't open output file " + filename);
@@ -242,21 +238,21 @@ void Emporium::write(){
 void Emporium::edit_container(int id, Containr container){
 	int temp = _containers[id].get_stock();
 	_containers[id] = container;
-	_containers[id].get_stock() = temp;
+	_containers[id].set_stock(temp);
 }
 
 //edit flavor
-void Emporium::edit_falvor(int id, Flavor flavor){
+void Emporium::edit_flavor(int id, Flavor flavor){
 	int temp = _flavors[id].get_stock();
 	_flavors[id] = flavor;
-	_flavors[id].get_stock() = temp;
+	_flavors[id].set_stock(temp);
 }
 
 //edit topping
-void Emporium::edit_toppings(int id, Topping topping){
+void Emporium::edit_topping(int id, Topping topping){
 	int temp = _toppings[id].get_stock();
 	_toppings[id] = topping;
-	_toppings[id].get_stock() = temp;
+	_toppings[id].set_stock(temp);
 }
 
 

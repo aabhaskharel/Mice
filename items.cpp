@@ -31,6 +31,9 @@ double Items::get_retail_price() const {return _retail_price;}
 //get item's stock
 int Items::get_stock() const {return _stock;}
 
+//set item's stock
+void Items::set_stock(int value){ _stock = value; }
+
 //restock
 void Items::restock(int value){
 	_stock = value;
@@ -72,6 +75,7 @@ void Topping::_set_amount(string amount) {_amount = amount;}
 
 //get Container's capacity
 int Containr::get_scoop()const {return _scoop;}
+
 
 //return's what kind of item
 string Items::get_type() const {return "Item";}
