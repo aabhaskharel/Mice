@@ -230,6 +230,7 @@ void Main_window::on_edit_item_click() {
     vector<Containr> _containers = emp.get_containers();
     vector<Flavor> _flavors = emp.get_flavors();
     vector<Topping> _toppings = emp.get_toppings();
+    vector<string> names;
 
     // /////////////////////////////
     // Select Item Type
@@ -287,11 +288,23 @@ void Main_window::on_edit_item_click() {
     
     //edit magic
     Gtk::ComboBoxText c_index;
-    
+    c_index.set_size_request(WIDTH*10);
+    if(type==CONTAINER) {
+        for(Containr c: _containers) names.push_back(c.get_name());
+        for(std::string s : names) c_index.append(s);
+    } else if(type==SCOOP) {
+        names.clear();
+        for(Flavor f: _flavors) names.push_back(f.get_name());
+        for(std::string s : names) c_index.append(s);
+    } else {
+        for(Topping t: _toppings) names.push_back(t.get_name());
+        for(std::string s : names) c_index.append(s);
+    }
+    b_name.pack_start(c_index, Gtk::PACK_SHRINK);
 
-    Gtk::Entry e_name;
-    e_name.set_max_length(WIDTH*4);
-    b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+    //Gtk::Entry e_name;
+    //e_name.set_max_length(WIDTH*4);
+    //b_name.pack_start(e_name, Gtk::PACK_SHRINK);
     dialog.get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
 
     // TODO: Replace this with a Gtk::TextView inside a Gtk::ScrolledWindow
@@ -382,6 +395,7 @@ void Main_window::on_edit_item_click() {
                 valid_data = false;
             }
         }
+        /*
         for (Containr c : _containers) if (c.get_name() == e_name.get_text()) {
             e_name.set_text("*** duplicate name ***");
             valid_data = false;
@@ -394,20 +408,27 @@ void Main_window::on_edit_item_click() {
             e_name.set_text("*** duplicate name ***");
             valid_data = false;
         }
+        */
     }
+    
+    int index = c_index.get_active_row_number();
+    string text = c_index.get_active_text();
         
     // Instance item
     if (type == CONTAINER) {
-        //Containr c(e_name.get_text(), e_desc.get_text(), d_cost, d_price, 0, i_max_scoops);
-        //_containers.push_back(c);
-        //std::cout << c << std::endl;
+        Containr cont(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png", i_max_scoops);
+       //emp.edit_container(index, cont);
+        
+       //std::cout << c << std::endl;
     } else if (type == SCOOP) {
-        //Flavor f(e_name.get_text(), e_desc.get_text(), d_cost, 0, d_price);
-        //_scoops.push_back(s);
+        Flavor f(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png");
+        //emp.edit_flavor(index, flav);
+        
         //std::cout << f << std::endl;
     } else {
-        //Topping t(e_name.get_text(), e_desc.get_text(), d_cost, 0, d_price, "light");
-        //_toppings.push_back(t);
+        Topping t(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png", "light");
+        //emp.edit_flavor(index, top);
+        
         //std::cout << t << std::endl;
     }
     
