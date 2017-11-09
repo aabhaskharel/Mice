@@ -37,6 +37,17 @@ Main_window::Main_window() {
 	Gtk::MenuItem *menuitem_quit = Gtk::manage(new Gtk::MenuItem("_Quit", true));
 	menuitem_quit->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_quit_click));
 	filemenu->append(*menuitem_quit);
+	
+	//owner menu
+	Gtk::MenuItem *menuitem_owner = Gtk::manage(new Gtk::MenuItem("_Owner", true));
+	menubar->append(*menuitem_owner);
+	Gtk::Menu *owner_menu = Gtk::manage(new Gtk::Menu());
+	menuitem_owner->set_submenu(*owner_menu);
+
+	// new manager menu
+	Gtk::MenuItem *menuitem_new_manager = Gtk::manage(new Gtk::MenuItem("_Add New Manager", true));
+	menuitem_new_manager->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_manager));
+	owner_menu->append(*menuitem_new_manager);
 
 	//Manager to the menu bar
 	Gtk::MenuItem *menuitem_manager = Gtk::manage(new Gtk::MenuItem("_Manager", true));
@@ -44,7 +55,7 @@ Main_window::Main_window() {
 	Gtk::Menu *manager_menu = Gtk::manage(new Gtk::Menu());
 	menuitem_manager->set_submenu(*manager_menu);
 
-	// new falvor menu
+	// new flavor menu
 	Gtk::MenuItem *menuitem_flavor = Gtk::manage(new Gtk::MenuItem("_Add New Flavor", true));
 	menuitem_flavor->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_flavor));
 	manager_menu->append(*menuitem_flavor);
@@ -212,7 +223,7 @@ void Main_window::on_new_server() {
 	vector<string> res;
 	res = Dialogs::add_server();
 	if (res.size() == 2) {
-		Server ser(res[0], emp.get_servers().size()+1, 0, stod(res[1]));
+		Server ser(res[0], emp.get_servers().size(), 0, stod(res[1]));
 		emp.add_new_server(ser);
 	}
 }
@@ -253,10 +264,11 @@ void Main_window::on_new_order() {
 			stringstream buf;
 			buf << order ;
 			string out = buf.str();
-			cout << order << endl;
-			Gtk::MessageDialog dialog(*this, out);
-			dialog.run();
-			dialog.close();
+			//cout << order << endl;
+			//Gtk::MessageDialog dialog(*this, out);
+			//dialog.run();
+			//dialog.close();
+			Dialogs::message(out, "Your Order");
 		}
 	}
 }
@@ -302,9 +314,13 @@ void Main_window::on_new_customer() {
 	vector<string> res;
 	res = Dialogs::add_customer();
 	if (res.size() == 2) {
-		Customer cust(res[0], emp.get_customers().size()+1, res[2]);
+		Customer cust(res[0], emp.get_customers().size(), res[2]);
 		emp.add_new_customer(cust);
 	}
+}
+
+void Main_window::on_new_manager() {
+    
 }
 
 //report callbacks

@@ -417,7 +417,6 @@ vector<string> Dialogs::add_customer()
     b_wage.pack_start(e_no, Gtk::PACK_SHRINK);
     dialog->get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
     
-    
     dialog->add_button("Cancel", 0);
     dialog->add_button("Done", 1);
     dialog->set_default_response(1);
