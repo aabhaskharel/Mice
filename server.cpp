@@ -26,6 +26,11 @@ void Server::filled(){
 //to get server's hourly salary/pay
 double Server::get_hourly_salary(){ return _hourly_salary; }
 
+//change hourly salary
+void Server::change_salary(int salary){
+	_hourly_salary = salary;
+}
+
 //to pay the server
 void Server::pay_server(){
 	_total_earned += get_hourly_salary();
