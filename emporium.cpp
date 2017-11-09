@@ -152,7 +152,7 @@ string Emporium::get_orders_report() {
 	
 	for(int i=0; i<_orders.size(); i++){
 		out += "\nOrder #"+to_string(_orders[i].get_id())+"  State:"+_orders[i].get_state()+"\n";
-		out +="\tWholesale cost: "+_orders[i].get_wholesale_price()+"\n\tRetail cost: "+_orders[i].get_total_price()+"\n\n";
+		out +="\tWholesale cost: "+to_string(_orders[i].get_wholesale_price())+"\n\tRetail cost: "+to_string(_orders[i].get_total_price())+"\n\n";
 	}
 	
 	return out;
