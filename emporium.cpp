@@ -238,6 +238,27 @@ void Emporium::write(){
 
 }
 
+//edit container
+void Emporium::edit_container(int id, Containr container){
+	int temp = _containers[id].get_stock();
+	_containers[id] = container;
+	_containers[id].get_stock() = temp;
+}
+
+//edit flavor
+void Emporium::edit_falvor(int id, Flavor flavor){
+	int temp = _flavors[id].get_stock();
+	_flavors[id] = flavor;
+	_flavors[id].get_stock() = temp;
+}
+
+//edit topping
+void Emporium::edit_toppings(int id, Topping topping){
+	int temp = _toppings[id].get_stock();
+	_toppings[id] = topping;
+	_toppings[id].get_stock() = temp;
+}
+
 
 void Emporium:: populate_emporium(){
     Containr cont("Cup", "A freshly baked waffle cone.", 0.03, 0, 0, "picture.png", 3);

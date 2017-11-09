@@ -30,6 +30,10 @@ class Emporium{
 
 		void add_new_order(Order order);
 		int get_order_id();
+	
+		void edit_container(int id, Containr container);
+		void edit_flavor(int id, Flavor flavor);
+		void edit_topping(int id, Topping topping);
 
 		void change_salary(int server_id, double salary);
 		void write();
