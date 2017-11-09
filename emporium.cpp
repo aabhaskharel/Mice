@@ -1,4 +1,7 @@
 #include "emporium.h"
+#include <fstream>
+#include <stdexcept>
+#include <iostream>
 
 using namespace std;
 
@@ -193,6 +196,18 @@ string Emporium::get_pnl_report() {
 	out += "\nNet Total\t$ "+to_string(orders_retail)+"\t$ "+to_string(total_paid+_stocking_cost)+" = $ "+to_string(orders_retail-total_paid-_stocking_cost);
 	
 	return out;
+}
+
+//write to a file
+void Emporium::write(){
+	string filename;
+	cout << "Enter file name: " << endl;
+	cin >> filename;
+	
+	ofstream ofs {filename};
+	if(!ofs) throw runtime_error("can't open output file " + filename);
+	
+	ofs << _managers[0] << endl;
 }
 
 

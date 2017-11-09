@@ -31,6 +31,8 @@ class Emporium{
 		void add_new_order(Order order);
 		int get_order_id();
 
+		void write();
+
 		//report calls
 		string get_servers_report();
 		string get_customers_report();

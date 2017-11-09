@@ -39,3 +39,12 @@ void Server::pay_server(){
 double Server::get_total_earned(){ return _total_earned; }
 
 
+std::ostream& operator<<(std::ostream& os, const Server& server) {
+    os << std::setw(40) << "Server:\n\tName: " << server.get_name() 
+       << "\nID: " << std::fixed << server.get_employee_number()
+       << "\nTotal Filled: " << std::fixed << server.get_total_filled()
+       << "\nHourly Salary: " << std::fixed << server.get_hourly_salary()
+       << "\nTotal Earned: " << std::fixed << server.get_total_earned();
+    return os;
+}
+
