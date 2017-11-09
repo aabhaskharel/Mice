@@ -17,4 +17,12 @@ int Server::get_total_filled(){ return _total_filled; }
 //to get server's hourly salary/pay
 int Server::get_hourly_salary(){ return _hourly_salary; }
 
+//to pay the server
+void Server::pay_server(){
+	_total_earned += get_hourly_salary();
+}
+
+//get total earned salary
+int Server::get_total_earned(){ return _total_earned; }
+
 

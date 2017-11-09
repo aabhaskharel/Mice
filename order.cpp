@@ -30,6 +30,25 @@ double Order::get_total_price(){
 	return total;
 }
 
+//to get wholesale price
+double Order::get_wholesale_price(){
+	double total;
+	
+	for(int i=0; i<_servings.size(); i++){
+		total += _servings[i].total_wholesale_price();
+	}	
+	
+	return total;
+	
+}
+	
+
+//get id
+int Order::get_id(){ return _id; }
+
+//get state status
+string Order::get_state(){ return _state; }
+
 //check if it can be filled?
 void Order::fill(){
 	_state = "filled";
@@ -37,31 +56,28 @@ void Order::fill(){
 
 //pay status
 void Order::pay() {
-
+	
 }
 
 //cancle order
 void Order::cancel(){
-	_state = "Cancel";
+	_state = "Cancelled";
 }
 
 //list a serving
 string Order::list_serving(int index){
-	int i; string out;
-/*
-	i = _servings.size();
-	out = to_string(i);
-*/
-    out = "("+to_string(index)+")"+"\t"+"Container: "+(_servings[index].get_container()).get_name()+"\t"+"$"+to_string((_servings[index].get_container()).get_retail_price())+"\n";
-	out+="\t\tFlavor: ";
+	string out;
+
+    	out = "\n("+to_string(index+1)+")"+"\t"+"Container: "+(_servings[index].get_container()).get_name()+"\t"+"$"+to_string((_servings[index].get_container()).get_retail_price())+"\n";
+	out+="\tFlavor:\n";
 	for(int i=0; i<(_servings[index].get_flavors()).size(); i++)
 		{
-		out+="\t"+(_servings[index].get_flavors())[i].get_name()+"\t"+"$"+to_string((_servings[index].get_flavors())[i].get_retail_price())+"\n";
+		out+="\t\t"+(_servings[index].get_flavors())[i].get_name()+"\t"+"\t$"+to_string((_servings[index].get_flavors())[i].get_retail_price())+"\n";
 		}
-	out+="\t\tTopping: ";
+	out+="\tTopping:\n";
 	for(int i=0; i<(_servings[index].get_toppings()).size(); i++)
 		{
-		out+="\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"$"+to_string((_servings[index].get_toppings())[i].get_retail_price())+"\n";
+		out+="\t\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"\t$"+to_string((_servings[index].get_toppings())[i].get_retail_price())+"\n";
 		} 
 	return out;
 }

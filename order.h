@@ -16,8 +16,11 @@ class Order{
 		//void add_customer(Customer customer);
 		
 		double get_total_price();
+		double get_wholesale_price();
 		vector<Serving> get_servings();
 		int get_servings_size();
+		int get_id();
+		string get_state();
 
 		void fill();
 		void pay();

@@ -33,8 +33,8 @@ void Emporium::add_new_order(Order order) {
 		    for(int i=0; i<_flavors.size();i++){
 		        if(f.get_name() == _flavors[i].get_name()){
 		            if(!_flavors[i].consume(0)){
-		                    _flavors[i].restock();
-		                    cash_register -= _flavors[i].get_wholesale_price()*25;
+		            	_flavors[i].restock();
+		            	cash_register -= _flavors[i].get_wholesale_price()*25;
 		            }
 		            
 		            _flavors[i].consume();
@@ -100,20 +100,83 @@ int Emporium::get_order_id() {
 
 //report calls
 string Emporium::get_servers_report() {
-
+	string out = "Server details: \n";
+	
+	for(int i=0; i<_servers.size(); i++){
+		out += "\tName: "+_servers[i].get_name()+"\tEmployee #: "+to_string(_servers[i].get_employee_number())+"\tTotal Order Filled: "+
+		to_string(_servers[i].get_total_filled())+"\tHourly Salary: "+to_string(_servers[i].get_hourly_salary())+"\tTotal earned: "+to_string(_servers[i].get_total_earned())+"\n";
+	}
+	
+	return out;
 }
+
 string Emporium::get_customers_report() {
-
+	string out = "Customer details: \n";
+	
+	for(int i=0; i< _customers.size(); i++){
+		out += "\tName: "+_customers[i].get_name()+"\t\tID: "+to_string(_customers[i].get_id())+"\tPhone: "+_customers[i].get_phone()+"\n";
+	}
+	
+	return out;
 }
+
 string Emporium::get_inventory_report() {
-
+	string out = "Inventory Report: \n\nContainers Available:\n";
+	
+	for(int i=0; i<_containers.size(); i++){
+		out += "\tContainer name: "+_containers[i].get_name()+"\tStock Remaining: "+to_string(_containers[i].get_stock())+"\n";
+	}
+	
+	out += "\n\nFlavors Available:\n";
+	
+	for(int i=0; i<_flavors.size(); i++){
+		out += "\tFlavor name: "+_flavors[i].get_name()+"\tStock Remaining: "+to_string(_flavors[i].get_stock())+"\n";
+	}
+	
+	out += "\n\nToppingsAvailable:\n";
+	
+	for(int i=0; i<_toppings.size(); i++){
+		out += "\tTopping name: "+_toppings[i].get_name()+"\tStock Remainig: "+to_string(_toppings[i].get_stock())+"\n";
+	}
+	
+	return out;
 }
+
 string Emporium::get_orders_report() {
-
+	string out = "Orders Report:\n";
+	
+	for(int i=0; i<_orders.size(); i++){
+		out += "\nOrder #"+to_string(_orders[i].get_id())+"  State:"+_orders[i].get_state()+"\n";
+		
+		for(int j=0; j<_orders[i].get_servings_size(); j++){	
+			out +="\t"+_orders[i].list_serving(j)+"\n";
+		}
+	}
+	
+	return out;
 }
+
 string Emporium::get_pnl_report() {
-
+	double orders_retail=0;
+	double orders_wholesale=0;
+	string out = "Profit & Loss Statement:\n\n";
+	
+	for(int i=0; i<_orders.size(); i++){
+		orders_retail+=_orders[i].get_total_price();
+	}
+	
+	out += "\tFrom Orders:\n\t\tTotal retail: " + to_string(orders_retail);
+	
+	for(int i=0; i<_orders.size(); i++){
+		orders_wholesale += _orders[i].get_wholesale_price();
+	}
+	
+	out += "\n\t\tTotal wholesale cost:" + to_string(orders_wholesale) + "\n\tToal income from all Orders: " + to_string(orders_retail-orders_wholesale);
+	
+	
+	return out;
 }
+
 
 void Emporium:: populate_emporium(){
     Containr cont("Waffle Cone", "A freshly baked waffle cone.", 0.49, 0.89, 0, "picture.png", 3);
