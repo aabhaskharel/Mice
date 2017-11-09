@@ -1,6 +1,7 @@
 #ifndef MANAGER_H
 #define MANAGER_H
 #include<string>
+
 using namespace std;
 
 class Manager{
@@ -14,4 +15,7 @@ class Manager{
 		int _id;
 		string _phone;	
 };
+
+std::ostream& operator<<(std::ostream& os, const Manager& manager);
+
 #endif

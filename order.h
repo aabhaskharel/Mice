@@ -21,8 +21,7 @@ class Order{
 		int get_servings_size();
 		int get_id();
 		string get_state();
-
-		void fill();
+         	void fill();
 		void pay();
 		void cancel();
 		string list_serving(int index);

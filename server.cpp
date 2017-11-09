@@ -1,5 +1,7 @@
 #include <vector>
 #include "server.h"
+#include <iomanip>
+
 using namespace std;
 
 //constructor
@@ -26,7 +28,7 @@ void Server::filled(){
 double Server::get_hourly_salary(){ return _hourly_salary; }
 
 //change hourly salary
-void Server::change_salary(int salary){
+void Server::change_salary(double salary){
 	_hourly_salary = salary;
 }
 
@@ -38,4 +40,14 @@ void Server::pay_server(){
 //get total earned salary
 double Server::get_total_earned(){ return _total_earned; }
 
+/*
+std::ostream& operator<<(std::ostream& os, const Server& server) {
+    os << std::setw(40) << "Server:\n\tName: " << server.get_name() 
+       << "\nID: " << std::fixed << server.get_employee_number()
+       << "\nTotal Filled: " << std::fixed << server.get_total_filled()
+       << "\nHourly Salary: " << std::fixed << server.get_hourly_salary()
+       << "\nTotal Earned: " << std::fixed << server.get_total_earned();
+    return os;
 
+}
+*/

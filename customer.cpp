@@ -1,5 +1,6 @@
 #include <string>
 #include "customer.h"
+#include <iomanip>
 
 using namespace std;
 //constructor
@@ -24,3 +25,13 @@ int Customer::get_id() {
 string Customer::get_phone() {
     return _phone;
 }	
+
+/*
+std::ostream& operator<<(std::ostream& os, const Customer& customer) {
+    os << std::setw(40) << "Customer:\n\tName: " << customer.get_name() 
+       << "\nID: " << std::fixed << customer.get_id()
+       << "\nPhone: " << customer.get_phone();
+    return os;
+
+}
+*/
