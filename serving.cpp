@@ -78,12 +78,14 @@ double Serving::get_total_wholesale_price() {
 
 
 
-std::ostream& operator<<(std::ostream& os, const Serving& serving) {
-  /*  os << serving.get_container();
+std::ostream& operator<<(std::ostream& os, Serving& serving) {
+/*
+    os << serving.get_container();
     for (Flavor s : serving.get_flavors()) os << std::endl << s;
     for (Topping t : serving.get_toppings()) os << std::endl << t;
     os << std::endl << std::setw(50) << "----------------------------" 
-    << std::endl << std::setw(40) << "Serving Total: $ " << serving.total_retail_price() << endl;
-    return os; */
+    << std::endl << std::setw(40) << "Serving Total: $ " << serving.get_total_retail_price() << endl;
+    return os;
+*/
 }
 

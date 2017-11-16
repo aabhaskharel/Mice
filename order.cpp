@@ -1,4 +1,5 @@
 #include "order.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -54,7 +55,7 @@ void Order::set_state(string state){
 
 //list a serving
 string Order::list_serving(int index){
-	/*string out;
+	string out;
 
     	out = "\n("+to_string(index+1)+")"+"\t"+"Container: "+(_servings[index].get_container()).get_name()+"\t"+"$"+to_string((_servings[index].get_container()).get_retail_price())+"\n";
 	out+="\tFlavor:\n";
@@ -67,7 +68,7 @@ string Order::list_serving(int index){
 		{
 		out+="\t\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"\t$"+to_string((_servings[index].get_toppings())[i].get_retail_price())+"\n";
 		} 
-	return out;*/
+	return out;
 }
 
 //list order
@@ -76,11 +77,13 @@ string Order::list_order(){
 }
 
 std::ostream& operator<<(std::ostream& os, Order& order) {
-    /*os << "Your order:";
+/*
+    os << "Your order:";
     for (Serving s : order.get_servings()) os << std::endl << s;
     os << std::endl << std::setw(50) << "----------------------------" 
-    << std::endl << std::setw(40) << "Order Total: $ " << order.get_total_price() << endl;
-    return os;*/
+    << std::endl << std::setw(40) << "Order Total: $ " << order.get_total_retail_price() << endl;
+    return os;
+*/
 }
 
 

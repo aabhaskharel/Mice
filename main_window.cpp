@@ -28,6 +28,11 @@ Main_window::Main_window() {
 	Gtk::Menu *filemenu = Gtk::manage(new Gtk::Menu());
 	menuitem_file->set_submenu(*filemenu);
 	
+	//new
+	Gtk::MenuItem *menuitem_new = Gtk::manage(new Gtk::MenuItem("_New Emporium", true));
+	menuitem_new->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_mgmt_click));
+	filemenu->append(*menuitem_new);
+	
 	//save to a file
 	Gtk::MenuItem *menuitem_save = Gtk::manage(new Gtk::MenuItem("_Save", true));
 	menuitem_save->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_save_click));
@@ -212,6 +217,11 @@ Main_window::Main_window() {
 
 Main_window::~Main_window() { }
 
+void Main_window::on_new_mgmt_click() {
+    Emporium ab{1, "Bedford", "192-464-1293"};
+    emp = ab;
+    cout << "in here" << endl;
+}
 
 void Main_window::on_pop_mgmt_click() {
 	emp.populate_emporium();
@@ -419,20 +429,7 @@ void Main_window::on_edit_item_click() {
             cretire = true; valid_data = true;
         }
         
-        /*
-        for (Containr c : _containers) if (c.get_name() == e_name.get_text()) {
-            e_name.set_text("*** duplicate name ***");
-            valid_data = false;
-        }
-        for (Flavor f : _flavors) if (f.get_name() == e_name.get_text()) {
-            e_name.set_text("*** duplicate name ***");
-            valid_data = false;
-        }
-        for (Topping t : _toppings) if (t.get_name() == e_name.get_text()) {
-            e_name.set_text("*** duplicate name ***");
-            valid_data = false;
-        }
-        */
+        
     }
     
     int index = c_index.get_active_row_number();
@@ -680,14 +677,14 @@ void Main_window::on_new_topping() {
 }
 
 void Main_window::on_new_server() {
-/*
+
 	vector<string> res;
 	res = Dialogs::add_server();
 	if (res.size() == 2) {
-		Server ser(res[0], emp.get_servers().size(), stod(res[1]));
+		Server ser(res[0], emp.get_servers().size(),"183-212-3444", stod(res[1]));
 		emp.add_server(ser);
 	}
-	*/
+	
 }
 
 void Main_window::on_change_salary() {
@@ -760,7 +757,7 @@ void Main_window::on_new_order() {
 	while(result==1) {
 		try {
 			Serving serving = create_serving();
-			cout << serving << endl;
+			//cout << serving << endl;
 			order.add_serving(serving);
 		} catch (std::runtime_error e) {}
 
@@ -771,9 +768,14 @@ void Main_window::on_new_order() {
 	if(result == 2) {
 		if (order.get_servings_size()!=0) { 
 			emp.add_order(order);
-			stringstream buf;
-			buf << order ;		//OPERATOR OVERLOADING
-			string out = buf.str();
+			string out = "";
+			for (int i =0; i< order.get_servings_size(); i++) {
+			    out+= order.list_serving(i);
+			}
+			
+			//stringstream buf;
+			//buf << order ;		//OPERATOR OVERLOADING
+			//string out = buf.str();
 			//cout << order << endl;
 			//Gtk::MessageDialog dialog(*this, out);
 			//dialog.run();

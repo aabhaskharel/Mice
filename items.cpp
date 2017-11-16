@@ -1,4 +1,5 @@
 #include "items.h"
+#include <iomanip>
 
 using namespace std;
 
@@ -42,10 +43,12 @@ string Containr::get_type() {return "Container";}
 string Flavor::get_type() {return "Flavor";}
 string Topping::get_type() {return "Topping";}
 
-std::ostream& operator<<(std::ostream& os, const Items& item) {
-  /*  os << std::setw(40) << item.get_type() + ": " + item.get_name() << " $" 
+std::ostream& operator<<(std::ostream& os, Items& item) {
+/*
+    os << std::setw(40) << item.get_type() + ": " + item.get_name() << " $" 
        << std::setprecision(2) << std::fixed << item.get_retail_price(); 
-    return os; */
+    return os;
+*/
 }
 
 
