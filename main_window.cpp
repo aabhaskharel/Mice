@@ -275,6 +275,7 @@ void Main_window::on_edit_item_click() {
     // Show dialog_type
     dialog_type.add_button("Cancel", 0);
     dialog_type.add_button("OK", 1);
+    
     dialog_type.show_all();
     if (dialog_type.run() != 1) {
         dialog_type.close();
@@ -374,17 +375,19 @@ void Main_window::on_edit_item_click() {
     }
 
     // Show dialog
+    dialog.add_button("Retire", 2);
     dialog.add_button("Cancel", 0);
     dialog.add_button("OK", 1);
     dialog.show_all();
 
     bool valid_data = false;
+    bool cretire = false;
     double d_cost;
     double d_price;
     int i_max_scoops;
 
     while(!valid_data) {
-        if (dialog.run() != 1) {
+        if (dialog.run() == 0) {
             dialog.close();
             return;
         }
@@ -410,6 +413,12 @@ void Main_window::on_edit_item_click() {
                 valid_data = false;
             }
         }
+        
+        if(dialog.run() == 2) {
+            cout << "Retire staus" << endl;
+            cretire = true; valid_data = true;
+        }
+        
         /*
         for (Containr c : _containers) if (c.get_name() == e_name.get_text()) {
             e_name.set_text("*** duplicate name ***");
@@ -428,6 +437,11 @@ void Main_window::on_edit_item_click() {
     
     int index = c_index.get_active_row_number();
     string text = c_index.get_active_text();
+    
+    if (cretire) {
+        emp.retire_item(type, index);
+        return;
+    }
         
     // Instance item
     if (type == CONTAINER) {
