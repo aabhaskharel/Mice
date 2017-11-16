@@ -8,6 +8,7 @@
 #include "serving.h"
 #include "order.h"
 #include "person.h"
+#include "dialogs.h"
 
 class Main_window : public Gtk::Window
 {

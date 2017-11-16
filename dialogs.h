@@ -6,8 +6,8 @@
 #include "emporium.h"
 #include "items.h"
 #include "serving.h"
-#include "manager.h"
 #include "main_window.h"
+#include "person.h"
 
 using namespace std;
 

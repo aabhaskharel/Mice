@@ -226,9 +226,9 @@ string Emporium::get_pnl_report() {
 		total_salary += _servers[i].get_total_pay();
 	}
 	
-	out += "Income:" + "\n";
+	out += "Income:\n";
 	out += "\tTotal earnings from orders: " + to_string(orders_retail) + "\n\n";
-	out += "Expenses:" + "\n";
+	out += "Expenses:make\n";
 	out += "\tTotal cost of items: " + to_string(_stocking_cost) + "\n";
 	out += "\tTotal salaries distributed: " + to_string(total_salary) + "\n\n";
 	

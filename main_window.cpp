@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-Emporium emp;
+Emporium emp{1,"Euless", "8187-22-1-22"};
 
 Main_window::Main_window() {
 	// /////////////////
@@ -431,17 +431,17 @@ void Main_window::on_edit_item_click() {
         
     // Instance item
     if (type == CONTAINER) {
-        Containr cont(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png", i_max_scoops);
+        Containr cont(text, e_desc.get_text(), d_cost, d_price, "picture.png", i_max_scoops);
         emp.edit_container(index, cont);
         
        //std::cout << c << std::endl;
     } else if (type == SCOOP) {
-        Flavor f(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png");
+        Flavor f(text, e_desc.get_text(), d_cost, d_price,  "picture.png");
         emp.edit_flavor(index, f);
         
         //std::cout << f << std::endl;
     } else {
-        Topping t(text, e_desc.get_text(), d_cost, d_price, 0, "picture.png", "light");
+        Topping t(text, e_desc.get_text(), d_cost, d_price, "picture.png");
         emp.edit_topping(index, t);
         
         //std::cout << t << std::endl;
@@ -639,36 +639,41 @@ void Main_window::on_new_container() {
 	vector<string> res;
 	res = Dialogs::form(1);
 	if (res.size() == 7) {
-		Containr cont(res[0], res[1], stod(res[2]), stod(res[3]), stoi(res[4]), res[5], stoi(res[6]));
-		emp.add_new_container(cont);
+		Containr cont(res[0], res[1], stod(res[2]), stod(res[3]), res[5], stoi(res[6]));
+		emp.add_container(cont);
 	}
+	
 }
 
 void Main_window::on_new_flavor() {
+
 	vector<string> res;
 	res = Dialogs::form(2);
 	if (res.size() == 6) {
-		Flavor flav(res[0], res[1], stod(res[2]), stod(res[3]), stoi(res[4]), res[5]);
-		emp.add_new_flavor(flav);
+		Flavor flav(res[0], res[1], stod(res[2]), stod(res[3]), res[5]);
+		emp.add_flavor(flav);
 	}
+	
 }
 
 void Main_window::on_new_topping() {
 	vector<string> res;
 	res = Dialogs::form(3);
 	if (res.size() == 6) {
-		Topping top(res[0], res[1], stod(res[2]), stod(res[3]), stoi(res[4]), res[5], "Light");
-		emp.add_new_topping(top);
+		Topping top(res[0], res[1], stod(res[2]), stod(res[3]), res[5]);
+		emp.add_topping(top);
 	}
 }
 
 void Main_window::on_new_server() {
+/*
 	vector<string> res;
 	res = Dialogs::add_server();
 	if (res.size() == 2) {
 		Server ser(res[0], emp.get_servers().size(), stod(res[1]));
-		emp.add_new_server(ser);
+		emp.add_server(ser);
 	}
+	*/
 }
 
 void Main_window::on_change_salary() {
@@ -751,7 +756,7 @@ void Main_window::on_new_order() {
 	if(result == 0) return;
 	if(result == 2) {
 		if (order.get_servings_size()!=0) { 
-			emp.add_new_order(order);
+			emp.add_order(order);
 			stringstream buf;
 			buf << order ;		//OPERATOR OVERLOADING
 			string out = buf.str();
@@ -795,7 +800,7 @@ Serving Main_window::create_serving() {
 		int topping = select_from_vector(names, "Topping");
 		//int topping = select_topping();
 		if (topping == -1) break;
-		else serving.set_topping(_toppings[topping]);
+		else serving.set_topping(_toppings[topping], 1);
 	}
 
 	return serving;
@@ -806,7 +811,7 @@ void Main_window::on_new_customer() {
 	res = Dialogs::add_customer();
 	if (res.size() == 2) {
 		Customer cust(res[0], emp.get_customers().size(), res[1]);
-		emp.add_new_customer(cust);
+		emp.add_customer(cust);
 	}
 }
 
@@ -850,7 +855,7 @@ void Main_window::on_new_manager() {
             return;
         }
         int size = emp.get_managers().size();
-        emp.add_new_manager(Manager{name, size, phone});
+        emp.add_manager(Manager{name, size, phone});
     }
     
 }
