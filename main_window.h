@@ -4,12 +4,10 @@
 #include <gtkmm.h>
 #include <string>
 #include "emporium.h"
-#include "dialogs.h"
 #include "items.h"
-#include "server.h"
 #include "serving.h"
 #include "order.h"
-#include "manager.h"
+#include "person.h"
 
 class Main_window : public Gtk::Window
 {

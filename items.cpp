@@ -31,17 +31,10 @@ int Items::get_stock(){return _stock;}
 
 string Items::get_image_path(){return _image_path;}
 
-//get Topping's type
-int Topping::get_kind(){return _kind;}
-
-int Topping::set_kind(int kind) { _kind = kind;}
-
 //get Container's capacity
 int Containr::get_scoop(){return _scoop;}
 
-int Items::restock(int quantity) {_stock += quantity;}
-
-int Items::consume(int quantity) {_stock -= quantity;}
+void Items::set_stock(int quantity) {_stock += quantity;}
 
 //return's what kind of item
 string Items::get_type() {return "Item";}
@@ -50,7 +43,9 @@ string Flavor::get_type() {return "Flavor";}
 string Topping::get_type() {return "Topping";}
 
 std::ostream& operator<<(std::ostream& os, const Items& item) {
-    os << std::setw(40) << item.get_type() + ": " + item.get_name() << " $" 
+  /*  os << std::setw(40) << item.get_type() + ": " + item.get_name() << " $" 
        << std::setprecision(2) << std::fixed << item.get_retail_price(); 
-    return os;
+    return os; */
 }
+
+

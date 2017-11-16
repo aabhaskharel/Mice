@@ -1,16 +1,16 @@
 #ifndef PERSON_H
 #define PERSON_H
-
-//#include "cashregister.h"
+ 
+#include <string>
 
 using namespace std;
 
-Class Person {
+class Person {
 public:
 	Person(string name, int id, string phone);
 	string get_name();
 	int get_id();
-	string phone();
+	string get_phone();
 	virtual int get_type();
 
 protected:
@@ -20,7 +20,8 @@ protected:
 
 };
 
-Class Owner: public Person {
+/*
+class Owner: public Person {
 public:
 	static Owner& getInstance();
 	Owner (Owner const&);
@@ -29,14 +30,15 @@ public:
 private:
 	Owner() {};
 };
+*/
 
-Class Manager: public Person {
+class Manager: public Person {
 public:
 	Manager(string name, int id, string phone);
 	int get_type() override;
 };
 
-Class Server: public Person {
+class Server: public Person {
 public:
 	Server(string name, int id, string phone, double hourly_salary);
 	int get_type() override;
@@ -45,14 +47,18 @@ public:
 	double get_hourly_salary();
 	void set_hourly_salary(double salary);
 	void set_total_filled(int fill);
+	void set_total_pay(double total);
+	bool pay();
 private:
 	double _hourly_salary;
-	int _total_filled = 0;
-	double total_pay = 0;
+	int _total_filled ;
+	double total_pay;
+	int x;
 
 };
 
-Class Customer:public Person {
+class Customer:public Person {
+public:
 	Customer(string name, int id, string phone);
 	int get_type() override;
 };

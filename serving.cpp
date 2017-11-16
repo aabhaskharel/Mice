@@ -9,17 +9,19 @@ using namespace std;
 Serving::Serving(Containr container): _container{container} {}
 
 //return container
-Containr Serving::get_container() const {return _container;}
+Containr Serving::get_container() {return _container;}
 
 //return flavors
-vector<Flavor> Serving::get_flavors() const {return _flavors;}
+vector<Flavor> Serving::get_flavors() {return _flavors;}
+vector<int> Serving::get_top_kind() {return _top_kind;}
 		
 //return toppings
-vector<Topping> Serving::get_toppings() const {return _toppings;}
+vector<Topping> Serving::get_toppings() {return _toppings;}
 
 //set toppings
-void Serving::set_topping(Topping topping) {
+void Serving::set_topping(Topping topping, int kind) {
     _toppings.push_back(topping);
+    _top_kind.push_back(kind);
 }
 
 //set flavors
@@ -28,7 +30,7 @@ void Serving::set_flavor(Flavor flavor) {
 }
 
 //total retail price
-double Serving::total_retail_price() const {
+double Serving::get_total_retail_price() {
 		double total=0; double f=0; double t;
 		total = _container.get_retail_price();
 		
@@ -37,7 +39,13 @@ double Serving::total_retail_price() const {
 		}
 		
 		for(int i=0; i<_toppings.size(); i++){
-				t+=_toppings[i].get_retail_price();
+			switch (_top_kind[i])
+			{
+			case 0:	t+=_toppings[i].get_retail_price()*1; break;
+			case 1:	t+=_toppings[i].get_retail_price()*2; break;
+			case 2:	t+=_toppings[i].get_retail_price()*3; break;
+			case 3:	t+=_toppings[i].get_retail_price()*4; break;	
+			}
 		}
 		
 	total = total + f + t;
@@ -45,8 +53,7 @@ double Serving::total_retail_price() const {
 	return total;
 }
 
-//total wholesale price
-double Serving::total_wholesale_price() const {
+double Serving::get_total_wholesale_price() {
 		double total=0; double f=0; double t;
 		total = _container.get_wholesale_price();
 		
@@ -55,7 +62,13 @@ double Serving::total_wholesale_price() const {
 		}
 		
 		for(int i=0; i<_toppings.size(); i++){
-				t+=_toppings[i].get_wholesale_price();
+			switch (_top_kind[i])
+			{
+			case 0:	t+=_toppings[i].get_wholesale_price()*1; break;
+			case 1:	t+=_toppings[i].get_wholesale_price()*2; break;
+			case 2:	t+=_toppings[i].get_wholesale_price()*3; break;
+			case 3:	t+=_toppings[i].get_wholesale_price()*4; break;	
+			}
 		}
 		
 	total = total + f + t;
@@ -63,12 +76,14 @@ double Serving::total_wholesale_price() const {
 	return total;
 }
 
+
+
 std::ostream& operator<<(std::ostream& os, const Serving& serving) {
-    os << serving.get_container();
+  /*  os << serving.get_container();
     for (Flavor s : serving.get_flavors()) os << std::endl << s;
     for (Topping t : serving.get_toppings()) os << std::endl << t;
     os << std::endl << std::setw(50) << "----------------------------" 
     << std::endl << std::setw(40) << "Serving Total: $ " << serving.total_retail_price() << endl;
-    return os;
+    return os; */
 }
 

@@ -1,5 +1,6 @@
 #ifndef _ITEMS_H_
 #define _ITEMS_H_
+#include <string>
 using namespace std;
 
 class Items {
@@ -10,8 +11,7 @@ class Items {
 		double get_wholesale_price();
 		double get_retail_price();
 		int get_stock();
-		int restock(int quantity);
-		int consume(int quantity);
+		void set_stock(int quantity);
 		string get_image_path();
 		virtual string get_type();
 		
@@ -36,11 +36,8 @@ class Flavor : public Items{
 class Topping : public Items{
 	public:
 		Topping(string name, string description, double wholesale_price, double retail_price, string image_path);
-		int get_kind();
-		void set_kind(int kind);	
 		string get_type() override;
-	private:
-		int _kind;
+
 };
 class Containr : public Items{
 	public:

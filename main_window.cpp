@@ -725,7 +725,7 @@ void Main_window::on_new_order() {
     
     if(s_c==-1 || c_c==-1) return;
 
-	Order order{emp.get_order_id(), _servers[s_c], _customers[c_c]};
+	Order order{emp.get_orders().size(), _servers[s_c], _customers[c_c]};
 
 	Gtk::Dialog order_dialog{"New Order", *this};
 
