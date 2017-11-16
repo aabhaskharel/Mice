@@ -252,13 +252,12 @@ void Emporium::change_salary(int server_id, double salary){
 	_servers[server_id].set_hourly_salary(salary);
 }
 
-void Emporium::retire_item(Items item, int id){
-	string type = item.get_type();
-	if (type == "Container")
+void Emporium::retire_item(int item, int id){
+	if (item == 0)
 	{	_retired_containers.push_back(_containers[id]);
 		_containers.erase(_containers.begin()+id);
 	}
-	else if (type == "Flavor")
+	else if (item == 1)
 	{
 		_retired_flavors.push_back(_flavors[id]);
 		_flavors.erase(_flavors.begin()+id);

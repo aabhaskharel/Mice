@@ -32,7 +32,7 @@ class Emporium{
 		void add_customer(Customer customer);
 		void add_manager(Manager manager);
 
-		void retire_item(Items item, int id);
+		void retire_item(int item, int id);
 		void retire_person(Person person, int id);
 		void restore_item(Items item, int id);
 		void restore_person(Person person, int id);
