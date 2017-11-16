@@ -462,35 +462,35 @@ void Emporium::add_stock(Server server, Items item, int quantity) {
 }
 
 void Emporium:: populate_emporium(){
-   /* Containr cont("Cup", "A freshly baked waffle cone.", 0.03, 0, 0, "picture.png", 3);
-    Containr cont2("Regular Cone", "Everyone's Favroite", 0.05, 0.15, 0, "picture.png", 1);
+    Containr cont("Cup", "A freshly baked waffle cone.", 0.1, 0.6, "picture.png", 3);
+    Containr cont2("Regular Cone", "Everyone's Favroite", 0.2, 0.8, "picture.png", 1);
 
     _containers.push_back(cont2);
     _containers.push_back(cont);
 
-    Flavor flav("Chocolate", "Rich Dark Chocolate", 1, 1.99, 0, "f_chocolate.png");
-    Flavor flav2("Vanilla", "Very Smooth Vanilla", 1, 1.99, 0, "f_vanilla.png");
-    Flavor flav3("Strawberry", "Refreshing Strawberry Flavor", 1.05, 2.09, 0, "f_strawberry.png");
+    Flavor flav("Chocolate", "Rich Dark Chocolate", 1, 1.99, "f_chocolate.png");
+    Flavor flav2("Vanilla", "Very Smooth Vanilla", 1, 1.99, "f_vanilla.png");
+    Flavor flav3("Strawberry", "Refreshing Strawberry Flavor", 1.05, 2.09, "f_strawberry.png");
 
     _flavors.push_back(flav);
     _flavors.push_back(flav2);
     _flavors.push_back(flav3);
 
-    Topping top("Whipped Cream", "An Irrestible topping", 0.05, 0.25, 0, "picture.png", "light");
-    Topping top2("Hot Fudge", "Hot & Fresh chocolate", 0.25, 0.75, 0, "picture.png", "light");
-    Topping top3("Cherry", "Red and bright delight", 0.01, 0.1, 0, "t_cherry.png", "light");
+    Topping top("Whipped Cream", "An Irrestible topping", 0.05, 0.25, "picture.png");
+    Topping top2("Hot Fudge", "Hot & Fresh chocolate", 0.25, 0.75, "picture.png");
+    Topping top3("Cherry", "Red and bright delight", 0.01, 0.1, "t_cherry.png");
 
     _toppings.push_back(top);
     _toppings.push_back(top2);
     _toppings.push_back(top3);
     
-    _servers.push_back(Server{"Pujan B.", 0, 8.5});
-    _servers.push_back(Server{"Ankit R.", 1, 8.5});
+    _servers.push_back(Server{"Pujan B.", 0, "817-928-9301",  8.5});
+    _servers.push_back(Server{"Ankit R.", 1, "817-928-9301",  8.5});
     
     _customers.push_back(Customer{"Jeevan G.", 0, "817-928-9301"});
     _customers.push_back(Customer{"Sumit N.", 1, "817-213-4123"});
     
-    _managers.push_back(Manager{"Aabhas K.", 0, "817-391-9304"}); */
+    _managers.push_back(Manager{"Aabhas K.", 0, "817-391-9304"}); 
     
 }
 
