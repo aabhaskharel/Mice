@@ -910,7 +910,7 @@ void Main_window::on_cancel_order(){
     int id = select_from_vector(names, "Cancel Order");
 
 	if (id!=-1) {
-		//emp.set_order_state(id, "canceled");
+		emp.set_order_state(id, "Cancelled");
 	}
 }
 
@@ -926,7 +926,7 @@ void Main_window::on_fill_order() {
     int id = select_from_vector(names, "Fill Order");
 
 	if (id!=-1) {
-		//emp.set_order_state(id, "filled");
+		emp.set_order_state(id, "Filled");
 	}
 }
 
@@ -942,7 +942,7 @@ void Main_window::on_pay_order() {
     int id = select_from_vector(names, "Pay Order");
 
 	if (id!=-1) {
-		//emp.set_order_state(id, "paid");
+		emp.set_order_state(id, "Paid");
 	}
 }
 

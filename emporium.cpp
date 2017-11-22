@@ -35,21 +35,28 @@ void Emporium::add_order(Order order) {
     _orders.push_back(order);
 }
 
-void Emporium::set_order_state(Order order, string state) {
-	order.set_state(state);
+//template<typename T>
+//void Emporium::all_id(T id){
+//	return T.get_id();
+//}
+
+void Emporium::set_order_state(int id, string state) {
+	_orders[id].set_state(state);
+	
 	if (state == "Filled")
 	{
-		double trp = order.get_total_retail_price();
+		double trp = _orders[id].get_total_retail_price();
 		cash_register += trp;
-		Server server = order.get_server();
-		server.set_total_filled(1);
-		if (server.pay())
+		Server server = _orders[id].get_server();
+		int sid = server.get_id();
+		_servers[sid].set_total_filled(1);
+		if (_servers[sid].pay())
 		{
 			cash_register -= server.get_hourly_salary();
-			server.set_total_pay(server.get_hourly_salary());
+			_servers[sid].set_total_pay(server.get_hourly_salary());
 		}
 		
-		vector<Serving> svg = order.get_servings();
+		vector<Serving> svg = _orders[id].get_servings();
 		for (Serving s: svg) {
 		Containr c = s.get_container();
 		c.set_stock(-1);

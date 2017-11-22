@@ -38,7 +38,7 @@ int Server::get_type() {return 3;}
 int Customer::get_type() {return 4;}
 
 
-double Server::get_total_filled() {return _total_filled;}
+int Server::get_total_filled() {return _total_filled;}
 double Server::get_hourly_salary() {return _hourly_salary;}
 void Server::set_hourly_salary(double salary) { _hourly_salary = salary;}
 	

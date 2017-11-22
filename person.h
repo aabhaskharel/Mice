@@ -43,7 +43,7 @@ public:
 	Server(string name, int id, string phone, double hourly_salary);
 	int get_type() override;
 	double get_total_pay();
-	double get_total_filled();
+	int get_total_filled();
 	double get_hourly_salary();
 	void set_hourly_salary(double salary);
 	void set_total_filled(int fill);

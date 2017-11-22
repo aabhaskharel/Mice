@@ -38,7 +38,7 @@ class Emporium{
 		void restore_person(Person person, int id);
 
 		void add_order(Order order);
-		void set_order_state(Order order, string state);
+		void set_order_state(int id, string state);
 
 		void add_stock(Server server, Items item, int quantity);
 	
