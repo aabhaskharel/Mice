@@ -280,13 +280,6 @@ void Main_window::on_edit_item_click() {
     vector<Topping> _toppings = emp.get_toppings();
     vector<string> names;
 
-	if(_containers.size() == 0) {
-		Gtk::MessageDialog dialog{*this, "Add at least one container, one topping, and one flavor to start an order!"};
-	    dialog.run();
-	    dialog.close();
-		return;
-	}
-
     // /////////////////////////////
     // Select Item Type
     Gtk::Dialog dialog_type{"Select Item Type", *this};
@@ -326,8 +319,32 @@ void Main_window::on_edit_item_click() {
 
     dialog_type.close();
 
+	//check for Available items
+	if (type == CONTAINER) {
+		if(_containers.size() == 0 ) {
+			Gtk::MessageDialog dialog{*this, "Add at least one container to edit!"};
+		    dialog.run();
+		    dialog.close();
+			return;
+		}
+	} else if (type == SCOOP) {
+		if(_flavors.size() == 0 ) {
+			Gtk::MessageDialog dialog{*this, "Add at least one flavor to edit!"};
+		    dialog.run();
+		    dialog.close();
+			return;
+		}
+	} else {
+		if(_toppings.size() == 0 ) {
+			Gtk::MessageDialog dialog{*this, "Add at least one topping to edit!"};
+		    dialog.run();
+		    dialog.close();
+			return;
+		}
+	}
+
     // //////////////////////////////
-    // Define Item
+    // edit Item
 
     Gtk::Dialog dialog;
     if (type == CONTAINER) dialog.set_title("Edit Container");
@@ -415,53 +432,56 @@ void Main_window::on_edit_item_click() {
     }
 
     // Show dialog
-    dialog.add_button("Retire", 2);
     dialog.add_button("Cancel", 0);
+	dialog.add_button("Retire", 2);
+	dialog.add_button("Re-Stock", 3);
     dialog.add_button("OK", 1);
     dialog.show_all();
 
     bool valid_data = false;
     bool cretire = false;
+	bool restock = false;
     double d_cost;
     double d_price;
     int i_max_scoops;
 
     while(!valid_data) {
-        if (dialog.run() == 0) {
+
+		int result = dialog.run();
+
+        if (result == 0) {
             dialog.close();
             return;
-        }
-
-        valid_data = true;
-        try {
-            d_cost = std::stod(e_cost.get_text());
-        } catch(std::exception e) {
-            e_cost.set_text("*** invalid cost ***");
-            valid_data = false;
-        }
-        try {
-            d_price = std::stod(e_price.get_text());
-        } catch(std::exception e) {
-            e_price.set_text("*** invalid price ***");
-            valid_data = false;
-        }
-        if (type == CONTAINER) {
-            try {
-                i_max_scoops = std::stoi(e_max_scoops.get_text());
-            } catch(std::exception e) {
-                e_max_scoops.set_text("*** invalid max scoops ***");
-                valid_data = false;
-            }
-        }
-
-        if(dialog.run() == 2) {
-            cout << "Retire staus" << endl;
-            cretire = true; valid_data = true;
-        }
-
-
+        } else if(result == 2) {
+            cretire = true;
+			valid_data = true;
+        } else if(result == 3) {
+			restock = true;
+			valid_data = true;
+		} else {
+	        valid_data = true;
+	        try {
+	            d_cost = std::stod(e_cost.get_text());
+	        } catch(std::exception e) {
+	            e_cost.set_text("*** invalid cost ***");
+	            valid_data = false;
+	        }
+	        try {
+	            d_price = std::stod(e_price.get_text());
+	        } catch(std::exception e) {
+	            e_price.set_text("*** invalid price ***");
+	            valid_data = false;
+	        }
+	        if (type == CONTAINER) {
+	            try {
+	                i_max_scoops = std::stoi(e_max_scoops.get_text());
+	            } catch(std::exception e) {
+	                e_max_scoops.set_text("*** invalid max scoops ***");
+	                valid_data = false;
+	            }
+	        }
+		}
     }
-
     int index = c_index.get_active_row_number();
     string text = c_index.get_active_text();
 
@@ -469,6 +489,25 @@ void Main_window::on_edit_item_click() {
         emp.retire_item(type, index);
         return;
     }
+
+	if (restock) {
+		vector<Server> _servers = emp.get_servers();
+		vector<string> names;
+
+		if(_servers.size() == 0) {
+			Gtk::MessageDialog dialog{*this, "No servers to restock!"};
+			dialog.run();
+			dialog.close();
+			return;
+		}
+
+		for(Server s: _servers) names.push_back(s.get_name());
+		int s_c = select_from_vector(names, "Server");
+
+		if(s_c == -1) return;
+
+		//emp.add_stock(_servers[s_c], type, index, 25);
+	}
 
     // Instance item
     if (type == CONTAINER) {
