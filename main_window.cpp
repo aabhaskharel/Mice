@@ -27,17 +27,17 @@ Main_window::Main_window() {
 	menubar->append(*menuitem_file);
 	Gtk::Menu *filemenu = Gtk::manage(new Gtk::Menu());
 	menuitem_file->set_submenu(*filemenu);
-	
+
 	//new
 	Gtk::MenuItem *menuitem_new = Gtk::manage(new Gtk::MenuItem("_New Emporium", true));
 	menuitem_new->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_mgmt_click));
 	filemenu->append(*menuitem_new);
-	
+
 	//save to a file
 	Gtk::MenuItem *menuitem_save = Gtk::manage(new Gtk::MenuItem("_Save", true));
 	menuitem_save->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_save_click));
 	filemenu->append(*menuitem_save);
-	
+
     //easter egg
 	Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Management", true));
 	menuitem_pop_mgmt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pop_mgmt_click));
@@ -48,21 +48,21 @@ Main_window::Main_window() {
 	Gtk::MenuItem *menuitem_quit = Gtk::manage(new Gtk::MenuItem("_Quit", true));
 	menuitem_quit->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_quit_click));
 	filemenu->append(*menuitem_quit);
-	
+
 	// EDIT
 	Gtk::MenuItem *menuitem_edit = Gtk::manage(new Gtk::MenuItem("_Edit", true));
 	menubar->append(*menuitem_edit);
 	Gtk::Menu *editmenu = Gtk::manage(new Gtk::Menu());
 	menuitem_edit->set_submenu(*editmenu);
-	
+
 	// edit item
 	Gtk::MenuItem *menuitem_eitem = Gtk::manage(new Gtk::MenuItem("_Edit Item", true));
 	menuitem_eitem->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_item_click));
 	editmenu->append(*menuitem_eitem);
-	
+
 	//edit manager
 	//TODO
-	
+
 	//owner menu
 	Gtk::MenuItem *menuitem_owner = Gtk::manage(new Gtk::MenuItem("_Owner", true));
 	menubar->append(*menuitem_owner);
@@ -99,7 +99,7 @@ Main_window::Main_window() {
 	Gtk::MenuItem *menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_Add New Server", true));
 	menuitem_add_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_server));
 	manager_menu->append(*menuitem_add_server);
-	
+
 	// new server salary menu
 	Gtk::MenuItem *menuitem_new_salary = Gtk::manage(new Gtk::MenuItem("_Change Server Salary", true));
 	menuitem_new_salary->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_change_salary));
@@ -131,6 +131,27 @@ Main_window::Main_window() {
 	Gtk::MenuItem *menuitem_serving1 = Gtk::manage(new Gtk::MenuItem("_New Order", true));
 	menuitem_serving1->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
 	customer_menu->append(*menuitem_serving1);
+
+	// Create a Process menu and add to the menu bar
+	Gtk::MenuItem *menuitem_process = Gtk::manage(new Gtk::MenuItem("_Process", true));
+	menubar->append(*menuitem_process);
+	Gtk::Menu *process_menu = Gtk::manage(new Gtk::Menu());
+	menuitem_process->set_submenu(*process_menu);
+
+	//cancel order
+	Gtk::MenuItem *menuitem_cancel = Gtk::manage(new Gtk::MenuItem("_Cancel Order", true));
+	menuitem_cancel->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_cancel_order));
+	process_menu->append(*menuitem_cancel);
+
+	//fill order
+	Gtk::MenuItem *menuitem_fill = Gtk::manage(new Gtk::MenuItem("_Fill Order", true));
+	menuitem_fill->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_fill_order));
+	process_menu->append(*menuitem_fill);
+
+	//pay order
+	Gtk::MenuItem *menuitem_pay = Gtk::manage(new Gtk::MenuItem("_Pay Order", true));
+	menuitem_pay->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pay_order));
+	process_menu->append(*menuitem_pay);
 
 	//REPORTS
 	Gtk::MenuItem *menuitem_reports = Gtk::manage(new Gtk::MenuItem("_Reports", true));
@@ -225,29 +246,29 @@ void Main_window::on_new_mgmt_click() {
 
 void Main_window::on_pop_mgmt_click() {
 	emp.populate_emporium();
-	
+
 	Gtk::MessageDialog dialog{*this, "Populate Succesful"};
     dialog.run();
     dialog.close();
 }
 
 void Main_window::on_save_click() {
-    
+
     Gtk::Dialog dlg{"Enter File Name", *this};
     Gtk::Entry e;
     dlg.get_vbox()->pack_start(e, Gtk::PACK_SHRINK);
-    
+
     dlg.add_button("Save", 1);
-    
+
     dlg.show_all();
     dlg.run();
-    
+
     string s = e.get_text();
-    
+
     emp.write(s);
-    
+
     dlg.close();
-    
+
 }
 
 void Main_window::on_edit_item_click() {
@@ -285,7 +306,7 @@ void Main_window::on_edit_item_click() {
     // Show dialog_type
     dialog_type.add_button("Cancel", 0);
     dialog_type.add_button("OK", 1);
-    
+
     dialog_type.show_all();
     if (dialog_type.run() != 1) {
         dialog_type.close();
@@ -305,13 +326,13 @@ void Main_window::on_edit_item_click() {
     else dialog.set_title("Edit Topping");
     dialog.set_transient_for(*this);
 
-    // Name 
+    // Name
     Gtk::HBox b_name;
 
     Gtk::Label l_name{"Name:"};
     l_name.set_width_chars(WIDTH);
     b_name.pack_start(l_name, Gtk::PACK_SHRINK);
-    
+
     //edit magic
     Gtk::ComboBoxText c_index;
     c_index.set_size_request(WIDTH*10);
@@ -423,41 +444,41 @@ void Main_window::on_edit_item_click() {
                 valid_data = false;
             }
         }
-        
+
         if(dialog.run() == 2) {
             cout << "Retire staus" << endl;
             cretire = true; valid_data = true;
         }
-        
-        
+
+
     }
-    
+
     int index = c_index.get_active_row_number();
     string text = c_index.get_active_text();
-    
+
     if (cretire) {
         emp.retire_item(type, index);
         return;
     }
-        
+
     // Instance item
     if (type == CONTAINER) {
         Containr cont(text, e_desc.get_text(), d_cost, d_price, "picture.png", i_max_scoops);
         emp.edit_container(index, cont);
-        
+
        //std::cout << c << std::endl;
     } else if (type == SCOOP) {
         Flavor f(text, e_desc.get_text(), d_cost, d_price,  "picture.png");
         emp.edit_flavor(index, f);
-        
+
         //std::cout << f << std::endl;
     } else {
         Topping t(text, e_desc.get_text(), d_cost, d_price, "picture.png");
         emp.edit_topping(index, t);
-        
+
         //std::cout << t << std::endl;
     }
-    
+
     dialog.close();
 }
 
@@ -514,7 +535,7 @@ void Main_window::on_new_item() {
     else dialog.set_title("Create Topping");
     dialog.set_transient_for(*this);
 
-    // Name 
+    // Name
     Gtk::HBox b_name;
 
     Gtk::Label l_name{"Name:"};
@@ -627,7 +648,7 @@ void Main_window::on_new_item() {
             valid_data = false;
         }
     }
-        
+
     // Instance item
     if (type == CONTAINER) {
         //Containr c(e_name.get_text(), e_desc.get_text(), d_cost, d_price, 0, i_max_scoops);
@@ -642,7 +663,7 @@ void Main_window::on_new_item() {
         //_toppings.push_back(t);
         //std::cout << t << std::endl;
     }
-    
+
     dialog.close();
 }
 
@@ -653,7 +674,7 @@ void Main_window::on_new_container() {
 		Containr cont(res[0], res[1], stod(res[2]), stod(res[3]), res[5], stoi(res[6]));
 		emp.add_container(cont);
 	}
-	
+
 }
 
 void Main_window::on_new_flavor() {
@@ -664,7 +685,7 @@ void Main_window::on_new_flavor() {
 		Flavor flav(res[0], res[1], stod(res[2]), stod(res[3]), res[5]);
 		emp.add_flavor(flav);
 	}
-	
+
 }
 
 void Main_window::on_new_topping() {
@@ -684,26 +705,26 @@ void Main_window::on_new_server() {
 		Server ser(res[0], emp.get_servers().size(),"183-212-3444", stod(res[1]));
 		emp.add_server(ser);
 	}
-	
+
 }
 
 void Main_window::on_change_salary() {
-    
+
     vector<Server> _servers = emp.get_servers();
     vector<string> names;
-    
+
     for(Server s: _servers) names.push_back(s.get_name());
     int s_c = select_from_vector(names, "Server");
-    
+
     if(s_c == -1) return;
-    
+
     Gtk::Dialog dlg{"New Salary Input", *this};
-    
+
     Gtk::HBox b_wage;
     Gtk::Label l_wage{"Hourly Salary: "};
     l_wage.set_width_chars(20);
     b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
-    
+
     Gtk::SpinButton e_wage(0,0);
     e_wage.set_increments(0.1,0.01);
     e_wage.set_increments(0.1,0.01);
@@ -713,16 +734,16 @@ void Main_window::on_change_salary() {
     e_wage.set_numeric();
     b_wage.pack_start(e_wage, Gtk::PACK_SHRINK);
     dlg.get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
-    
+
     dlg.add_button("Cancel", 0);
     dlg.add_button("Done", 1);
     dlg.show_all();
-    
+
     if(dlg.run() == 1) {
         double m = e_wage.get_value();
         emp.change_salary(s_c, m);
     }
-    
+
     dlg.close();
 }
 
@@ -731,14 +752,14 @@ void Main_window::on_new_order() {
     vector<Server> _servers = emp.get_servers();
     vector<Customer> _customers = emp.get_customers();
     vector<string> names;
-    
+
     for(Server s: _servers) names.push_back(s.get_name());
     int s_c = select_from_vector(names, "Server");
-   
-    names.clear(); 
+
+    names.clear();
     for(Customer c: _customers) names.push_back(c.get_name());
     int c_c = select_from_vector(names, "Customer");
-    
+
     if(s_c==-1 || c_c==-1) return;
 
 	Order order{emp.get_orders().size(), _servers[s_c], _customers[c_c]};
@@ -766,13 +787,13 @@ void Main_window::on_new_order() {
 
 	if(result == 0) return;
 	if(result == 2) {
-		if (order.get_servings_size()!=0) { 
+		if (order.get_servings_size()!=0) {
 			emp.add_order(order);
 			string out = "";
 			for (int i =0; i< order.get_servings_size(); i++) {
 			    out+= order.list_serving(i);
 			}
-			
+
 			//stringstream buf;
 			//buf << order ;		//OPERATOR OVERLOADING
 			//string out = buf.str();
@@ -833,38 +854,38 @@ void Main_window::on_new_customer() {
 
 void Main_window::on_new_manager() {
     Gtk::Dialog m_dialog{"Add New Manager", *this};
-    
+
     Gtk::HBox hbox1;
     Gtk::Label l_name{"Name: "};
     l_name.set_width_chars(15);
     Gtk::Entry e_name;
     e_name.set_max_length(50);
-    
+
     hbox1.pack_start(l_name, Gtk::PACK_SHRINK);
     hbox1.pack_start(e_name, Gtk::PACK_SHRINK);
-    
+
     Gtk::HBox hbox2;
     Gtk::Label l_phone{"Phone: "};
     l_phone.set_width_chars(15);
     Gtk::Entry e_phone;
     e_phone.set_max_length(50);
-    
+
     hbox2.pack_start(l_phone, Gtk::PACK_SHRINK);
     hbox2.pack_start(e_phone, Gtk::PACK_SHRINK);
-    
+
     m_dialog.get_vbox()->pack_start(hbox1, Gtk::PACK_SHRINK);
     m_dialog.get_vbox()->pack_start(hbox2, Gtk::PACK_SHRINK);
-    
+
     m_dialog.add_button("Cancel", 0);
     m_dialog.add_button("Ok", 1);
-    
+
     m_dialog.show_all();
-    
+
     string name, phone;
     if(m_dialog.run() == 1) {
         name = e_name.get_text();
         phone = e_phone.get_text();
-        
+
         if (name == "" || phone == "") {
             Gtk::MessageDialog dlg{*this, "Invalid Input"};
             dlg.run(); dlg.close();
@@ -873,7 +894,36 @@ void Main_window::on_new_manager() {
         int size = emp.get_managers().size();
         emp.add_manager(Manager{name, size, phone});
     }
-    
+
+}
+
+//process callbacks
+void Main_window::on_cancel_order(){
+	vector<string> names;
+	vector<Order> orders = emp.get_orders();
+
+    for(Order s: orders) names.push_back(s.get_id());
+    int id = select_from_vector(names, "Cancel Order");
+
+	emp.set_order_state(id, "canceled");
+}
+void Main_window::on_fill_order() {
+	vector<string> names;
+	vector<Order> orders = emp.get_orders();
+
+    for(Order s: orders) names.push_back(s.get_id());
+    int id = select_from_vector(names, "Fill Order");
+
+	emp.set_order_state(id, "filled");
+}
+void Main_window::on_pay_order() {
+	vector<string> names;
+	vector<Order> orders = emp.get_orders();
+
+    for(Order s: orders) names.push_back(s.get_id());
+    int id = select_from_vector(names, "Pay Order");
+
+	emp.set_order_state(id, "paid");
 }
 
 //report callbacks
@@ -883,18 +933,18 @@ void Main_window::on_servers_report() {
 	Gtk::Dialog s_dialog{"Servers Report", *this};
 	Gtk::Label l_text{res};
 	s_dialog.get_vbox()->pack_start(l_text, Gtk::PACK_SHRINK);
-	
+
 	s_dialog.add_button("Ok", 1);
 	s_dialog.show_all();
 	s_dialog.run();
 }
 void Main_window::on_customers_report() {
 	string res = emp.get_customers_report();
-	
+
 	Gtk::Dialog c_dialog{"Customers Report", *this};
 	Gtk::Label lc_text{res};
 	c_dialog.get_vbox()->pack_start(lc_text, Gtk::PACK_SHRINK);
-	
+
 	c_dialog.add_button("Ok", 1);
 	c_dialog.show_all();
 	c_dialog.run();
@@ -905,7 +955,7 @@ void Main_window::on_inventory_report() {
     Gtk::Dialog i_dialog{"Inventory Report", *this};
 	Gtk::Label li_text{res};
 	i_dialog.get_vbox()->pack_start(li_text, Gtk::PACK_SHRINK);
-	
+
 	i_dialog.add_button("Ok", 1);
 	i_dialog.show_all();
 	i_dialog.run();
@@ -916,18 +966,18 @@ void Main_window::on_orders_report() {
     Gtk::Dialog o_dialog{"Orders Report", *this};
 	Gtk::Label lo_text{res};
 	o_dialog.get_vbox()->pack_start(lo_text, Gtk::PACK_SHRINK);
-	
+
 	o_dialog.add_button("Ok", 1);
 	o_dialog.show_all();
 	o_dialog.run();
 }
 void Main_window::on_pnl_report() {
 	string res = emp.get_pnl_report();
-	
+
 	Gtk::Dialog p_dialog{"Profit & Loss Report", *this};
 	Gtk::Label lp_text{res};
 	p_dialog.get_vbox()->pack_start(lp_text, Gtk::PACK_SHRINK);
-	
+
 	p_dialog.add_button("Ok", 1);
 	p_dialog.show_all();
 	p_dialog.run();
@@ -1018,5 +1068,3 @@ int Main_window::select_from_vector(std::vector<std::string> names, std::string 
 
 	return index;
 }
-
-
