@@ -902,28 +902,48 @@ void Main_window::on_cancel_order(){
 	vector<string> names;
 	vector<Order> orders = emp.get_orders();
 
-    for(Order s: orders) names.push_back(s.get_id());
+	if(orders.size()==0) {
+		return;
+	}
+
+    for(Order s: orders) names.push_back(to_string(s.get_id()));
     int id = select_from_vector(names, "Cancel Order");
 
-	emp.set_order_state(id, "canceled");
+	if (id!=-1) {
+		//emp.set_order_state(id, "canceled");
+	}
 }
+
 void Main_window::on_fill_order() {
 	vector<string> names;
 	vector<Order> orders = emp.get_orders();
 
-    for(Order s: orders) names.push_back(s.get_id());
+	if(orders.size()==0) {
+		return;
+	}
+
+    for(Order s: orders) names.push_back(to_string(s.get_id()));
     int id = select_from_vector(names, "Fill Order");
 
-	emp.set_order_state(id, "filled");
+	if (id!=-1) {
+		//emp.set_order_state(id, "filled");
+	}
 }
+
 void Main_window::on_pay_order() {
 	vector<string> names;
 	vector<Order> orders = emp.get_orders();
 
-    for(Order s: orders) names.push_back(s.get_id());
+	if(orders.size()==0) {
+		return;
+	}
+
+    for(Order s: orders) names.push_back(to_string(s.get_id()));
     int id = select_from_vector(names, "Pay Order");
 
-	emp.set_order_state(id, "paid");
+	if (id!=-1) {
+		//emp.set_order_state(id, "paid");
+	}
 }
 
 //report callbacks
