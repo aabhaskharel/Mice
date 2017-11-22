@@ -46,10 +46,13 @@ void Emporium::set_order_state(int id, string state) {
 	if (state == "Filled")
 	{
 		double trp = _orders[id].get_total_retail_price();
+		double twp = _orders[id].get_total_wholesale_price();
+		_stocking_cost += twp;
 		cash_register += trp;
 		Server server = _orders[id].get_server();
 		int sid = server.get_id();
 		_servers[sid].set_total_filled(1);
+		
 		if (_servers[sid].pay())
 		{
 			cash_register -= server.get_hourly_salary();
@@ -57,6 +60,7 @@ void Emporium::set_order_state(int id, string state) {
 		}
 		
 		vector<Serving> svg = _orders[id].get_servings();
+		
 		for (Serving s: svg) {
 		Containr c = s.get_container();
 		c.set_stock(-1);
@@ -199,8 +203,10 @@ string Emporium::get_orders_report() {
 	for(int i=0; i<_orders.size(); i++){
 		if (_orders[i].get_state() == "Filled") {
 		out += "\nOrder #" + to_string(_orders[i].get_id()) + "\n";
-		out += "\tWholesale cost: " + to_string(_orders[i].get_total_wholesale_price()) + "\n\tRetail cost: " + to_string(_orders[i].get_total_retail_price())+"\n";
-		out += "\tProfit: " + to_string(_orders[i].get_total_retail_price()-_orders[i].get_total_wholesale_price()) + "\n\n";
+		double retail = _orders[i].get_total_retail_price();
+		out += "\tWholesale cost: " + to_string(_orders[i].get_total_wholesale_price()) + "\n\tRetail cost: " + to_string(retail)+"\n";
+		double profit = retail - _orders[i].get_total_wholesale_price();
+		out += "\tProfit: " + to_string(profit) + "\n\n";
 		}	
 	}
 	
