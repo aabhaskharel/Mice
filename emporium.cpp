@@ -42,7 +42,7 @@ void Emporium::add_order(Order order) {
 
 void Emporium::set_order_state(int id, string state) {
 	_orders[id].set_state(state);
-	
+
 	if (state == "Filled")
 	{
 		double trp = _orders[id].get_total_retail_price();
@@ -52,15 +52,15 @@ void Emporium::set_order_state(int id, string state) {
 		Server server = _orders[id].get_server();
 		int sid = server.get_id();
 		_servers[sid].set_total_filled(1);
-		
+
 		if (_servers[sid].pay())
 		{
 			cash_register -= server.get_hourly_salary();
 			_servers[sid].set_total_pay(server.get_hourly_salary());
 		}
-		
+
 		vector<Serving> svg = _orders[id].get_servings();
-		
+
 		for (Serving s: svg) {
 		Containr c = s.get_container();
 		c.set_stock(-1);
@@ -78,14 +78,14 @@ void Emporium::set_order_state(int id, string state) {
 			case 0:	tv[i].set_stock(-1); break;
 			case 1:	tv[i].set_stock(-2); break;
 			case 2:	tv[i].set_stock(-3); break;
-			case 3:	tv[i].set_stock(-4); break;	
-			}	
+			case 3:	tv[i].set_stock(-4); break;
+			}
 		}
-		
+
 		}
-		
-		
-		
+
+
+
 	}
 }
 
@@ -114,6 +114,9 @@ vector<Flavor> Emporium::get_retired_flavors() {
 vector<Server> Emporium::get_retired_servers() {
     return _retired_servers;
 }
+vector<Manager> Emporium::get_retired_managers() {
+    return _retired_managers;
+}
 vector<Customer> Emporium::get_customers(){
 	return _customers;
 }
@@ -129,7 +132,7 @@ vector<Order> Emporium::get_orders() {
 string Emporium::get_servers_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
-	out += "		" + _location + "		" + "\n"; 
+	out += "		" + _location + "		" + "\n";
 	out += "		" + _phone + "		    "  + "\n\n";
 	out += "SERVERS REPORT\n\n";
 	out += "Active Servers: \n\n";
@@ -137,69 +140,69 @@ string Emporium::get_servers_report() {
 		out += "\tName: " +_servers[i].get_name() + "\tEmployee #: " + to_string(_servers[i].get_id()) + "\tTotal Order Filled: " +
 		to_string(_servers[i].get_total_filled()) + "\tHourly Salary: "+ to_string(_servers[i].get_hourly_salary()) + "\tTotal earned: "+to_string(_servers[i].get_total_pay())+ "\n";
 	}
-	
+
 	out += "\nSuspended Servers: \n\n";
 	for(int i=0; i<_retired_servers.size(); i++){
 		out += "\tName: " +_retired_servers[i].get_name() + "\tEmployee #: " + to_string(_retired_servers[i].get_id()) + "\tTotal Order Filled: " +
 		to_string(_retired_servers[i].get_total_filled()) + "\tHourly Salary: "+ to_string(_retired_servers[i].get_hourly_salary()) + "\tTotal earned: "+to_string(_retired_servers[i].get_total_pay())+ "\n";
 	}
-	
+
 	return out;
-	
+
 }
 
 string Emporium::get_customers_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
-	out += "		" + _location + "		" + "\n"; 
+	out += "		" + _location + "		" + "\n";
 	out += "		" + _phone + "		    "  + "\n\n";
 	out += "CUSTOMERS REPORT\n\n";
-	
-	
+
+
 	for(int i=0; i< _customers.size(); i++){
 		out += "\tName: " + _customers[i].get_name() + "\t\tID: " + to_string(_customers[i].get_id()) + "\tPhone: "+_customers[i].get_phone() + "\n";
 	}
-	
+
 	return out;
-	
+
 }
 
 string Emporium::get_inventory_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
-	out += "		" + _location + "		" + "\n"; 
+	out += "		" + _location + "		" + "\n";
 	out += "		" + _phone + "		    "  + "\n\n";
 	out += "INVENTORY REPORT\n\n";
-	
+
 	out += "Containers Available:\n";
-	
+
 	for(int i=0; i<_containers.size(); i++){
 		out += "\tContainer name: "+_containers[i].get_name()+"\tStock Remaining: "+to_string(_containers[i].get_stock())+"\n";
 	}
-	
+
 	out += "\nFlavors Available:\n";
-	
+
 	for(int i=0; i<_flavors.size(); i++){
 		out += "\tFlavor name: "+_flavors[i].get_name()+"\tStock Remaining: "+to_string(_flavors[i].get_stock())+"\n";
 	}
-	
+
 	out += "\nToppingsAvailable:\n";
-	
+
 	for(int i=0; i<_toppings.size(); i++){
 		out += "\tTopping name: "+_toppings[i].get_name()+"\tStock Remainig: "+to_string(_toppings[i].get_stock())+"\n";
 	}
-	
+
 	return out;
 }
 
 string Emporium::get_orders_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
-	out += "		" + _location + "		" + "\n"; 
+	out += "		" + _location + "		" + "\n";
 	out += "		" + _phone + "		    "  + "\n\n";
 	out += "ORDER REPORT\n\n";
 	out += "Filled/Paid Orders\n\n";
-	
+
 	for(int i=0; i<_orders.size(); i++){
 		if (_orders[i].get_state() == "Filled") {
 		out += "\nOrder #" + to_string(_orders[i].get_id()) + "\n";
@@ -207,44 +210,44 @@ string Emporium::get_orders_report() {
 		out += "\tWholesale cost: " + to_string(_orders[i].get_total_wholesale_price()) + "\n\tRetail cost: " + to_string(retail)+"\n";
 		double profit = retail - _orders[i].get_total_wholesale_price();
 		out += "\tProfit: " + to_string(profit) + "\n\n";
-		}	
+		}
 	}
-	
+
 	out += "\nCancelled Orders\n\n";
-	
+
 	for(int i=0; i<_orders.size(); i++){
 		if (_orders[i].get_state() == "Cancelled") {
 		out += "\nOrder #" + to_string(_orders[i].get_id()) + "\n";
-		}	
+		}
 	}
-	
+
 	return out;
 }
 
 string Emporium::get_pnl_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
-	out += "		" + _location + "		" + "\n"; 
+	out += "		" + _location + "		" + "\n";
 	out += "		" + _phone + "		    "  + "\n\n";
 	out += "PROFIT AND LOSS STATEMENT\n\n";
-	
+
 	double orders_retail = 0;
 	double total_salary = 0;
-	
+
 	for(int i=0; i<_orders.size(); i++){
 		orders_retail += _orders[i].get_total_retail_price();
 	}
-	
+
 	for(int i=0; i<_servers.size(); i++){
 		total_salary += _servers[i].get_total_pay();
 	}
-	
+
 	out += "Income:\n";
 	out += "\tTotal earnings from orders: " + to_string(orders_retail) + "\n\n";
 	out += "Expenses:make\n";
 	out += "\tTotal cost of items: " + to_string(_stocking_cost) + "\n";
 	out += "\tTotal salaries distributed: " + to_string(total_salary) + "\n\n";
-	
+
 	double net = orders_retail - _stocking_cost - total_salary;
 	if (net < 0)
 	{
@@ -253,11 +256,11 @@ string Emporium::get_pnl_report() {
 	else
 	{
 		out += "Profit: " + to_string(net);
-	}	
+	}
 	out += "\n\n";
-	
+
 	return out;
-	
+
 }
 
 //change server's salary
@@ -294,7 +297,7 @@ void Emporium::retire_person(Person person, int id){
 		_retired_servers.push_back(_servers[id]);
 		_servers.erase(_servers.begin()+id);
 	}
-	
+
 }
 
 void Emporium::restore_item(Items item, int id){
@@ -327,83 +330,83 @@ void Emporium::restore_person(Person person, int id){
 		_servers.push_back(_retired_servers[id]);
 		_retired_servers.erase(_retired_servers.begin()+id);
 	}
-	
+
 }
 
 //write to a file
 void Emporium::write(string filename){
-	
+
 	ofstream ofs {filename};
 	if(!ofs) throw runtime_error("can't open output file " + filename);
-	
+
 	ofs << "-co" << endl;
-	
+
 	//writing containers data
 	for(int i=0; i<_containers.size(); i++){
-		ofs << _containers[i].get_name() << "," << _containers[i].get_description() << "," << _containers[i].get_wholesale_price() << "," << _containers[i].get_retail_price() << "," << _containers[i].get_stock() << "," << _containers[i].get_image_path() << "," << _containers[i].get_scoop() << endl; 
+		ofs << _containers[i].get_name() << "," << _containers[i].get_description() << "," << _containers[i].get_wholesale_price() << "," << _containers[i].get_retail_price() << "," << _containers[i].get_stock() << "," << _containers[i].get_image_path() << "," << _containers[i].get_scoop() << endl;
 	}
-	
+
 	ofs << "-rc" << endl;
 	//retired containers
 	for(int i=0; i<_retired_containers.size(); i++){
-		ofs << _retired_containers[i].get_name() << "," << _retired_containers[i].get_description() << "," << _retired_containers[i].get_wholesale_price() << "," << _retired_containers[i].get_retail_price() << "," << _retired_containers[i].get_stock() << "," << _retired_containers[i].get_image_path() << "," << _retired_containers[i].get_scoop() << endl; 
+		ofs << _retired_containers[i].get_name() << "," << _retired_containers[i].get_description() << "," << _retired_containers[i].get_wholesale_price() << "," << _retired_containers[i].get_retail_price() << "," << _retired_containers[i].get_stock() << "," << _retired_containers[i].get_image_path() << "," << _retired_containers[i].get_scoop() << endl;
 	}
-	
-	
+
+
 	//writing flavors data
 	ofs << "-fl" << endl;
-	
+
 	for(int i=0; i<_flavors.size(); i++){
 		ofs << _flavors[i].get_name() << "," << _flavors[i].get_description() << "," << _flavors[i].get_wholesale_price() << "," << _flavors[i].get_retail_price() << "," << _flavors[i].get_stock() << "," << _flavors[i].get_image_path() << endl;
 	}
-	
+
 	//retired flavors
 	ofs << "-rf" << endl;
-	
+
 	for(int i=0; i<_retired_flavors.size(); i++){
 		ofs << _retired_flavors[i].get_name() << "," << _retired_flavors[i].get_description() << "," << _retired_flavors[i].get_wholesale_price() << "," << _retired_flavors[i].get_retail_price() << "," << _retired_flavors[i].get_stock() << "," << _retired_flavors[i].get_image_path() << endl;
 	}
-	
+
 	ofs << "-to" << endl;
-	
+
 	for(int i=0; i<_toppings.size(); i++){
 		ofs << _toppings[i].get_name() << "," << _toppings[i].get_description() << "," << _toppings[i].get_wholesale_price() << "," << _toppings[i].get_retail_price() << "," << _toppings[i].get_stock() << "," << _toppings[i].get_image_path() << "," << endl;
 	}
-	
+
 	ofs << "-rt" << endl;
-	
+
 	for(int i=0; i<_retired_toppings.size(); i++){
 		ofs << _retired_toppings[i].get_name() << "," << _retired_toppings[i].get_description() << "," << _retired_toppings[i].get_wholesale_price() << "," << _retired_toppings[i].get_retail_price() << "," << _retired_toppings[i].get_stock() << "," << _retired_toppings[i].get_image_path() << "," << endl;
 	}
-	
+
 	ofs << "-ma" << endl;
-	
+
 	for(int i=0; i<_managers.size(); i++){
 		ofs << _managers[i].get_name() << "," << _managers[i].get_id() << "," << _managers[i].get_phone() << endl;
 	}
-	
+
 	ofs << "-rm" << endl;
-	
+
 	for(int i=0; i<_retired_managers.size(); i++){
 		ofs << _retired_managers[i].get_name() << "," << _retired_managers[i].get_id() << "," << _retired_managers[i].get_phone() << endl;
 	}
-	
+
 	ofs << "-se" << endl;
 	for(int i=0; i<_servers.size(); i++){
 		ofs << _servers[i].get_name() << "," << _servers[i].get_id() << "," << _servers[i].get_phone() << "," << _servers[i].get_hourly_salary() << "," << _servers[i].get_total_filled() << endl;
 	}
-	
+
 	ofs << "-rs" << endl;
 	for(int i=0; i<_retired_servers.size(); i++){
 		ofs << _retired_servers[i].get_name() << "," << _retired_servers[i].get_id() << "," << _retired_servers[i].get_phone() << "," << _retired_servers[i].get_hourly_salary() << "," << _retired_servers[i].get_total_filled() << endl;
 	}
-	
+
 	ofs << "-cu" << endl;
-	
+
 	for(int i=0; i<_customers.size(); i++){
 		ofs << _customers[i].get_name() << "," << _customers[i].get_id() << "," << _customers[i].get_phone() << endl;
 	}
-	
+
 	ofs << "-or" << endl;
 
 	for(int i=0; i<_orders.size(); i++) {
@@ -430,27 +433,27 @@ void Emporium::write(string filename){
 				svng += "," + x;
 			}
 		}
-		
+
 		ofs << _orders[i].get_id() << "," << _orders[i].get_server().get_id() << "," << _orders[i].get_customer().get_id() << "," << svng << "," << _orders[i].get_state() << "," << endl;
 	}
-	
+
 	ofs << "-cr" << endl;
 	ofs << cash_register << endl;
-	
-	
-	
+
+
+
 }
 
 //edit container
 void Emporium::edit_container(int id, Containr container){
 	_containers[id] = container;
-	
+
 }
 
 //edit flavor
 void Emporium::edit_flavor(int id, Flavor flavor){
 	_flavors[id] = flavor;
-	
+
 }
 
 //edit topping
@@ -470,7 +473,7 @@ void Emporium::add_stock(Server server, Items item, int quantity) {
 			cash_register -= server.get_hourly_salary();
 			server.set_total_pay(server.get_hourly_salary());
 		}
-	
+
 }
 
 void Emporium:: populate_emporium(){
@@ -495,14 +498,13 @@ void Emporium:: populate_emporium(){
     _toppings.push_back(top);
     _toppings.push_back(top2);
     _toppings.push_back(top3);
-    
+
     _servers.push_back(Server{"Pujan B.", 0, "817-928-9301",  8.5});
     _servers.push_back(Server{"Ankit R.", 1, "817-928-9301",  8.5});
-    
+
     _customers.push_back(Customer{"Jeevan G.", 0, "817-928-9301"});
     _customers.push_back(Customer{"Sumit N.", 1, "817-213-4123"});
-    
-    _managers.push_back(Manager{"Aabhas K.", 0, "817-391-9304"}); 
-    
-}
 
+    _managers.push_back(Manager{"Aabhas K.", 0, "817-391-9304"});
+
+}

@@ -65,6 +65,11 @@ Main_window::Main_window() {
 	menuitem_eserver->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_server_click));
 	editmenu->append(*menuitem_eserver);
 
+	//restore person
+	Gtk::MenuItem *menuitem_restore_person = Gtk::manage(new Gtk::MenuItem("_Restore Person", true));
+	menuitem_restore_person->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_restore_person_click));
+	editmenu->append(*menuitem_restore_person);
+
 	//owner menu
 	Gtk::MenuItem *menuitem_owner = Gtk::manage(new Gtk::MenuItem("_Owner", true));
 	menubar->append(*menuitem_owner);
@@ -484,6 +489,50 @@ void Main_window::on_edit_item_click() {
     }
 
     dialog.close();
+}
+
+void Main_window::on_restore_person_click() {
+	vector<string> names;
+	names.push_back("Manager");
+	names.push_back("Server");
+
+	int mos = select_from_vector(names, "Manager or Server:");
+
+	if(mos==-1) return;
+
+	if (mos == 1) {
+		vector<Server> rservers = emp.get_retired_servers();
+		if(rservers.size() == 0) {
+			Gtk::MessageDialog dialog{*this, "No servers to Restore"};
+		    dialog.run();
+		    dialog.close();
+			return;
+		}
+		names.clear();
+		for(Server s: rservers) names.push_back(s.get_name());
+
+		int sc = select_from_vector(names, "Select an Server");
+		if(sc == -1) return;
+
+		emp.restore_person(rservers[sc], sc);
+	}
+
+	if (mos == 0) {
+		vector<Manager> rmanagers = emp.get_retired_managers();
+		if(rmanagers.size() == 0) {
+			Gtk::MessageDialog dialog{*this, "No managers to Restore"};
+		    dialog.run();
+		    dialog.close();
+			return;
+		}
+		names.clear();
+		for(Manager m: rmanagers) names.push_back(m.get_name());
+
+		int mc = select_from_vector(names, "Select an Manager");
+		if(mc == -1) return;
+
+		emp.restore_person(rmanagers[mc], mc);
+	}
 }
 
 void Main_window::on_edit_server_click() {

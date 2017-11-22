@@ -41,6 +41,8 @@ class Main_window : public Gtk::Window
     	void on_edit_item_click();
         void on_edit_server_click();
 
+        void on_restore_person_click();
+
     	//report callbacks
     	void on_servers_report();
     	void on_customers_report();

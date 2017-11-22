@@ -17,6 +17,7 @@ class Emporium{
 		vector<Topping> get_retired_toppings();
 		vector<Flavor> get_retired_flavors();
 		vector<Server> get_retired_servers();
+		vector<Manager> get_retired_managers();
 		vector<Customer> get_customers();
 		vector<Order> get_orders();
 		vector<Manager> get_managers();
@@ -41,7 +42,7 @@ class Emporium{
 		void set_order_state(int id, string state);
 
 		void add_stock(Server server, Items item, int quantity);
-	
+
 		void edit_container(int id, Containr container);
 		void edit_flavor(int id, Flavor flavor);
 		void edit_topping(int id, Topping topping);
