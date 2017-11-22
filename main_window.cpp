@@ -275,6 +275,13 @@ void Main_window::on_edit_item_click() {
     vector<Topping> _toppings = emp.get_toppings();
     vector<string> names;
 
+	if(_containers.size() == 0) {
+		Gtk::MessageDialog dialog{*this, "Add at least one container, one topping, and one flavor to start an order!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
     // /////////////////////////////
     // Select Item Type
     Gtk::Dialog dialog_type{"Select Item Type", *this};
@@ -483,6 +490,13 @@ void Main_window::on_edit_server_click() {
 
     vector<Server> _servers = emp.get_servers();
     vector<string> names;
+
+	if(_servers.size() == 0) {
+		Gtk::MessageDialog dialog{*this, "No servers to Edit!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
 
     for(Server s: _servers) names.push_back(s.get_name());
     int s_c = select_from_vector(names, "Server");
@@ -757,6 +771,13 @@ void Main_window::on_new_order() {
     vector<Customer> _customers = emp.get_customers();
     vector<string> names;
 
+	if(_servers.size() == 0 || _customers.size() == 0) {
+		Gtk::MessageDialog dialog{*this, "Add at least one server, and one customer to start an order!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
     for(Server s: _servers) names.push_back(s.get_name());
     int s_c = select_from_vector(names, "Server");
 
@@ -815,6 +836,14 @@ Serving Main_window::create_serving() {
 	vector<Containr> _containers = emp.get_containers();
 	vector<Flavor> _flavors = emp.get_flavors();
 	vector<Topping> _toppings = emp.get_toppings();
+/*
+	if(_containers.size() == 0 || _flavors.size() == 0 || _toppings.size() == 0) {
+		Gtk::MessageDialog dialog{*this, "Add at least one container, one topping, and one flavor to start an serving!"};
+	    dialog.run();
+	    dialog.close();
+		return Serving s;
+	}
+*/
 
 	std::vector<std::string> names;
 	for (Containr c : _containers) names.push_back(c.get_name());
@@ -907,6 +936,9 @@ void Main_window::on_cancel_order(){
 	vector<Order> orders = emp.get_orders();
 
 	if(orders.size()==0) {
+		Gtk::MessageDialog dialog{*this, "No orders to Cancel!"};
+	    dialog.run();
+	    dialog.close();
 		return;
 	}
 
@@ -923,6 +955,9 @@ void Main_window::on_fill_order() {
 	vector<Order> orders = emp.get_orders();
 
 	if(orders.size()==0) {
+		Gtk::MessageDialog dialog{*this, "No orders to Fill!"};
+	    dialog.run();
+	    dialog.close();
 		return;
 	}
 
@@ -939,6 +974,9 @@ void Main_window::on_pay_order() {
 	vector<Order> orders = emp.get_orders();
 
 	if(orders.size()==0) {
+		Gtk::MessageDialog dialog{*this, "No orders to Pay!"};
+	    dialog.run();
+	    dialog.close();
 		return;
 	}
 
