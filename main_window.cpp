@@ -60,8 +60,10 @@ Main_window::Main_window() {
 	menuitem_eitem->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_item_click));
 	editmenu->append(*menuitem_eitem);
 
-	//edit manager
-	//TODO
+	//edit server
+	Gtk::MenuItem *menuitem_eserver = Gtk::manage(new Gtk::MenuItem("_Edit Server", true));
+	menuitem_eserver->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_server_click));
+	editmenu->append(*menuitem_eserver);
 
 	//owner menu
 	Gtk::MenuItem *menuitem_owner = Gtk::manage(new Gtk::MenuItem("_Owner", true));
@@ -99,11 +101,6 @@ Main_window::Main_window() {
 	Gtk::MenuItem *menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_Add New Server", true));
 	menuitem_add_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_server));
 	manager_menu->append(*menuitem_add_server);
-
-	// new server salary menu
-	Gtk::MenuItem *menuitem_new_salary = Gtk::manage(new Gtk::MenuItem("_Change Server Salary", true));
-	menuitem_new_salary->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_change_salary));
-	manager_menu->append(*menuitem_new_salary);
 
 	// Create a Server menu and add to the menu bar
 	Gtk::MenuItem *menuitem_server = Gtk::manage(new Gtk::MenuItem("_Server", true));
@@ -482,6 +479,52 @@ void Main_window::on_edit_item_click() {
     dialog.close();
 }
 
+void Main_window::on_edit_server_click() {
+
+    vector<Server> _servers = emp.get_servers();
+    vector<string> names;
+
+    for(Server s: _servers) names.push_back(s.get_name());
+    int s_c = select_from_vector(names, "Server");
+
+    if(s_c == -1) return;
+
+    Gtk::Dialog dlg{"New Salary Input", *this};
+
+    Gtk::HBox b_wage;
+    Gtk::Label l_wage{"Hourly Salary: "};
+    l_wage.set_width_chars(20);
+    b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
+
+    Gtk::SpinButton e_wage(0,0);
+    e_wage.set_increments(0.1,0.01);
+    e_wage.set_increments(0.1,0.01);
+    e_wage.set_range(0.00,99999.00);
+    e_wage.set_digits(2);
+    e_wage.set_wrap(true);
+    e_wage.set_numeric();
+    b_wage.pack_start(e_wage, Gtk::PACK_SHRINK);
+    dlg.get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
+
+    dlg.add_button("Cancel", 0);
+	dlg.add_button("Suspend", 2);
+    dlg.add_button("Done", 1);
+    dlg.show_all();
+
+	int result = dlg.run();
+
+    if(result == 1) {
+        double m = e_wage.get_value();
+        emp.change_salary(s_c, m);
+    }
+
+	if(result == 2) {
+		emp.retire_person(_servers[s_c], s_c);
+	}
+
+    dlg.close();
+}
+
 void Main_window::on_new_item() {
 
     vector<Containr> _containers = emp.get_containers();
@@ -706,45 +749,6 @@ void Main_window::on_new_server() {
 		emp.add_server(ser);
 	}
 
-}
-
-void Main_window::on_change_salary() {
-
-    vector<Server> _servers = emp.get_servers();
-    vector<string> names;
-
-    for(Server s: _servers) names.push_back(s.get_name());
-    int s_c = select_from_vector(names, "Server");
-
-    if(s_c == -1) return;
-
-    Gtk::Dialog dlg{"New Salary Input", *this};
-
-    Gtk::HBox b_wage;
-    Gtk::Label l_wage{"Hourly Salary: "};
-    l_wage.set_width_chars(20);
-    b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
-
-    Gtk::SpinButton e_wage(0,0);
-    e_wage.set_increments(0.1,0.01);
-    e_wage.set_increments(0.1,0.01);
-    e_wage.set_range(0.00,99999.00);
-    e_wage.set_digits(2);
-    e_wage.set_wrap(true);
-    e_wage.set_numeric();
-    b_wage.pack_start(e_wage, Gtk::PACK_SHRINK);
-    dlg.get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
-
-    dlg.add_button("Cancel", 0);
-    dlg.add_button("Done", 1);
-    dlg.show_all();
-
-    if(dlg.run() == 1) {
-        double m = e_wage.get_value();
-        emp.change_salary(s_c, m);
-    }
-
-    dlg.close();
 }
 
 void Main_window::on_new_order() {

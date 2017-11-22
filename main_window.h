@@ -29,8 +29,6 @@ class Main_window : public Gtk::Window
     	void on_new_customer();
     	void on_new_manager();
 
-    	void on_change_salary();
-
         //order states
         void on_cancel_order();
         void on_fill_order();
@@ -41,6 +39,7 @@ class Main_window : public Gtk::Window
 
     	//edit calls
     	void on_edit_item_click();
+        void on_edit_server_click();
 
     	//report callbacks
     	void on_servers_report();
