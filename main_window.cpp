@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 
-Emporium emp{1,"Euless", "8187-22-1-22"};
+Emporium emp{1,"Euless", "817-722-1222"};
 
 Main_window::Main_window() {
 	// /////////////////
@@ -44,7 +44,7 @@ Main_window::Main_window() {
 	filemenu->append(*menuitem_load);
 
     //easter egg
-	Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Management", true));
+	Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Emporium", true));
 	menuitem_pop_mgmt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pop_mgmt_click));
 	filemenu->append(*menuitem_pop_mgmt);
 
@@ -235,8 +235,8 @@ void Main_window::on_new_mgmt_click() {
 
 	if(result == 1) on_save_click();
 
-    Emporium ab{1, "Bedford", "192-464-1293"};
-    emp = ab;
+    Emporium new_emp{1, "Bedford", "817-464-1293"};
+    emp = new_emp;
 }
 
 void Main_window::on_pop_mgmt_click() {
@@ -258,11 +258,21 @@ void Main_window::on_save_click() {
     dlg.show_all();
     dlg.run();
 
-    string s = e.get_text();
+    string s = e.get_text() + ".emp";
 
-    emp.write(s);
-
+	if(s=="") return;
+    //emp.write(s);
     dlg.close();
+
+	try {
+        std::ofstream ofs{s, std::ofstream::out};
+        emp.save(ofs);
+    } catch (std::exception& e) {
+        Gtk::MessageDialog dialog{*this, "Unable to save "+s};
+        dialog.set_secondary_text(e.what());
+        dialog.run();
+        dialog.close();
+    }
 
 }
 
@@ -276,6 +286,7 @@ void Main_window::on_load_click() {
 
 	//Show the dialog and wait for a user response:
 	int result = dialog.run();
+	string filename;
 
 	//Handle the response:
 	switch(result)
@@ -285,7 +296,7 @@ void Main_window::on_load_click() {
 		std::cout << "Open clicked." << std::endl;
 
 		//Notice that this is a std::string, not a Glib::ustring.
-		std::string filename = dialog.get_filename();
+		filename = dialog.get_filename();
 		std::cout << "File selected: " <<  filename << std::endl;
 		break;
 	  }
@@ -300,6 +311,17 @@ void Main_window::on_load_click() {
 		break;
 	  }
 	}
+
+	try {
+        std::ifstream ifs{filename, std::ifstream::in};
+		Emporium new_emp{ifs};
+        emp = new_emp;
+    } catch (std::exception& e) {
+        Gtk::MessageDialog dialog{*this, "Unable to open file"};
+        dialog.set_secondary_text(e.what());
+        dialog.run();
+        dialog.close();
+    }
 }
 
 void Main_window::on_edit_item_click() {

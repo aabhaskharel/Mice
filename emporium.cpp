@@ -5,7 +5,60 @@
 
 using namespace std;
 
-Emporium::Emporium(int id, string location, string phone) : _id{id}, _location{location}, _phone{phone}, _stocking_cost{0}, cash_register{1000} {}
+Emporium::Emporium(int id, string location, string phone) : _id{id}, _location{location}, _phone{phone}, _stocking_cost{0}, cash_register{0} {}
+Emporium::Emporium(std::istream& ist) {
+    // WARNING: Do NOT strip the header - pass the FULL FILE to Emporium!
+    std::string header1, header2;
+
+    std::getline(ist, header1); // magic cookie
+    std::getline(ist, header2);
+    if (header1 != "MICE") throw std::runtime_error("NOT an Emporium file");
+    if (header2 != "0.1") throw std::runtime_error("Incompatible file version");
+
+    std::getline(ist, header1); // header
+    std::getline(ist, header2);
+    if (header1 != "#") throw std::runtime_error("No Emporium records in file");
+    if (header2 != "EMPORIUM") throw std::runtime_error("Malformed Emporium record");
+
+    //std::getline(ist, _name);
+	std::getline(ist, _location);
+	std::getline(ist, _phone);
+    ist >> cash_register; ist.ignore();
+    ist >> _id; ist.ignore();
+
+    while(ist) {
+        std::getline(ist, header1); // header
+        std::getline(ist, header2);
+
+        if (header1 != "#") throw std::runtime_error("missing # during input");
+        if (header2 == "CONTAINER") _containers.push_back(Containr{ist});
+        else if (header2 == "FLAVOR") _flavors.push_back(Flavor{ist});
+        else if (header2 == "TOPPING") _toppings.push_back(Topping{ist});
+        else if (header2 == "ORDER") _orders.push_back(Order{ist});
+        else if (header2 == "SERVER") _servers.push_back(Server{ist});
+        else if (header2 == "CUSTOMER") _customers.push_back(Customer{ist});
+        else if (header2 == "END EMPORIUM") break;
+        else throw std::runtime_error("invalid item type in Emporium");
+    }
+}
+
+void Emporium::save(std::ostream& ost) {
+        ost << "MICE" << std::endl << "0.1" << std::endl; // magic cookie
+        ost << "#" << std::endl << "EMPORIUM" << std::endl; // header
+        //ost << _name << std::endl;
+		ost << _location << std::endl;
+		ost << _phone << std::endl;
+        ost << cash_register << std::endl;
+        ost << _id << std::endl;
+
+        for (Containr c : _containers) c.save(ost);
+        for (Flavor s : _flavors) s.save(ost);
+        for (Topping t : _toppings) t.save(ost);
+        for (Order o : _orders) o.save(ost);
+        for (Server s : _servers) s.save(ost);
+        for (Customer c : _customers) c.save(ost);
+        ost << "#" << std::endl << "END EMPORIUM" << std::endl; // footer
+}
 
 void Emporium::add_container(Containr cont){
 	_containers.push_back(cont);
@@ -83,9 +136,6 @@ void Emporium::set_order_state(int id, string state) {
 		}
 
 		}
-
-
-
 	}
 }
 
@@ -439,9 +489,6 @@ void Emporium::write(string filename){
 
 	ofs << "-cr" << endl;
 	ofs << cash_register << endl;
-
-
-
 }
 
 //edit container

@@ -1,6 +1,7 @@
 #ifndef EMPORIUM_H
 #define EMPORIUM_H
 #include <vector>
+#include <fstream>
 #include "items.h"
 #include "order.h"
 #include "person.h"
@@ -9,6 +10,8 @@ using namespace std;
 class Emporium{
 	public:
 		Emporium(int id, string location, string phone);
+		Emporium(std::istream& ist);
+        void save(std::ostream& ost);
 		vector<Containr> get_containers();
 		vector<Topping> get_toppings();
 		vector<Flavor> get_flavors();
@@ -48,6 +51,7 @@ class Emporium{
 		void edit_topping(int id, Topping topping);
 
 		void change_salary(int server_id, double salary);
+
 		void write(string filename);
 
 		//report calls
@@ -60,21 +64,23 @@ class Emporium{
 		void populate_emporium();
 	private:
 		int _id;
+		double cash_register;
+		double _stocking_cost;
 		string _location;
 		string _phone;
+
 		vector<Containr> _containers;
 		vector<Flavor> _flavors;
 		vector<Topping> _toppings;
+		vector<Order> _orders;
+		vector<Manager> _managers;
+		vector<Customer> _customers;
+		vector<Server> _servers;
+
 		vector<Containr> _retired_containers;
 		vector<Flavor> _retired_flavors;
 		vector<Topping> _retired_toppings;
-		vector<Order> _orders;
-		vector<Manager> _managers;
 		vector<Manager> _retired_managers;
-		vector<Customer> _customers;
-		vector<Server> _servers;
 		vector<Server> _retired_servers;
-		double cash_register;
-		double _stocking_cost;
 };
 #endif
