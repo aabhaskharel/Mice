@@ -822,17 +822,6 @@ void Main_window::on_new_item() {
     dialog.close();
 }
 
-void Main_window::on_new_server() {
-
-	vector<string> res;
-	res = Dialogs::add_server();
-	if (res.size() == 2) {
-		Server ser(res[0], emp.get_servers().size(),"183-212-3444", stod(res[1]));
-		emp.add_server(ser);
-	}
-
-}
-
 void Main_window::on_new_order() {
 
     vector<Server> _servers = emp.get_servers();
@@ -945,58 +934,118 @@ Serving Main_window::create_serving() {
 	return serving;
 }
 
-void Main_window::on_new_customer() {
-	vector<string> res;
-	res = Dialogs::add_customer();
-	if (res.size() == 2) {
-		Customer cust(res[0], emp.get_customers().size(), res[1]);
-		emp.add_customer(cust);
+void Main_window::on_new_person(string role) {
+
+	const int WIDTH = 15;
+
+	Gtk::Dialog dialog{"Create " + role, *this};
+
+	// Name
+	Gtk::HBox b_name;
+
+	Gtk::Label l_name{"Name:"};
+	l_name.set_width_chars(WIDTH);
+	b_name.pack_start(l_name, Gtk::PACK_SHRINK);
+
+	Gtk::Entry e_name;
+	e_name.set_max_length(WIDTH*4);
+	b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+	dialog.get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
+
+	// Phone
+	Gtk::HBox b_phone;
+
+	Gtk::Label l_phone{"Phone:"};
+	l_phone.set_width_chars(WIDTH);
+	b_phone.pack_start(l_phone, Gtk::PACK_SHRINK);
+
+	Gtk::Entry e_phone;
+	e_phone.set_max_length(WIDTH*4);
+	b_phone.pack_start(e_phone, Gtk::PACK_SHRINK);
+	dialog.get_vbox()->pack_start(b_phone, Gtk::PACK_SHRINK);
+
+	// Salary (Server only)
+	Gtk::HBox b_wage;
+    Gtk::Label l_wage{"Hourly Salary: "};
+    l_wage.set_width_chars(WIDTH);
+    b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
+
+    Gtk::SpinButton e_wage(0,0);
+	//e_wage.set_width_chars(WIDTH);
+    e_wage.set_increments(0.1,0.01);
+    e_wage.set_increments(0.1,0.01);
+    e_wage.set_range(0.00,99999.00);
+    e_wage.set_digits(2);
+    e_wage.set_wrap(true);
+    e_wage.set_numeric();
+    b_wage.pack_start(e_wage, Gtk::PACK_SHRINK);
+	if (role== "Server")
+    	dialog.get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
+
+	// Show dialog
+	dialog.add_button("Cancel", 0);
+	dialog.add_button("OK", 1);
+	dialog.show_all();
+
+	//double d_salary;
+	bool valid_data = false;
+
+	while(!valid_data) {
+        if (dialog.run() != 1) {
+            dialog.close();
+            return;
+        }
+
+        // Data validation
+        valid_data = true;
+
+        if (e_name.get_text().length() == 0) {
+            e_name.set_text("*** name is required ***");
+            valid_data = false;
+        }
+        if (e_phone.get_text().length() == 0) {
+            e_phone.set_text("*** phone is required ***");
+            valid_data = false;
+        }
+/*
+        for (int s=0; s < _emp->num_servers(); ++s) {
+            if (_emp->server(s).name() == e_name.get_text()) {
+                e_name.set_text("*** duplicate name ***");
+                valid_data = false;
+            }
+    	}
+*/
 	}
+
+	// Instance person
+    if (role == "Server") {
+		int size = emp.get_servers().size();
+        Server s{e_name.get_text(), size, e_phone.get_text(), e_wage.get_value()};
+        emp.add_server(s);
+    } else if (role == "Customer") {
+		int size = emp.get_customers().size();
+        Customer c{e_name.get_text(), size, e_phone.get_text()};
+        emp.add_customer(c);
+    } else {
+		int size = emp.get_managers().size();
+        Manager m{e_name.get_text(), size, e_phone.get_text()};
+        emp.add_manager(m);
+	}
+
+    dialog.close();
+
+}
+
+void Main_window::on_new_server() {
+	on_new_person("Server");
+}
+
+void Main_window::on_new_customer() {
+	on_new_person("Customer");
 }
 
 void Main_window::on_new_manager() {
-    Gtk::Dialog m_dialog{"Add New Manager", *this};
-
-    Gtk::HBox hbox1;
-    Gtk::Label l_name{"Name: "};
-    l_name.set_width_chars(15);
-    Gtk::Entry e_name;
-    e_name.set_max_length(50);
-
-    hbox1.pack_start(l_name, Gtk::PACK_SHRINK);
-    hbox1.pack_start(e_name, Gtk::PACK_SHRINK);
-
-    Gtk::HBox hbox2;
-    Gtk::Label l_phone{"Phone: "};
-    l_phone.set_width_chars(15);
-    Gtk::Entry e_phone;
-    e_phone.set_max_length(50);
-
-    hbox2.pack_start(l_phone, Gtk::PACK_SHRINK);
-    hbox2.pack_start(e_phone, Gtk::PACK_SHRINK);
-
-    m_dialog.get_vbox()->pack_start(hbox1, Gtk::PACK_SHRINK);
-    m_dialog.get_vbox()->pack_start(hbox2, Gtk::PACK_SHRINK);
-
-    m_dialog.add_button("Cancel", 0);
-    m_dialog.add_button("Ok", 1);
-
-    m_dialog.show_all();
-
-    string name, phone;
-    if(m_dialog.run() == 1) {
-        name = e_name.get_text();
-        phone = e_phone.get_text();
-
-        if (name == "" || phone == "") {
-            Gtk::MessageDialog dlg{*this, "Invalid Input"};
-            dlg.run(); dlg.close();
-            return;
-        }
-        int size = emp.get_managers().size();
-        emp.add_manager(Manager{name, size, phone});
-    }
-
+	on_new_person("Manager");
 }
 
 //process callbacks

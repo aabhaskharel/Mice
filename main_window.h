@@ -21,6 +21,7 @@ class Main_window : public Gtk::Window
     	void on_pop_mgmt_click();
 
     	void on_new_item();
+        void on_new_person(std::string role);
     	void on_new_server();
     	void on_new_order();
     	void on_new_customer();
