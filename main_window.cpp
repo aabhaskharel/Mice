@@ -34,9 +34,14 @@ Main_window::Main_window() {
 	filemenu->append(*menuitem_new);
 
 	//save to a file
-	Gtk::MenuItem *menuitem_save = Gtk::manage(new Gtk::MenuItem("_Save", true));
+	Gtk::MenuItem *menuitem_save = Gtk::manage(new Gtk::MenuItem("_Save Emporium", true));
 	menuitem_save->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_save_click));
 	filemenu->append(*menuitem_save);
+
+	//load an Emporium
+	Gtk::MenuItem *menuitem_load = Gtk::manage(new Gtk::MenuItem("_Load Emporium", true));
+	menuitem_load->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_load_click));
+	filemenu->append(*menuitem_load);
 
     //easter egg
 	Gtk::MenuItem *menuitem_pop_mgmt = Gtk::manage(new Gtk::MenuItem("_Populate Management", true));
@@ -273,6 +278,10 @@ void Main_window::on_save_click() {
 
 }
 
+void Main_window::on_load_click() {
+	
+}
+
 void Main_window::on_edit_item_click() {
 
     vector<Containr> _containers = emp.get_containers();
@@ -507,6 +516,7 @@ void Main_window::on_edit_item_click() {
 		if(s_c == -1) return;
 
 		//emp.add_stock(_servers[s_c], type, index, 25);
+		return;
 	}
 
     // Instance item
@@ -874,6 +884,7 @@ void Main_window::on_new_order() {
     int c_c = select_from_vector(names, "Customer");
 
     if(s_c==-1 || c_c==-1) return;
+
 
 	Order order{emp.get_orders().size(), _servers[s_c], _customers[c_c]};
 

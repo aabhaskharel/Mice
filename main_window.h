@@ -36,6 +36,7 @@ class Main_window : public Gtk::Window
 
     	//file calls
     	void on_save_click();
+        void on_load_click();
 
     	//edit calls
     	void on_edit_item_click();
