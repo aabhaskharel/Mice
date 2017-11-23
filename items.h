@@ -1,11 +1,15 @@
 #ifndef _ITEMS_H_
 #define _ITEMS_H_
+
 #include <string>
+#include <fstream>
+
 using namespace std;
 
 class Items {
 	public:
 		Items(string name, string description, double wholesale_price, double retail_price, string image_path);
+		Items();
 		string get_name();
 		string get_description();
 		double get_wholesale_price();
@@ -14,8 +18,6 @@ class Items {
 		void set_stock(int quantity);
 		string get_image_path();
 		virtual string get_type();
-		
-	
 
 	protected:
 		string  _name;
@@ -31,17 +33,23 @@ std::ostream& operator<<(std::ostream& os, const Items& item);
 class Flavor : public Items{
 	public:
 		Flavor(string name, string description, double wholesale_price, double retail_price, string image_path);
+		Flavor(std::istream& ist);
+    	void save(std::ostream& ost);
 		string get_type() override;
 };
 class Topping : public Items{
 	public:
 		Topping(string name, string description, double wholesale_price, double retail_price, string image_path);
+		Topping(std::istream& ist);
+    	void save(std::ostream& ost);
 		string get_type() override;
 
 };
 class Containr : public Items{
 	public:
 		Containr(string name, string description, double wholesale_price, double retail_price, string image_path, int scoop);
+		Containr(std::istream& ist);
+    	void save(std::ostream& ost);
 		int get_scoop();
 		string get_type() override;
 	private:
