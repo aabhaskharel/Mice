@@ -93,19 +93,9 @@ Main_window::Main_window() {
 	menuitem_manager->set_submenu(*manager_menu);
 
 	// new flavor menu
-	Gtk::MenuItem *menuitem_flavor = Gtk::manage(new Gtk::MenuItem("_Add New Flavor", true));
-	menuitem_flavor->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_flavor));
-	manager_menu->append(*menuitem_flavor);
-
-	// new topping menu
-	Gtk::MenuItem *menuitem_topping = Gtk::manage(new Gtk::MenuItem("_Add New Topping", true));
-	menuitem_topping->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_topping));
-	manager_menu->append(*menuitem_topping);
-
-	// new container menu
-	Gtk::MenuItem *menuitem_container = Gtk::manage(new Gtk::MenuItem("_Add New Container", true));
-	menuitem_container->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_container));
-	manager_menu->append(*menuitem_container);
+	Gtk::MenuItem *menuitem_item = Gtk::manage(new Gtk::MenuItem("_Add New Item", true));
+	menuitem_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
+	manager_menu->append(*menuitem_item);
 
 	// new server menu
 	Gtk::MenuItem *menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_Add New Server", true));
@@ -206,24 +196,10 @@ Main_window::Main_window() {
 
 	//new flavor button
 	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
-	Gtk::ToolButton *new_flavor_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
-	new_flavor_button->set_tooltip_markup("Add a new Flavor");
-	new_flavor_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_flavor));
-	toolbar->append(*new_flavor_button);
-
-	//new topping button
-	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_topping.png"));
-	Gtk::ToolButton *new_topping_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
-	new_topping_button->set_tooltip_markup("Add a new Topping");
-	new_topping_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_topping));
-	toolbar->append(*new_topping_button);
-
-	//new container button
-	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_container.png"));
-	Gtk::ToolButton *new_cont_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
-	new_cont_button->set_tooltip_markup("Add a new Container");
-	new_cont_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_container));
-	toolbar->append(*new_cont_button);
+	Gtk::ToolButton *new_item_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	new_item_button->set_tooltip_markup("Add a new Item");
+	new_item_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
+	toolbar->append(*new_item_button);
 
 	Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
 	sep->set_expand(true);
@@ -246,9 +222,21 @@ Main_window::Main_window() {
 Main_window::~Main_window() { }
 
 void Main_window::on_new_mgmt_click() {
+
+	Gtk::Dialog dlg{"Do you want to save your current emporium?", *this};
+	dlg.set_default_size(450,10);
+	dlg.add_button("Cancel", 2);
+	dlg.add_button("No", 0);
+	dlg.add_button("Yes", 1);
+
+	int result = dlg.run();
+
+	if(result == 2) return;
+
+	if(result == 1) on_save_click();
+
     Emporium ab{1, "Bedford", "192-464-1293"};
     emp = ab;
-    cout << "in here" << endl;
 }
 
 void Main_window::on_pop_mgmt_click() {
@@ -279,8 +267,7 @@ void Main_window::on_save_click() {
 }
 
 void Main_window::on_load_click() {
-	Gtk::FileChooserDialog dialog("Please choose a file",
-    Gtk::FILE_CHOOSER_ACTION_OPEN);
+	Gtk::FileChooserDialog dialog("Please choose a file", Gtk::FILE_CHOOSER_ACTION_OPEN);
   	dialog.set_transient_for(*this);
 
   	//Add response buttons the the dialog:
@@ -748,141 +735,91 @@ void Main_window::on_new_item() {
     b_desc.pack_start(e_desc, Gtk::PACK_SHRINK);
     dialog.get_vbox()->pack_start(b_desc, Gtk::PACK_SHRINK);
 
-    // Cost
-    Gtk::HBox b_cost;
+	//scoop size
+	Gtk::HBox b_scoop;
+    Gtk::Label l_scoop{"Scoop Size: "};
+    l_scoop.set_width_chars(WIDTH);
+    b_scoop.pack_start(l_scoop, Gtk::PACK_SHRINK);
 
-    Gtk::Label l_cost{"Cost:"};
-    l_cost.set_width_chars(WIDTH);
-    b_cost.pack_start(l_cost, Gtk::PACK_SHRINK);
-
-    Gtk::Entry e_cost;
-    e_cost.set_max_length(WIDTH*4);
-    b_cost.pack_start(e_cost, Gtk::PACK_SHRINK);
-    dialog.get_vbox()->pack_start(b_cost, Gtk::PACK_SHRINK);
-
-    // Price
-    Gtk::HBox b_price;
-
-    Gtk::Label l_price{"Price:"};
-    l_price.set_width_chars(WIDTH);
-    b_price.pack_start(l_price, Gtk::PACK_SHRINK);
-
-    Gtk::Entry e_price;
-    e_price.set_max_length(WIDTH*4);
-    b_price.pack_start(e_price, Gtk::PACK_SHRINK);
-    dialog.get_vbox()->pack_start(b_price, Gtk::PACK_SHRINK);
-
-    // Max Scoops (Container only)
-    Gtk::HBox b_max_scoops;
-
-    Gtk::Label l_max_scoops{"Max Scoops:"};
-    l_max_scoops.set_width_chars(WIDTH);
-    b_max_scoops.pack_start(l_max_scoops, Gtk::PACK_SHRINK);
-
-    Gtk::Entry e_max_scoops;
-    e_max_scoops.set_max_length(WIDTH*4);
-    b_max_scoops.pack_start(e_max_scoops, Gtk::PACK_SHRINK);
-    if (type == CONTAINER) {
-        dialog.get_vbox()->pack_start(b_max_scoops, Gtk::PACK_SHRINK);
+    Gtk::SpinButton e_scoop(0,0);
+    e_scoop.set_increments(1.0,1.0);
+    e_scoop.set_range(0,99999);
+    e_scoop.set_digits(0);
+    e_scoop.set_wrap(true);
+    e_scoop.set_numeric();
+    b_scoop.pack_start(e_scoop, Gtk::PACK_SHRINK);
+	if (type == CONTAINER) {
+        dialog.get_vbox()->pack_start(b_scoop, Gtk::PACK_SHRINK);
     }
+
+	// wholesale price
+    Gtk::HBox b_wprice;
+    Gtk::Label l_wprice{"Cost: "};
+    l_wprice.set_width_chars(WIDTH);
+    b_wprice.pack_start(l_wprice, Gtk::PACK_SHRINK);
+
+    Gtk::SpinButton e_wprice(0,0);
+    e_wprice.set_increments(0.1,0.01);
+    e_wprice.set_range(0.00,99999.00);
+    e_wprice.set_digits(2);
+    e_wprice.set_value(0.00);
+    e_wprice.set_wrap(true);
+    e_wprice.set_numeric();
+    b_wprice.pack_start(e_wprice, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(b_wprice, Gtk::PACK_SHRINK);
+
+    // retail price
+    Gtk::HBox b_rprice;
+    Gtk::Label l_rprice{"Price: "};
+    l_rprice.set_width_chars(WIDTH);
+    b_rprice.pack_start(l_rprice, Gtk::PACK_SHRINK);
+
+    Gtk::SpinButton e_rprice(0,0);
+    e_rprice.set_increments(0.1,0.01);
+    e_rprice.set_increments(0.1,0.01);
+    e_rprice.set_range(0.00,99999.00);
+    e_rprice.set_digits(2);
+    e_rprice.set_wrap(true);
+    e_rprice.set_numeric();
+    b_rprice.pack_start(e_rprice, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(b_rprice, Gtk::PACK_SHRINK);
+
+	//image path
+	Gtk::HBox b_image;
+    Gtk::Label l_image{"Image: "};
+    l_image.set_width_chars(WIDTH);
+    b_image.pack_start(l_image, Gtk::PACK_SHRINK);
+
+    Gtk::FileChooserButton f_image;
+    b_image.pack_start(f_image, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(b_image, Gtk::PACK_SHRINK);
 
     // Show dialog
     dialog.add_button("Cancel", 0);
     dialog.add_button("OK", 1);
     dialog.show_all();
 
-    bool valid_data = false;
-    double d_cost;
-    double d_price;
-    int i_max_scoops;
-
-    while(!valid_data) {
-        if (dialog.run() != 1) {
-            dialog.close();
-            return;
-        }
-
-        valid_data = true;
-        try {
-            d_cost = std::stod(e_cost.get_text());
-        } catch(std::exception e) {
-            e_cost.set_text("*** invalid cost ***");
-            valid_data = false;
-        }
-        try {
-            d_price = std::stod(e_price.get_text());
-        } catch(std::exception e) {
-            e_price.set_text("*** invalid price ***");
-            valid_data = false;
-        }
-        if (type == CONTAINER) {
-            try {
-                i_max_scoops = std::stoi(e_max_scoops.get_text());
-            } catch(std::exception e) {
-                e_max_scoops.set_text("*** invalid max scoops ***");
-                valid_data = false;
-            }
-        }
-        for (Containr c : _containers) if (c.get_name() == e_name.get_text()) {
-            e_name.set_text("*** duplicate name ***");
-            valid_data = false;
-        }
-        for (Flavor f : _flavors) if (f.get_name() == e_name.get_text()) {
-            e_name.set_text("*** duplicate name ***");
-            valid_data = false;
-        }
-        for (Topping t : _toppings) if (t.get_name() == e_name.get_text()) {
-            e_name.set_text("*** duplicate name ***");
-            valid_data = false;
-        }
-    }
+	int result = dialog.run();
 
     // Instance item
     if (type == CONTAINER) {
-        //Containr c(e_name.get_text(), e_desc.get_text(), d_cost, d_price, 0, i_max_scoops);
-        //_containers.push_back(c);
+		Containr cont(e_name.get_text(), e_desc.get_text(), e_wprice.get_value(), e_rprice.get_value(), f_image.get_filename(), e_scoop.get_value_as_int());
+		emp.add_container(cont);
+
         //std::cout << c << std::endl;
     } else if (type == SCOOP) {
-        //Flavor f(e_name.get_text(), e_desc.get_text(), d_cost, 0, d_price);
-        //_scoops.push_back(s);
+		Flavor f(e_name.get_text(), e_desc.get_text(), e_wprice.get_value(), e_rprice.get_value(),  f_image.get_filename());
+		emp.add_flavor(f);
+
         //std::cout << f << std::endl;
     } else {
-        //Topping t(e_name.get_text(), e_desc.get_text(), d_cost, 0, d_price, "light");
-        //_toppings.push_back(t);
+		Topping t(e_name.get_text(), e_desc.get_text(), e_wprice.get_value(), e_rprice.get_value(), f_image.get_filename());
+		emp.add_topping(t);
+
         //std::cout << t << std::endl;
     }
 
     dialog.close();
-}
-
-void Main_window::on_new_container() {
-	vector<string> res;
-	res = Dialogs::form(1);
-	if (res.size() == 7) {
-		Containr cont(res[0], res[1], stod(res[2]), stod(res[3]), res[5], stoi(res[6]));
-		emp.add_container(cont);
-	}
-
-}
-
-void Main_window::on_new_flavor() {
-
-	vector<string> res;
-	res = Dialogs::form(2);
-	if (res.size() == 6) {
-		Flavor flav(res[0], res[1], stod(res[2]), stod(res[3]), res[5]);
-		emp.add_flavor(flav);
-	}
-
-}
-
-void Main_window::on_new_topping() {
-	vector<string> res;
-	res = Dialogs::form(3);
-	if (res.size() == 6) {
-		Topping top(res[0], res[1], stod(res[2]), stod(res[3]), res[5]);
-		emp.add_topping(top);
-	}
 }
 
 void Main_window::on_new_server() {
