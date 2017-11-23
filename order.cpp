@@ -1,10 +1,55 @@
 #include "order.h"
 #include <iomanip>
+#include <stdexcept>
 
 using namespace std;
 
 //constructor
 Order::Order(int id, Server server, Customer customer): _id{id}, _server{server}, _customer{customer}, _state{"Unfilled"} {}
+Order::Order(std::istream& ist) {
+    std::string header1, header2;
+
+    // The header must have been stripped from the incoming stream at this point
+    ist >> _id; ist.ignore();
+    string state;
+    std::getline(ist, header1);
+
+    _state = (state == "Cancelled") ? "Cancelled" :
+             (state == "Unfilled") ? "Unfilled" :
+             (state == "Filled") ? "Filled" : "Paid";
+
+    std::getline(ist, header1);
+    std::getline(ist, header2);
+    if (header1 != "#") throw std::runtime_error("missing # during Order's Customer input");
+    if (header2 != "CUSTOMER") throw std::runtime_error("missing CUSTOMER during Order input");
+    _customer = Customer{ist};
+
+    std::getline(ist, header1);
+    std::getline(ist, header2);
+    if (header1 != "#") throw std::runtime_error("missing # during Order's Server input");
+    if (header2 != "SERVER") throw std::runtime_error("missing SERVER during Order input");
+    _server = Server{ist};
+
+    while (true) {
+        std::getline(ist, header1); // header
+        std::getline(ist, header2);
+        if (header1 != "#") throw std::runtime_error("missing # during Order input");
+
+        if (header2 == "END ORDER") break;  // footer
+        else if (header2 == "SERVING") _servings.push_back(Serving{ist});
+        else throw std::runtime_error("invalid serving in Order");
+    }
+}
+
+void Order::save(std::ostream& ost) {
+    ost << "#" << std::endl << "ORDER" << std::endl; // header
+    ost << _id << std::endl;
+    ost << _state << std::endl;
+    _customer.save(ost);
+    _server.save(ost);
+    for (Serving s : _servings) s.save(ost);
+    ost << "#" << std::endl << "END ORDER" << std::endl; // header
+}
 
 //add a serving to order
 void Order::add_serving(Serving serving) {
@@ -22,24 +67,24 @@ int Order::get_servings_size() {return _servings.size();}
 //to get total price
 double Order::get_total_retail_price(){
 	double total;
-	
+
 	for(int i=0; i<_servings.size(); i++){
 		total += _servings[i].get_total_retail_price();
-	}	
-	
+	}
+
 	return total;
 }
 
 double Order::get_total_wholesale_price(){
 	double total;
-	
+
 	for(int i=0; i<_servings.size(); i++){
 		total += _servings[i].get_total_wholesale_price();
-	}	
-	
+	}
+
 	return total;
 }
-	
+
 
 //get id
 int Order::get_id(){ return _id; }
@@ -67,7 +112,7 @@ string Order::list_serving(int index){
 	for(int i=0; i<(_servings[index].get_toppings()).size(); i++)
 		{
 		out+="\t\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"\t$"+to_string((_servings[index].get_toppings())[i].get_retail_price())+"\n";
-		} 
+		}
 	return out;
 }
 
@@ -80,10 +125,8 @@ std::ostream& operator<<(std::ostream& os, Order& order) {
 /*
     os << "Your order:";
     for (Serving s : order.get_servings()) os << std::endl << s;
-    os << std::endl << std::setw(50) << "----------------------------" 
+    os << std::endl << std::setw(50) << "----------------------------"
     << std::endl << std::setw(40) << "Order Total: $ " << order.get_total_retail_price() << endl;
     return os;
 */
 }
-
-
