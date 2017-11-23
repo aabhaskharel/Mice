@@ -844,8 +844,8 @@ void Main_window::on_new_order() {
 
     if(s_c==-1 || c_c==-1) return;
 
-
-	Order order{emp.get_orders().size(), _servers[s_c], _customers[c_c]};
+	int next_id = emp.get_orders().size();
+	Order order{next_id, _servers[s_c], _customers[c_c]};
 
 	Gtk::Dialog order_dialog{"New Order", *this};
 
@@ -876,15 +876,14 @@ void Main_window::on_new_order() {
 			for (int i =0; i< order.get_servings_size(); i++) {
 			    out+= order.list_serving(i);
 			}
+			Gtk::Dialog o_dialog{"Your Order", *this};
+			Gtk::Label l_text{out};
+			o_dialog.get_vbox()->pack_start(l_text, Gtk::PACK_SHRINK);
 
-			//stringstream buf;
-			//buf << order ;		//OPERATOR OVERLOADING
-			//string out = buf.str();
-			//cout << order << endl;
-			//Gtk::MessageDialog dialog(*this, out);
-			//dialog.run();
-			//dialog.close();
-			Dialogs::message(out, "Your Order");
+			o_dialog.add_button("Ok", 1);
+			o_dialog.show_all();
+			o_dialog.run();
+			o_dialog.close();
 		}
 	}
 }
