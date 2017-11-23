@@ -1,13 +1,15 @@
 #ifndef PERSON_H
 #define PERSON_H
- 
+
 #include <string>
+#include <fstream>
 
 using namespace std;
 
 class Person {
 public:
 	Person(string name, int id, string phone);
+    Person();
 	string get_name();
 	int get_id();
 	string get_phone();
@@ -25,7 +27,7 @@ class Owner: public Person {
 public:
 	static Owner& getInstance();
 	Owner (Owner const&);
-	void operator=(Owner const&);	
+	void operator=(Owner const&);
 
 private:
 	Owner() {};
@@ -35,12 +37,17 @@ private:
 class Manager: public Person {
 public:
 	Manager(string name, int id, string phone);
+    Manager(std::istream& ist);
+    void save(std::ostream& ost);
 	int get_type() override;
 };
 
 class Server: public Person {
 public:
 	Server(string name, int id, string phone, double hourly_salary);
+    Server(std::istream& ist);
+    void save(std::ostream& ost);
+
 	int get_type() override;
 	double get_total_pay();
 	int get_total_filled();
@@ -60,6 +67,8 @@ private:
 class Customer:public Person {
 public:
 	Customer(string name, int id, string phone);
+    Customer(std::istream& ist);
+    void save(std::ostream& ost);
 	int get_type() override;
 };
 
