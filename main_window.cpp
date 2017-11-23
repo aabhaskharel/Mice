@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include <iostream>
 #include <sstream>
+#include <regex>
 
 Emporium emp{1,"Euless", "817-722-1222"};
 
@@ -1024,10 +1025,15 @@ void Main_window::on_new_person(string role) {
             e_name.set_text("*** name is required ***");
             valid_data = false;
         }
-        if (e_phone.get_text().length() == 0) {
-            e_phone.set_text("*** phone is required ***");
-            valid_data = false;
-        }
+		regex phone_number{"[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]"}; //REGEX
+		string out_phone = e_phone.get_text();
+		if (regex_match(out_phone, phone_number)) {  //REGEX
+
+		} else {
+			std::cout << "Format: xxx-xxx-xxxx" << '\n';
+			e_phone.set_text("*** invalid format ***");
+			valid_data = false;
+		}
 /*
         for (int s=0; s < _emp->num_servers(); ++s) {
             if (_emp->server(s).name() == e_name.get_text()) {
