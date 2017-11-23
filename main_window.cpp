@@ -279,7 +279,40 @@ void Main_window::on_save_click() {
 }
 
 void Main_window::on_load_click() {
-	
+	Gtk::FileChooserDialog dialog("Please choose a file",
+    Gtk::FILE_CHOOSER_ACTION_OPEN);
+  	dialog.set_transient_for(*this);
+
+  	//Add response buttons the the dialog:
+  	dialog.add_button("_Cancel", Gtk::RESPONSE_CANCEL);
+  	dialog.add_button("_Open", Gtk::RESPONSE_OK);
+
+	//Show the dialog and wait for a user response:
+	int result = dialog.run();
+
+	//Handle the response:
+	switch(result)
+	{
+	  case(Gtk::RESPONSE_OK):
+	  {
+		std::cout << "Open clicked." << std::endl;
+
+		//Notice that this is a std::string, not a Glib::ustring.
+		std::string filename = dialog.get_filename();
+		std::cout << "File selected: " <<  filename << std::endl;
+		break;
+	  }
+	  case(Gtk::RESPONSE_CANCEL):
+	  {
+		std::cout << "Cancel clicked." << std::endl;
+		break;
+	  }
+	  default:
+	  {
+		std::cout << "Unexpected button clicked." << std::endl;
+		break;
+	  }
+	}
 }
 
 void Main_window::on_edit_item_click() {
