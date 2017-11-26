@@ -76,59 +76,36 @@ Main_window::Main_window() {
 	menuitem_restore_person->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_restore_person_click));
 	editmenu->append(*menuitem_restore_person);
 
-	//owner menu
-	Gtk::MenuItem *menuitem_owner = Gtk::manage(new Gtk::MenuItem("_Owner", true));
-	menubar->append(*menuitem_owner);
-	Gtk::Menu *owner_menu = Gtk::manage(new Gtk::Menu());
-	menuitem_owner->set_submenu(*owner_menu);
+	//create menu
+	Gtk::MenuItem *menuitem_create = Gtk::manage(new Gtk::MenuItem("_Create", true));
+	menubar->append(*menuitem_create);
+	Gtk::Menu *create_menu = Gtk::manage(new Gtk::Menu());
+	menuitem_create->set_submenu(*create_menu);
 
-	// new manager menu
-	Gtk::MenuItem *menuitem_new_manager = Gtk::manage(new Gtk::MenuItem("_Add New Manager", true));
-	menuitem_new_manager->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_manager));
-	owner_menu->append(*menuitem_new_manager);
-
-	//Manager to the menu bar
-	Gtk::MenuItem *menuitem_manager = Gtk::manage(new Gtk::MenuItem("_Manager", true));
-	menubar->append(*menuitem_manager);
-	Gtk::Menu *manager_menu = Gtk::manage(new Gtk::Menu());
-	menuitem_manager->set_submenu(*manager_menu);
-
-	// new flavor menu
-	Gtk::MenuItem *menuitem_item = Gtk::manage(new Gtk::MenuItem("_Add New Item", true));
-	menuitem_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
-	manager_menu->append(*menuitem_item);
-
-	// new server menu
-	Gtk::MenuItem *menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_Add New Server", true));
-	menuitem_add_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_server));
-	manager_menu->append(*menuitem_add_server);
-
-	// Create a Server menu and add to the menu bar
-	Gtk::MenuItem *menuitem_server = Gtk::manage(new Gtk::MenuItem("_Server", true));
-	menubar->append(*menuitem_server);
-	Gtk::Menu *server_menu = Gtk::manage(new Gtk::Menu());
-	menuitem_server->set_submenu(*server_menu);
-
-	// new serving menu
-	Gtk::MenuItem *menuitem_serving = Gtk::manage(new Gtk::MenuItem("_New Order", true));
-	menuitem_serving->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
-	server_menu->append(*menuitem_serving);
+	//new order option
+	Gtk::MenuItem *menuitem_order = Gtk::manage(new Gtk::MenuItem("_New Order", true));
+	menuitem_order->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
+	create_menu->append(*menuitem_order);
 
 	// new customer menu
-	Gtk::MenuItem *menuitem_add_customer = Gtk::manage(new Gtk::MenuItem("_Add New Customer", true));
+	Gtk::MenuItem *menuitem_add_customer = Gtk::manage(new Gtk::MenuItem("_New Customer", true));
 	menuitem_add_customer->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_customer));
-	server_menu->append(*menuitem_add_customer);
+	create_menu->append(*menuitem_add_customer);
 
-	// Create a Customer menu and add to the menu bar
-	Gtk::MenuItem *menuitem_customer = Gtk::manage(new Gtk::MenuItem("_Customer", true));
-	menubar->append(*menuitem_customer);
-	Gtk::Menu *customer_menu = Gtk::manage(new Gtk::Menu());
-	menuitem_customer->set_submenu(*customer_menu);
+	//new item menu
+	Gtk::MenuItem *menuitem_item = Gtk::manage(new Gtk::MenuItem("_New Item", true));
+	menuitem_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
+	create_menu->append(*menuitem_item);
 
-	// new customer serving menu
-	Gtk::MenuItem *menuitem_serving1 = Gtk::manage(new Gtk::MenuItem("_New Order", true));
-	menuitem_serving1->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
-	customer_menu->append(*menuitem_serving1);
+	// new server menu
+	Gtk::MenuItem *menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_New Server", true));
+	menuitem_add_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_server));
+	create_menu->append(*menuitem_add_server);
+
+	// new manager menu
+	Gtk::MenuItem *menuitem_new_manager = Gtk::manage(new Gtk::MenuItem("_New Manager", true));
+	menuitem_new_manager->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_manager));
+	create_menu->append(*menuitem_new_manager);
 
 	// Create a Process menu and add to the menu bar
 	Gtk::MenuItem *menuitem_process = Gtk::manage(new Gtk::MenuItem("_Process", true));
@@ -195,7 +172,19 @@ Main_window::Main_window() {
 	Gtk::Toolbar *toolbar = Gtk::manage(new Gtk::Toolbar);
 	vbox->add(*toolbar);
 
-	//new flavor button
+	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
+	Gtk::ToolButton *new_order_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	new_order_button->set_tooltip_markup("Start a new order");
+	new_order_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
+	toolbar->append(*new_order_button);
+
+	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
+	Gtk::ToolButton *new_customer_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	new_customer_button->set_tooltip_markup("Add a new Customer");
+	new_customer_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_customer));
+	toolbar->append(*new_customer_button);
+
+	//new item button
 	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
 	Gtk::ToolButton *new_item_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
 	new_item_button->set_tooltip_markup("Add a new Item");
