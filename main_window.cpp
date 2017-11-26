@@ -178,6 +178,7 @@ Main_window::Main_window() {
 	new_order_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
 	toolbar->append(*new_order_button);
 
+	//new customer button
 	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
 	Gtk::ToolButton *new_customer_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
 	new_customer_button->set_tooltip_markup("Add a new Customer");
@@ -190,6 +191,12 @@ Main_window::Main_window() {
 	new_item_button->set_tooltip_markup("Add a new Item");
 	new_item_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
 	toolbar->append(*new_item_button);
+
+	//Login
+	Gtk::ToolButton *new_role_button = Gtk::manage(new Gtk::ToolButton("Change Role"));
+	new_role_button->set_tooltip_markup("Logout/Login to new Role");
+	new_role_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_role));
+	toolbar->append(*new_role_button);
 
 	Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
 	sep->set_expand(true);
@@ -312,6 +319,10 @@ void Main_window::on_load_click() {
         dialog.run();
         dialog.close();
     }
+}
+
+void Main_window::on_new_role() {
+	std::cout << "New ROLE" << '\n';
 }
 
 void Main_window::on_edit_item_click() {
