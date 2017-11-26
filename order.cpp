@@ -1,6 +1,7 @@
 #include "order.h"
 #include <iomanip>
 #include <stdexcept>
+#include <iostream>
 
 using namespace std;
 
@@ -11,13 +12,15 @@ Order::Order(std::istream& ist) {
 
     // The header must have been stripped from the incoming stream at this point
     ist >> _id; ist.ignore();
+    ist >> _state; ist.ignore();
+/*
     string state;
     std::getline(ist, header1);
 
     _state = (state == "Cancelled") ? "Cancelled" :
              (state == "Unfilled") ? "Unfilled" :
              (state == "Filled") ? "Filled" : "Paid";
-
+*/
     std::getline(ist, header1);
     std::getline(ist, header2);
     if (header1 != "#") throw std::runtime_error("missing # during Order's Customer input");
