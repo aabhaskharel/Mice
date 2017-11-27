@@ -44,6 +44,9 @@ class Topping : public Items{
     	void save(std::ostream& ost);
 		string get_type() override;
 
+		int get_amount();
+	private:
+		int _amount = 1; // 0 - Light, 1 - Normal, 2 - Extra, 3 - Drenched
 };
 class Containr : public Items{
 	public:

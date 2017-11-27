@@ -193,6 +193,11 @@ Main_window::Main_window() {
 	new_role_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_role));
 	toolbar->append(*new_role_button);
 
+	Gtk::ToolButton *test_button = Gtk::manage(new Gtk::ToolButton("T"));
+	test_button->set_tooltip_markup("Test a feature");
+	test_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_test));
+	toolbar->append(*test_button);
+
 	Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
 	sep->set_expand(true);
 	toolbar->append(*sep);
@@ -212,6 +217,18 @@ Main_window::Main_window() {
 }
 
 Main_window::~Main_window() { }
+
+void Main_window::on_test() {
+	std::cout << "TEST" << '\n';
+
+	vector<string> names;
+	for(int i = 0; i < 27; i++) {
+		names.push_back("test "+to_string(i));
+	}
+
+	int choice = select_from_grid(names, names, "test");
+
+}
 
 void Main_window::on_new_mgmt_click() {
 
@@ -317,16 +334,6 @@ void Main_window::on_load_click() {
 }
 
 void Main_window::on_new_role() {
-/*
-	std::cout << "New ROLE" << '\n';
-
-	vector<string> names;
-	for(int i = 0; i < 27; i++) {
-		names.push_back("test "+to_string(i));
-	}
-
-	int choice = select_from_grid(names, names, "LOL");
-*/
 
 	vector<string> names;
 	names.push_back("Owner");

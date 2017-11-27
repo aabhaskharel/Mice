@@ -96,6 +96,8 @@ string Items::get_image_path(){return _image_path;}
 //get Container's capacity
 int Containr::get_scoop(){return _scoop;}
 
+int Topping::get_amount(){return _amount;};
+
 void Items::set_stock(int quantity) {_stock += quantity;}
 
 //return's what kind of item

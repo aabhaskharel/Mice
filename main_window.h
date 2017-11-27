@@ -55,6 +55,7 @@ class Main_window : public Gtk::Window
         void on_about_click();           // Display About dialog
         void on_quit_click();            // Exit
 
+        void on_test();
     	int select_from_vector(std::vector<std::string> names, std::string title);
         int select_from_grid(std::vector<std::string> names, std::vector<std::string> path, std::string title);
     	Serving create_serving();
