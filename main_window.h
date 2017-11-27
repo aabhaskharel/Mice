@@ -56,12 +56,18 @@ class Main_window : public Gtk::Window
         void on_quit_click();            // Exit
 
         void on_test();
+        void on_order_update();
     	int select_from_vector(std::vector<std::string> names, std::string title);
         int select_from_grid(std::vector<std::string> names, std::vector<std::string> path, std::string title);
     	Serving create_serving();
 
     private:
         Emporium emp{1,"Euless", "817-722-1222"};
+
+        Gtk::Box *vbox;
+
+        Gtk::ScrolledWindow *s_window;
+        bool present = false; //presence of ScrolledWindow
 
         Gtk::MenuItem *menuitem_new;
         Gtk::MenuItem *menuitem_save;

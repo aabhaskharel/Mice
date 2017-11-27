@@ -8,7 +8,7 @@ Main_window::Main_window() {
 	set_default_size(500, 250);
 
 	// Put a vertical box container as the Window contents
-	Gtk::Box *vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
+	vbox = Gtk::manage(new Gtk::Box(Gtk::ORIENTATION_VERTICAL, 0));
 	add(*vbox);
 
 	// ///////
@@ -195,7 +195,7 @@ Main_window::Main_window() {
 
 	Gtk::ToolButton *test_button = Gtk::manage(new Gtk::ToolButton("T"));
 	test_button->set_tooltip_markup("Test a feature");
-	test_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_test));
+	test_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_order_update));
 	toolbar->append(*test_button);
 
 	Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
@@ -228,6 +228,35 @@ void Main_window::on_test() {
 
 	int choice = select_from_grid(names, names, "test");
 
+}
+
+void Main_window::on_order_update() {
+	if(present) vbox->remove(*s_window);
+
+	s_window = Gtk::manage(new Gtk::ScrolledWindow());
+	s_window->set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_ALWAYS);
+
+	vector<Order> orders = emp.get_orders();
+
+	Gtk::Table *table = Gtk::manage(new Gtk::Table(orders.size()+1,2,true));
+	Gtk::Label *l1 = Gtk::manage(new Gtk::Label("Order No."));
+	Gtk::Label *l2 = Gtk::manage(new Gtk::Label("State"));
+
+	table->attach(*l1,0,1,0,1);
+	table->attach(*l2,1,2,0,1);
+
+	for(int i = 0; i < orders.size(); i++) {
+		Gtk::Label *l_id = Gtk::manage(new Gtk::Label(to_string(orders[i].get_id())));
+		table->attach(*l_id, 0, 1, i+1, i+2);
+
+		Gtk::Label *l_state = Gtk::manage(new Gtk::Label(orders[i].get_state()));
+		table->attach(*l_state, 1, 2, i+1, i+2);
+	}
+
+	vbox->pack_start(*s_window);
+	s_window->add(*table);
+	vbox->show_all();
+	present = true;
 }
 
 void Main_window::on_new_mgmt_click() {
