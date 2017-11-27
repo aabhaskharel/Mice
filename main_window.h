@@ -3,6 +3,7 @@
 
 #include <gtkmm.h>
 #include <string>
+#include <iostream>
 #include "emporium.h"
 #include "items.h"
 #include "serving.h"
