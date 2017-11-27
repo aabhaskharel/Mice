@@ -58,16 +58,16 @@ Order::Order(std::istream& ist) {
 //STATE MACHINE
 void Order::process_event(string event, Server server){
     if (_state == "Unfilled") {
-        if (event == "Fill") {
+        if (event == "Filled") {
             _state = "Filled";
             _server = server;
-        } else if (event == "Cancel") {
+        } else if (event == "Cancelled") {
             _state = "Cancelled";
         } else {
             throw std::runtime_error("Invalid state transition in Unfilled");
         }
-    } else if (_state == "FIlled") {
-        if (event == "Pay") {
+    } else if (_state == "Filled") {
+        if (event == "Paid") {
             _state = "Paid";
         } else {
             throw std::runtime_error("Invalid state transition in Filled");

@@ -104,7 +104,7 @@ void Emporium::set_order_state(int id, string state, Server server) {
 		double twp = _orders[id].get_total_wholesale_price();
 		_stocking_cost += twp;
 		cash_register += trp;
-		Server server = _orders[id].get_server();
+		//Server server = _orders[id].get_server();
 		int sid = server.get_id();
 		_servers[sid].set_total_filled(1);
 
