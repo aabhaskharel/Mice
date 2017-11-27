@@ -31,13 +31,14 @@ void Flavor::save(std::ostream& ost) {
 }
 
 //Topping class constructor
-Topping::Topping(string name, string description, double wholesale_price, double retail_price, string image_path) : Items(name, description, wholesale_price, retail_price, image_path){}
+Topping::Topping(string name, string description, double wholesale_price, double retail_price, string image_path) : Items(name, description, wholesale_price, retail_price, image_path) {}
 Topping::Topping(std::istream& ist) {
     // The header must have been stripped from the incoming stream at this point
     getline(ist, _name);
     ist >> _wholesale_price; ist.ignore();
     ist >> _retail_price; ist.ignore();
     ist >> _stock; ist.ignore();
+    ist >> _amount; ist.ignore();
     ist >> _image_path; ist.ignore();
     getline(ist, _description);
 }
@@ -48,6 +49,7 @@ void Topping::save(std::ostream& ost) {
     ost << _wholesale_price << std::endl;
     ost << _retail_price << std::endl;
     ost << _stock << std::endl;
+    ost << _amount << std::endl;
     ost << _image_path << std::endl;
     ost << _description << std::endl;
 }
@@ -97,6 +99,7 @@ string Items::get_image_path(){return _image_path;}
 int Containr::get_scoop(){return _scoop;}
 
 int Topping::get_amount(){return _amount;};
+void Topping::set_amount(int amount) {_amount = amount;}
 
 void Items::set_stock(int quantity) {_stock += quantity;}
 

@@ -45,8 +45,9 @@ class Topping : public Items{
 		string get_type() override;
 
 		int get_amount();
+		void set_amount(int amount);
 	private:
-		int _amount = 1; // 0 - Light, 1 - Normal, 2 - Extra, 3 - Drenched
+		int _amount = -1; // 0 - Light, 1 - Normal, 2 - Extra, 3 - Drenched
 };
 class Containr : public Items{
 	public:
