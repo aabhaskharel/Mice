@@ -195,7 +195,7 @@ Main_window::Main_window() {
 
 	Gtk::ToolButton *test_button = Gtk::manage(new Gtk::ToolButton("T"));
 	test_button->set_tooltip_markup("Test a feature");
-	test_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_order_update));
+	test_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_test));
 	toolbar->append(*test_button);
 
 	Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());

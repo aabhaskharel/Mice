@@ -228,6 +228,8 @@ void Main_window::on_new_order() {
 			o_dialog.show_all();
 			o_dialog.run();
 			o_dialog.close();
+
+            on_order_update();
 		}
 	}
 }
