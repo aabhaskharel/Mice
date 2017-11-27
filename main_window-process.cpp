@@ -54,8 +54,10 @@ void Main_window::on_fill_order() {
 
 	int id = select_from_vector(names, "Fill Order");
 
+	if (id == -1) return;
+
+	names.clear();
 	for(Server s: _servers) {
-		names.clear();
 		names.push_back(s.get_name());
 	}
 
