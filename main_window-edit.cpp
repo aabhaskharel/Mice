@@ -233,7 +233,7 @@ void Main_window::on_edit_item_click() {
 
 		if(s_c == -1) return;
 
-		//emp.add_stock(_servers[s_c], type, index, 25);
+		emp.add_stock(_servers[s_c], type, index, 25);
 		return;
 	}
 
