@@ -94,7 +94,8 @@ void Emporium::add_order(Order order) {
 //	return T.get_id();
 //}
 
-void Emporium::set_order_state(int id, string state) {
+void Emporium::set_order_state(int id, string state, Server server) {
+	_orders[id].process_event(state, server);
 	_orders[id].set_state(state);
 
 	if (state == "Filled")
