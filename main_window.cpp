@@ -167,22 +167,22 @@ Main_window::Main_window() {
 	Gtk::Toolbar *toolbar = Gtk::manage(new Gtk::Toolbar);
 	vbox->add(*toolbar);
 
-	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
-	Gtk::ToolButton *new_order_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	Gtk::Image *new_order_image = Gtk::manage(new Gtk::Image("data/pictures/new_order.png"));
+	Gtk::ToolButton *new_order_button = Gtk::manage(new Gtk::ToolButton(*new_order_image));
 	new_order_button->set_tooltip_markup("Start a new order");
 	new_order_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_order));
 	toolbar->append(*new_order_button);
 
 	//new customer button
-	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
-	new_customer_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	Gtk::Image *new_customer_image = Gtk::manage(new Gtk::Image("data/pictures/new_customer.png"));
+	new_customer_button = Gtk::manage(new Gtk::ToolButton(*new_customer_image));
 	new_customer_button->set_tooltip_markup("Add a new Customer");
 	new_customer_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_customer));
 	toolbar->append(*new_customer_button);
 
 	//new item button
-	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
-	new_item_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	Gtk::Image *new_item_image = Gtk::manage(new Gtk::Image("data/pictures/new_item.png"));
+	new_item_button = Gtk::manage(new Gtk::ToolButton(*new_item_image));
 	new_item_button->set_tooltip_markup("Add a new Item");
 	new_item_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
 	toolbar->append(*new_item_button);

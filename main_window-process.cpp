@@ -24,7 +24,7 @@ void Main_window::on_cancel_order(){
     int id = select_from_vector(names, "Cancel Order");
 
 	if (id!=-1) {
-		emp.set_order_state(id+offset, "Cancelled");
+		emp.set_order_state(id+offset, "Cancelled", Server{"TBD", -1, "TBD", 0});
 		offset = 0;
 	}
 
@@ -63,8 +63,10 @@ void Main_window::on_fill_order() {
 
 	if (id!=-1 && s_c!=-1) {
 		//orders[id+offset].set_server(_servers[s_c]);
-		//emp.set_order_state(id+offset, "Filled");
-		orders[id+offset].process_event("Fill", _servers[s_c]);
+
+		emp.set_order_state(id+offset, "Filled", _servers[s_c]);
+
+		//orders[id+offset].process_event("Fill", _servers[s_c]);
 		offset = 0;
 	}
 
@@ -94,7 +96,7 @@ void Main_window::on_pay_order() {
     int id = select_from_vector(names, "Pay Order");
 
 	if (id!=-1) {
-		emp.set_order_state(id+offset, "Paid");
+		emp.set_order_state(id+offset, "Paid", Server{"TBD", -1, "TBD", 0});
 		offset = 0;
 	}
 
