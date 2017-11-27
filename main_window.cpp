@@ -3,8 +3,6 @@
 #include <sstream>
 #include <regex>
 
-Emporium emp{1,"Euless", "817-722-1222"};
-
 Main_window::Main_window() {
 	// /////////////////
 	// G U I   S E T U P
@@ -30,17 +28,17 @@ Main_window::Main_window() {
 	menuitem_file->set_submenu(*filemenu);
 
 	//new
-	Gtk::MenuItem *menuitem_new = Gtk::manage(new Gtk::MenuItem("_New Emporium", true));
+	menuitem_new = Gtk::manage(new Gtk::MenuItem("_New Emporium", true));
 	menuitem_new->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_mgmt_click));
 	filemenu->append(*menuitem_new);
 
 	//save to a file
-	Gtk::MenuItem *menuitem_save = Gtk::manage(new Gtk::MenuItem("_Save Emporium", true));
+	menuitem_save = Gtk::manage(new Gtk::MenuItem("_Save Emporium", true));
 	menuitem_save->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_save_click));
 	filemenu->append(*menuitem_save);
 
 	//load an Emporium
-	Gtk::MenuItem *menuitem_load = Gtk::manage(new Gtk::MenuItem("_Load Emporium", true));
+	menuitem_load = Gtk::manage(new Gtk::MenuItem("_Load Emporium", true));
 	menuitem_load->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_load_click));
 	filemenu->append(*menuitem_load);
 
@@ -56,23 +54,23 @@ Main_window::Main_window() {
 	filemenu->append(*menuitem_quit);
 
 	// EDIT
-	Gtk::MenuItem *menuitem_edit = Gtk::manage(new Gtk::MenuItem("_Edit", true));
+	menuitem_edit = Gtk::manage(new Gtk::MenuItem("_Edit", true));
 	menubar->append(*menuitem_edit);
 	Gtk::Menu *editmenu = Gtk::manage(new Gtk::Menu());
 	menuitem_edit->set_submenu(*editmenu);
 
 	// edit item
-	Gtk::MenuItem *menuitem_eitem = Gtk::manage(new Gtk::MenuItem("_Edit Item", true));
+	menuitem_eitem = Gtk::manage(new Gtk::MenuItem("_Edit Item", true));
 	menuitem_eitem->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_item_click));
 	editmenu->append(*menuitem_eitem);
 
 	//edit server
-	Gtk::MenuItem *menuitem_eserver = Gtk::manage(new Gtk::MenuItem("_Edit Server", true));
+	menuitem_eserver = Gtk::manage(new Gtk::MenuItem("_Edit Server", true));
 	menuitem_eserver->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_server_click));
 	editmenu->append(*menuitem_eserver);
 
 	//restore person
-	Gtk::MenuItem *menuitem_restore_person = Gtk::manage(new Gtk::MenuItem("_Restore Person", true));
+	menuitem_restore_person = Gtk::manage(new Gtk::MenuItem("_Restore Person", true));
 	menuitem_restore_person->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_restore_person_click));
 	editmenu->append(*menuitem_restore_person);
 
@@ -88,22 +86,22 @@ Main_window::Main_window() {
 	create_menu->append(*menuitem_order);
 
 	// new customer menu
-	Gtk::MenuItem *menuitem_add_customer = Gtk::manage(new Gtk::MenuItem("_New Customer", true));
+	menuitem_add_customer = Gtk::manage(new Gtk::MenuItem("_New Customer", true));
 	menuitem_add_customer->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_customer));
 	create_menu->append(*menuitem_add_customer);
 
 	//new item menu
-	Gtk::MenuItem *menuitem_item = Gtk::manage(new Gtk::MenuItem("_New Item", true));
+	menuitem_item = Gtk::manage(new Gtk::MenuItem("_New Item", true));
 	menuitem_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
 	create_menu->append(*menuitem_item);
 
 	// new server menu
-	Gtk::MenuItem *menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_New Server", true));
+	menuitem_add_server = Gtk::manage(new Gtk::MenuItem("_New Server", true));
 	menuitem_add_server->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_server));
 	create_menu->append(*menuitem_add_server);
 
 	// new manager menu
-	Gtk::MenuItem *menuitem_new_manager = Gtk::manage(new Gtk::MenuItem("_New Manager", true));
+	menuitem_new_manager = Gtk::manage(new Gtk::MenuItem("_New Manager", true));
 	menuitem_new_manager->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_new_manager));
 	create_menu->append(*menuitem_new_manager);
 
@@ -119,17 +117,17 @@ Main_window::Main_window() {
 	process_menu->append(*menuitem_cancel);
 
 	//fill order
-	Gtk::MenuItem *menuitem_fill = Gtk::manage(new Gtk::MenuItem("_Fill Order", true));
+	menuitem_fill = Gtk::manage(new Gtk::MenuItem("_Fill Order", true));
 	menuitem_fill->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_fill_order));
 	process_menu->append(*menuitem_fill);
 
 	//pay order
-	Gtk::MenuItem *menuitem_pay = Gtk::manage(new Gtk::MenuItem("_Pay Order", true));
+	menuitem_pay = Gtk::manage(new Gtk::MenuItem("_Pay Order", true));
 	menuitem_pay->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pay_order));
 	process_menu->append(*menuitem_pay);
 
 	//REPORTS
-	Gtk::MenuItem *menuitem_reports = Gtk::manage(new Gtk::MenuItem("_Reports", true));
+	menuitem_reports = Gtk::manage(new Gtk::MenuItem("_Reports", true));
 	menubar->append(*menuitem_reports);
 	Gtk::Menu *report_menu = Gtk::manage(new Gtk::Menu());
 	menuitem_reports->set_submenu(*report_menu);
@@ -180,14 +178,14 @@ Main_window::Main_window() {
 
 	//new customer button
 	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
-	Gtk::ToolButton *new_customer_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	new_customer_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
 	new_customer_button->set_tooltip_markup("Add a new Customer");
 	new_customer_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_customer));
 	toolbar->append(*new_customer_button);
 
 	//new item button
 	//Gtk::Image *new_image = Gtk::manage(new Gtk::Image("new_flavor.png"));
-	Gtk::ToolButton *new_item_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
+	new_item_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::ADD));
 	new_item_button->set_tooltip_markup("Add a new Item");
 	new_item_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
 	toolbar->append(*new_item_button);
@@ -322,7 +320,132 @@ void Main_window::on_load_click() {
 }
 
 void Main_window::on_new_role() {
+/*
 	std::cout << "New ROLE" << '\n';
+
+	vector<string> names;
+	for(int i = 0; i < 27; i++) {
+		names.push_back("test "+to_string(i));
+	}
+
+	int choice = select_from_grid(names, names, "LOL");
+*/
+
+	vector<string> names;
+	names.push_back("Owner");
+	names.push_back("Manager");
+	names.push_back("Server");
+	names.push_back("Customer");
+
+	int role = select_from_vector(names, "Role");
+
+	if (role == -1) return;
+
+	switch (role) {
+		case 0: {
+			std::cout << "Owner" << '\n';
+
+			menuitem_new->show();
+			menuitem_save->show();
+			menuitem_load->show();
+
+			menuitem_edit->show();
+			menuitem_eitem->show();
+			menuitem_eserver->show();
+			menuitem_restore_person->show();
+
+			menuitem_add_customer->show();
+			menuitem_item->show();
+			menuitem_add_server->show();
+			menuitem_new_manager->show();
+
+			menuitem_fill->show();
+			menuitem_pay->show();
+
+			menuitem_reports->show();
+
+			new_customer_button->show();
+			new_item_button->show();
+
+			break;
+		}
+		case 1: {
+			std::cout << "Manager" << '\n';
+
+			menuitem_new->hide();
+			menuitem_save->hide();
+			menuitem_load->hide();
+
+			menuitem_edit->show();
+			menuitem_eitem->show();
+			menuitem_eserver->show();
+			menuitem_restore_person->hide();
+
+			menuitem_add_customer->show();
+			menuitem_item->show();
+			menuitem_add_server->show();
+			menuitem_new_manager->hide();
+
+			menuitem_fill->show();
+			menuitem_pay->show();
+
+			menuitem_reports->show();
+
+			new_customer_button->show();
+			new_item_button->show();
+
+			break;
+		}
+		case 2: {
+			std::cout << "Server" << '\n';
+
+			menuitem_new->hide();
+			menuitem_save->hide();
+			menuitem_load->hide();
+
+			menuitem_edit->hide();
+
+			menuitem_add_customer->show();
+			menuitem_item->hide();
+			menuitem_add_server->hide();
+			menuitem_new_manager->hide();
+
+			menuitem_fill->show();
+			menuitem_pay->show();
+
+			menuitem_reports->hide();
+
+			new_customer_button->show();
+			new_item_button->hide();
+
+			break;
+		}
+		case 3: {
+			std::cout << "Customer" << '\n';
+
+			menuitem_new->hide();
+			menuitem_save->hide();
+			menuitem_load->hide();
+
+			menuitem_edit->hide();
+
+			menuitem_add_customer->hide();
+			menuitem_item->hide();
+			menuitem_add_server->hide();
+			menuitem_new_manager->hide();
+
+			menuitem_fill->hide();
+			menuitem_pay->hide();
+
+			menuitem_reports->hide();
+
+			new_customer_button->hide();
+			new_item_button->hide();
+
+			break;
+		}
+		default : std::cerr << "Invalid Choice" << '\n'; break;
+	}
 }
 
 void Main_window::on_edit_item_click() {
@@ -1286,4 +1409,38 @@ int Main_window::select_from_vector(std::vector<std::string> names, std::string 
 	dialog_index.close();
 
 	return index;
+}
+
+int Main_window::select_from_grid(std::vector<std::string> names, std::vector<std::string> path, std::string title) {
+
+	Gtk::Dialog gdlg{"Select " + title, *this};
+	const int WIDTH = 15;
+	int counter = 0;
+
+	int rows = names.size() / 3;
+
+	std::cout << "rows:" << rows << '\n';
+
+	Gtk::Grid grid;
+
+	for(int i = 0; i < 3; i++) {
+		for(int j = 0; j < rows+1; j++) {
+			if(counter<names.size()) {
+				auto button = Gtk::manage(new Gtk::Button(names[j+i*3]));
+				//button->signal_clicked(j+i*3);
+				grid.attach(*button, i, j, 1, 1);
+			}
+			counter++;
+		}
+	}
+
+	gdlg.add_button("Cancel", -1);
+
+	gdlg.get_vbox()->pack_start(grid, Gtk::PACK_SHRINK);
+
+	gdlg.show_all();
+	gdlg.run();
+
+	return 1;
+
 }

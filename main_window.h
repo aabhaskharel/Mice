@@ -55,7 +55,32 @@ class Main_window : public Gtk::Window
         void on_quit_click();            // Exit
 
     	int select_from_vector(std::vector<std::string> names, std::string title);
+        int select_from_grid(std::vector<std::string> names, std::vector<std::string> path, std::string title);
     	Serving create_serving();
 
+    private:
+        Emporium emp{1,"Euless", "817-722-1222"};
+
+        Gtk::MenuItem *menuitem_new;
+        Gtk::MenuItem *menuitem_save;
+        Gtk::MenuItem *menuitem_load;
+
+        Gtk::MenuItem *menuitem_edit;
+        Gtk::MenuItem *menuitem_eitem;
+        Gtk::MenuItem *menuitem_eserver;
+        Gtk::MenuItem *menuitem_restore_person;
+
+        Gtk::MenuItem *menuitem_add_customer;
+        Gtk::MenuItem *menuitem_item;
+        Gtk::MenuItem *menuitem_add_server;
+        Gtk::MenuItem *menuitem_new_manager;
+
+        Gtk::MenuItem *menuitem_fill;
+        Gtk::MenuItem *menuitem_pay;
+
+        Gtk::MenuItem *menuitem_reports;
+
+        Gtk::ToolButton *new_customer_button;
+        Gtk::ToolButton *new_item_button;
 };
 #endif
