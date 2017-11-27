@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <stdexcept>
+#include <iostream>
 
 using namespace std;
 
@@ -113,10 +114,16 @@ void Emporium::set_order_state(int id, string state) {
 		}
 
 		vector<Serving> svg = _orders[id].get_servings();
-
+		
 		for (Serving s: svg) {
 		Containr c = s.get_container();
-		c.set_stock(-1);
+			for(int i=0; i< _containers.size(); i++){
+				if(_containers[i].get_name() == c.get_name()){
+					_containers[i].set_stock(-1);
+				}
+			}
+		//c.set_stock(-1);
+		
 		vector<Flavor> fv = s.get_flavors();
 		for (Flavor f: fv)
 		{
@@ -509,19 +516,42 @@ void Emporium::edit_topping(int id, Topping topping){
 
 }
 
-void Emporium::add_stock(Server server, Items item, int quantity) {
-	item.set_stock(quantity);
-	double wp = quantity * item.get_wholesale_price();
-	_stocking_cost += wp;
-	cash_register -= wp;
-	server.set_total_filled(2);
-		if (server.pay())
+void Emporium::add_stock(Server server, int type, int index, int quantity) {
+
+	if(type == 0){
+		_containers[index].set_stock(quantity);
+		
+		double wp = quantity * _containers[index].get_wholesale_price();
+		_stocking_cost += wp;
+		cash_register -= wp;
+	}
+	
+	if(type == 1){
+		_flavors[index].set_stock(quantity);
+		
+		double wp = quantity * _flavors[index].get_wholesale_price();
+		_stocking_cost += wp;
+		cash_register -= wp;
+	}
+	
+	if(type == 2){
+		_toppings[index].set_stock(quantity);
+		
+		double wp = quantity * _toppings[index].get_wholesale_price();
+		_stocking_cost += wp;
+		cash_register -= wp;
+	}
+		
+	
+	int sid = server.get_id();
+	_servers[sid].set_total_filled(2);
+		if (_servers[sid].pay())
 		{
 			cash_register -= server.get_hourly_salary();
-			server.set_total_pay(server.get_hourly_salary());
+			_servers[sid].set_total_pay(server.get_hourly_salary());
 		}
+	}
 
-}
 
 void Emporium:: populate_emporium(){
     Containr cont("Cup", "A freshly baked waffle cone.", 0.1, 0.6, "picture.png", 3);

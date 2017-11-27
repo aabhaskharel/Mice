@@ -44,7 +44,7 @@ class Emporium{
 		void add_order(Order order);
 		void set_order_state(int id, string state);
 
-		void add_stock(Server server, Items item, int quantity);
+		void add_stock(Server server, int type, int index, int quantity);
 
 		void edit_container(int id, Containr container);
 		void edit_flavor(int id, Flavor flavor);
