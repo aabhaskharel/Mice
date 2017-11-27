@@ -9,12 +9,13 @@ using namespace std;
 
 class Order{
 	public:
-		Order(int id, Server server, Customer customer);
+		Order(int id, Customer customer);
 		Order(std::istream& ist);
     	void save(std::ostream& ost);
 
 		void add_serving(Serving serving);
 		Server get_server();
+		void set_server(Server server);
 		Customer get_customer();
 
 		double get_total_retail_price();

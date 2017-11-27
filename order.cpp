@@ -6,7 +6,12 @@
 using namespace std;
 
 //constructor
-Order::Order(int id, Server server, Customer customer): _id{id}, _server{server}, _customer{customer}, _state{"Unfilled"} {}
+Order::Order(int id, Customer customer): _id{id}, _customer{customer}, _state{"Unfilled"} {}
+
+Order::set_server(Server server){
+	_server = server;
+}
+
 Order::Order(std::istream& ist) {
     std::string header1, header2;
 
@@ -44,20 +49,39 @@ Order::Order(std::istream& ist) {
     }
 }
 
-void Order::save(std::ostream& ost) {
-    ost << "#" << std::endl << "ORDER" << std::endl; // header
-    ost << _id << std::endl;
-    ost << _state << std::endl;
-    _customer.save(ost);
-    _server.save(ost);
-    for (Serving s : _servings) s.save(ost);
-    ost << "#" << std::endl << "END ORDER" << std::endl; // header
-}
+//STATE MACHINE
+void Order::process_event(string event, Server server){
+        if (_state == "Unfilled") {
+            if (event == "Fill") {
+                _state = "Filled";
+                _server = server;
+            } else if (event == "Cancel") {
+                _state = "Cancelled";
+            } else {
+                throw std::runtime_error("Invalid state transition in Unfilled");
+            }
+        } else if (_state == "FIlled") {
+            if (event == "Pay") {
+                _state = "Paid";
+            } else {
+                throw std::runtime_error("Invalid state transition in Filled");
+            }
+        } else if (_state == "Paid") {
+            throw std::runtime_error("State transition attempted in Paid");
+        } else if (_state == "Cancelled") {
+            throw std::runtime_error("State transition attempted in Canceled");
+        } else {
+            throw std::runtime_error("Invalid state");
+        }
+    }
+    
 
 //add a serving to order
 void Order::add_serving(Serving serving) {
     _servings.push_back(serving);
 }
+
+
 
 Server Order::get_server(){ return _server; }
 
