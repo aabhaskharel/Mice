@@ -178,18 +178,18 @@ void Main_window::on_new_order() {
 	    dialog.close();
 		return;
 	}
-
+/*
     for(Server s: _servers) names.push_back(s.get_name());
     int s_c = select_from_vector(names, "Server");
-
+*/
     names.clear();
     for(Customer c: _customers) names.push_back(c.get_name());
     int c_c = select_from_vector(names, "Customer");
 
-    if(s_c==-1 || c_c==-1) return;
+    if(/*s_c==-1 ||*/ c_c==-1) return;
 
 	int next_id = emp.get_orders().size();
-	Order order{next_id, _servers[s_c], _customers[c_c]};
+	Order order{next_id,  _customers[c_c]};
 
 	Gtk::Dialog order_dialog{"New Order", *this};
 

@@ -32,11 +32,12 @@ void Main_window::on_cancel_order(){
 }
 
 void Main_window::on_fill_order() {
+
 	vector<string> names;
+	vector<Server> _servers = emp.get_servers();
 	vector<Order> orders = emp.get_orders();
 
 	int offset = 0; //catches offset of other states
-
 
     for(Order s: orders) {
 		if(s.get_state() == "Unfilled") {
@@ -46,15 +47,24 @@ void Main_window::on_fill_order() {
 
 	if(names.size()==0) {
 		Gtk::MessageDialog dialog{*this, "No orders to Fill!"};
-	    dialog.run();
-	    dialog.close();
+		dialog.run();
+		dialog.close();
 		return;
 	}
 
-    int id = select_from_vector(names, "Fill Order");
+	int id = select_from_vector(names, "Fill Order");
 
-	if (id!=-1) {
-		emp.set_order_state(id+offset, "Filled");
+	for(Server s: _servers) {
+		names.clear();
+		names.push_back(s.get_name());
+	}
+
+	int s_c = select_from_vector(names, "Server");
+
+	if (id!=-1 && s_c!=-1) {
+		//orders[id+offset].set_server(_servers[s_c]);
+		//emp.set_order_state(id+offset, "Filled");
+		orders[id+offset].process_event("Fill", _servers[s_c]);
 		offset = 0;
 	}
 

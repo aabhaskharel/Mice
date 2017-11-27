@@ -16,6 +16,7 @@ class Order{
 		void add_serving(Serving serving);
 		Server get_server();
 		void set_server(Server server);
+		void process_event(string event, Server server);
 		Customer get_customer();
 
 		double get_total_retail_price();
