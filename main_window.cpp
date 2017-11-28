@@ -261,12 +261,16 @@ void Main_window::on_order_update() {
 
 void Main_window::on_new_mgmt_click() {
 
-	Gtk::Dialog dlg{"Do you want to save your current emporium?", *this};
-	dlg.set_default_size(450,10);
+	Gtk::Dialog dlg{"New Emporium", *this};
+
+	Gtk::Label l_st{"Do you want to save your current emporium?"};
+	dlg.get_vbox()->pack_start(l_st, Gtk::PACK_SHRINK);
+
 	dlg.add_button("Cancel", 2);
 	dlg.add_button("No", 0);
 	dlg.add_button("Yes", 1);
 
+	dlg.show_all();
 	int result = dlg.run();
 
 	if(result == 2) return;
@@ -288,6 +292,7 @@ void Main_window::on_pop_mgmt_click() {
 void Main_window::on_save_click() {
 
     Gtk::Dialog dlg{"Enter File Name", *this};
+	dlg.set_default_size(250,10);
     Gtk::Entry e;
     dlg.get_vbox()->pack_start(e, Gtk::PACK_SHRINK);
 
@@ -296,10 +301,10 @@ void Main_window::on_save_click() {
     dlg.show_all();
     dlg.run();
 
-    string s = e.get_text() + ".emp";
+	if(e.get_text()=="") return;
 
-	if(s=="") return;
-    //emp.write(s);
+    string s = e.get_text() + ".txt";
+
     dlg.close();
 
 	try {
