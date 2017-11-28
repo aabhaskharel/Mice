@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Emporium::Emporium(int id, string location, string phone) : _id{id}, _location{location}, _phone{phone}, _stocking_cost{0}, cash_register{0} {}
+Emporium::Emporium(int id, string location, string phone) : _id{id}, _location{location}, _phone{phone}, _stocking_cost{0}, cash_register{0}, _happy_hour{false} {}
 Emporium::Emporium(std::istream& ist) {
     // WARNING: Do NOT strip the header - pass the FULL FILE to Emporium!
     std::string header1, header2;
@@ -497,6 +497,43 @@ void Emporium::write(string filename){
 
 	ofs << "-cr" << endl;
 	ofs << cash_register << endl;
+}
+
+
+//Happy Hour
+void Emporium::happy_hour(){
+
+	if(_happy_hour == false){
+		for(int i=0; i<_containers.size(); i++){
+			_containers[i].set_retail_price(_containers[i].get_retail_price()*0.7);
+		}
+	
+		for(int i=0; i<_flavors.size(); i++){
+			_flavors[i].set_retail_price(_flavors[i].get_retail_price()*0.7);
+		}
+	
+		for(int i=0; i<_toppings.size(); i++){
+			_toppings[i].set_retail_price(_toppings[i].get_retail_price()*0.7);
+		}
+		
+		_happy_hour = true;
+	}
+	
+	else{
+		for(int i=0; i<_containers.size(); i++){
+			_containers[i].set_retail_price(_containers[i].get_retail_price()/0.7);
+		}
+	
+		for(int i=0; i<_flavors.size(); i++){
+			_flavors[i].set_retail_price(_flavors[i].get_retail_price()/0.7);
+		}
+	
+		for(int i=0; i<_toppings.size(); i++){
+			_toppings[i].set_retail_price(_toppings[i].get_retail_price()/0.7);
+		}
+		_happy_hour = false;
+	}
+	
 }
 
 //edit container

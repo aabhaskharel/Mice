@@ -14,6 +14,7 @@ class Items {
 		string get_description();
 		double get_wholesale_price();
 		double get_retail_price();
+		void set_retail_price(double price);
 		int get_stock();
 		void set_stock(int quantity);
 		string get_image_path();
