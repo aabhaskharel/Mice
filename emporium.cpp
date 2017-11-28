@@ -123,23 +123,26 @@ void Emporium::set_order_state(int id, string state, Server server) {
 					_containers[i].set_stock(-1);
 				}
 			}
-		//c.set_stock(-1);
 		
 		vector<Flavor> fv = s.get_flavors();
-		for (Flavor f: fv)
+		for (int i=0; i<_flavors.size(); i++)
 		{
-			f.set_stock(-1);
+			for(int j=0; j<fv.size(); j++){
+				if(_flavors[i].get_name() == fv[j].get_name()){
+					_flavors[i].set_stock(-1);
+				}
+			}
 		}
+		
 		vector<Topping> tv = s.get_toppings();
-		vector<int> kv = s.get_top_kind();
-		for (int i = 0; i<tv.size(); i++)
+		
+		for (int i=0; i<_toppings.size(); i++)
 		{
-			switch (kv[i])
-			{
-			case 0:	tv[i].set_stock(-1); break;
-			case 1:	tv[i].set_stock(-2); break;
-			case 2:	tv[i].set_stock(-3); break;
-			case 3:	tv[i].set_stock(-4); break;
+			for(int j=0; j<tv.size(); j++){
+				if(_toppings[i].get_name() == tv[j].get_name()){
+					int amount = tv[j].get_amount();
+					_toppings[i].set_stock(-amount);
+				}
 			}
 		}
 
@@ -392,6 +395,7 @@ void Emporium::restore_person(Person person, int id){
 }
 
 //write to a file
+/*
 void Emporium::write(string filename){
 
 	ofstream ofs {filename};
@@ -498,7 +502,7 @@ void Emporium::write(string filename){
 	ofs << "-cr" << endl;
 	ofs << cash_register << endl;
 }
-
+*/
 
 //Happy Hour
 void Emporium::happy_hour(){

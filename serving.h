@@ -11,19 +11,17 @@ class Serving{
 		Containr _container{"", "", 0, 0, "", 0};
 		vector<Flavor>  _flavors;
 		vector<Topping> _toppings;
-		vector<int> _top_kind;
 
 	public:
 		Serving(Containr container);
 		Serving(std::istream& ist);
     	void save(std::ostream& ost);
-		void set_topping(Topping topping, int kind);
+		void set_topping(Topping topping);
 		void set_flavor(Flavor flavor);
 
 		Containr get_container() ;
 		vector<Flavor> get_flavors() ;
 		vector<Topping> get_toppings() ;
-		vector<int> get_top_kind() ;
 		double get_total_retail_price() ;
 		double get_total_wholesale_price();
 };
