@@ -5,13 +5,13 @@
 void Main_window::on_cancel_order(){
 	vector<string> names;
 	vector<Order> orders = emp.get_orders();
-
-	int offset = 0; //catches offset of other states
+	vector<int> o_id;
 
     for(Order s: orders) {
 		if(s.get_state() == "Unfilled") {
 			names.push_back(to_string(s.get_id()));
-		} else offset++;
+			o_id.push_back(s.get_id());
+		}
 	}
 
 	if(names.size()==0) {
@@ -24,8 +24,7 @@ void Main_window::on_cancel_order(){
     int id = select_from_vector(names, "Cancel Order");
 
 	if (id!=-1) {
-		emp.set_order_state(id+offset, "Cancelled", Server{"TBD", -1, "TBD", 0});
-		offset = 0;
+		emp.set_order_state(o_id[id], "Cancelled", Server{"TBD", -1, "TBD", 0});
 	}
 
 	on_order_update();
@@ -33,16 +32,15 @@ void Main_window::on_cancel_order(){
 
 void Main_window::on_fill_order() {
 
-	vector<string> names;
+	vector<string> names; vector<int> o_id;
 	vector<Server> _servers = emp.get_servers();
 	vector<Order> orders = emp.get_orders();
-
-	int offset = 0; //catches offset of other states
 
     for(Order s: orders) {
 		if(s.get_state() == "Unfilled") {
 			names.push_back(to_string(s.get_id()));
-		} else offset++;
+			o_id.push_back(s.get_id());
+		}
 	}
 
 	if(names.size()==0) {
@@ -64,28 +62,22 @@ void Main_window::on_fill_order() {
 	int s_c = select_from_vector(names, "Server");
 
 	if (id!=-1 && s_c!=-1) {
-		//orders[id+offset].set_server(_servers[s_c]);
-
-		emp.set_order_state(id+offset, "Filled", _servers[s_c]);
-
-		//orders[id+offset].process_event("Fill", _servers[s_c]);
-		offset = 0;
+		emp.set_order_state(o_id[id], "Filled", _servers[s_c]);
 	}
 
 	on_order_update();
 }
 
 void Main_window::on_pay_order() {
-	vector<string> names;
+
+	vector<string> names; vector<int> o_id;
 	vector<Order> orders = emp.get_orders();
-
-	int offset = 0; //catches offset of other states
-
 
     for(Order s: orders) {
 		if(s.get_state() == "Filled") {
 			names.push_back(to_string(s.get_id()));
-		} else offset++;
+			o_id.push_back(s.get_id());
+		}
 	}
 
 	if(names.size()==0) {
@@ -98,8 +90,7 @@ void Main_window::on_pay_order() {
     int id = select_from_vector(names, "Pay Order");
 
 	if (id!=-1) {
-		emp.set_order_state(id+offset, "Paid", Server{"TBD", -1, "TBD", 0});
-		offset = 0;
+		emp.set_order_state(o_id[id], "Paid", Server{"TBD", -1, "TBD", 0});
 	}
 
 	on_order_update();
