@@ -301,7 +301,15 @@ void Main_window::on_save_click() {
     dlg.show_all();
     dlg.run();
 
-	if(e.get_text()=="") return;
+	bool valid_data = false;
+
+	while(!valid_data) {
+		if(e.get_text()=="" || e.get_text() == "*Invalid Name*") {
+			valid_data = false;
+			e.set_text("*Invalid Name*");
+			dlg.run();
+		} else valid_data = true;
+	}
 
     string s = e.get_text() + ".txt";
 
