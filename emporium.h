@@ -53,7 +53,8 @@ class Emporium{
 		void change_salary(int server_id, double salary);
 
 		void write(string filename);
-
+		void happy_hour();
+		
 		//report calls
 		string get_servers_report();
 		string get_customers_report();
@@ -68,6 +69,7 @@ class Emporium{
 		double _stocking_cost;
 		string _location;
 		string _phone;
+		bool _happy_hour;
 
 		vector<Containr> _containers;
 		vector<Flavor> _flavors;

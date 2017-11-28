@@ -90,6 +90,8 @@ double Items::get_wholesale_price(){return _wholesale_price;}
 //get item's retail_price
 double Items::get_retail_price(){return _retail_price;}
 
+//set item's retail price
+void Items::set_retail_price(double price){_retail_price = price;}
 //get item's stock
 int Items::get_stock(){return _stock;}
 
