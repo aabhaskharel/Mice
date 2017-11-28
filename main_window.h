@@ -42,6 +42,8 @@ class Main_window : public Gtk::Window
     	void on_edit_item_click();
         void on_edit_server_click();
 
+        void on_happy_hour_click();
+
         void on_restore_person_click();
 
     	//report callbacks
@@ -75,6 +77,7 @@ class Main_window : public Gtk::Window
 
         Gtk::MenuItem *menuitem_edit;
         Gtk::MenuItem *menuitem_eitem;
+        Gtk::MenuItem *menuitem_happy_hour;
         Gtk::MenuItem *menuitem_eserver;
         Gtk::MenuItem *menuitem_restore_person;
 

@@ -1,5 +1,9 @@
 #include "main_window.h"
 
+void Main_window::on_happy_hour_click() {
+    emp.happy_hour();
+}
+
 void Main_window::on_edit_item_click() {
 
     vector<Containr> _containers = emp.get_containers();
