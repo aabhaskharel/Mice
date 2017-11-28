@@ -273,7 +273,7 @@ Serving Main_window::create_serving() {
                 std::cerr << e.what() << '\n';
                 break;
             }
-    		serving.set_topping(_toppings[topping], 1);
+    		serving.set_topping(_toppings[topping]);
     	}
     }
 
