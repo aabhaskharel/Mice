@@ -172,21 +172,21 @@ void Main_window::on_new_order() {
     vector<Customer> _customers = emp.get_customers();
     vector<string> names;
 
-	if(_servers.size() == 0 || _customers.size() == 0) {
-		Gtk::MessageDialog dialog{*this, "Add at least one server, and one customer to start an order!"};
+    int contsize = emp.get_containers().size();
+    int flavsize = emp.get_flavors().size();
+
+	if(_customers.size() == 0 || contsize == 0 || flavsize == 0) {
+		Gtk::MessageDialog dialog{*this, "Add at least one customer, one container, and one flavor to start an order!"};
 	    dialog.run();
 	    dialog.close();
 		return;
 	}
-/*
-    for(Server s: _servers) names.push_back(s.get_name());
-    int s_c = select_from_vector(names, "Server");
-*/
+
     names.clear();
     for(Customer c: _customers) names.push_back(c.get_name());
     int c_c = select_from_vector(names, "Customer");
 
-    if(/*s_c==-1 ||*/ c_c==-1) return;
+    if(c_c==-1) return;
 
 	int next_id = emp.get_orders().size();
 	Order order{next_id,  _customers[c_c]};
@@ -205,7 +205,6 @@ void Main_window::on_new_order() {
 	while(result==1) {
 		try {
 			Serving serving = create_serving();
-			//cout << serving << endl;
 			order.add_serving(serving);
 		} catch (std::runtime_error e) {}
 
@@ -239,14 +238,6 @@ Serving Main_window::create_serving() {
 	vector<Containr> _containers = emp.get_containers();
 	vector<Flavor> _flavors = emp.get_flavors();
 	vector<Topping> _toppings = emp.get_toppings();
-/*
-	if(_containers.size() == 0 || _flavors.size() == 0 || _toppings.size() == 0) {
-		Gtk::MessageDialog dialog{*this, "Add at least one container, one topping, and one flavor to start an serving!"};
-	    dialog.run();
-	    dialog.close();
-		return Serving s;
-	}
-*/
 
 	std::vector<std::string> names;
 	for (Containr c : _containers) names.push_back(c.get_name());
@@ -267,14 +258,24 @@ Serving Main_window::create_serving() {
 	}
 	if (has_no_flavors) throw std::runtime_error("Canceled");
 
-	while (true) {
-		names.clear();
-		for (Topping t : _toppings) names.push_back(t.get_name());
-		int topping = select_from_vector(names, "Topping");
-		//int topping = select_topping();
-		if (topping == -1) break;
-		else serving.set_topping(_toppings[topping], 1);
-	}
+    if (_toppings.size() > 0) {
+        std::vector<std::string> amounts = {"Light", "Normal", "Extra", "Drenched"};
+    	while (true) {
+    		names.clear();
+    		for (Topping t : _toppings) names.push_back(t.get_name());
+    		int topping = select_from_vector(names, "Topping");
+    		if (topping == -1) break;
+
+            try{
+                int a_c = select_from_vector(amounts, "Amount");
+                _toppings[topping].set_amount(a_c);
+            } catch (std::exception e) {
+                std::cerr << e.what() << '\n';
+                break;
+            }
+    		serving.set_topping(_toppings[topping], 1);
+    	}
+    }
 
 	return serving;
 }
