@@ -540,6 +540,7 @@ void Emporium::auto_restock(Server server, int id){
 
 		}
 }
+
 void Emporium:: populate_emporium(){
     Containr cont("Cup", "A freshly baked waffle cone.", 0.1, 0.6, "picture.png", 3);
     Containr cont2("Regular Cone", "Everyone's Favroite", 0.2, 0.8, "picture.png", 1);
