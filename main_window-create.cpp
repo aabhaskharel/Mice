@@ -210,7 +210,7 @@ void Main_window::on_new_order() {
 			Serving serving = create_serving();
 			order.add_serving(serving);
 
-            info+="New ";
+            info+= serving.get_report();
 
 		} catch (std::runtime_error e) {
             std::cerr << e.what() << '\n';
