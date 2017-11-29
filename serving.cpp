@@ -7,7 +7,7 @@
 using namespace std;
 
 //constructor
-Serving::Serving(Containr container): _container{container}, _count{0} {}
+Serving::Serving(Containr container): _container{container} {}
 Serving::Serving(std::istream& ist) {
     // The header must have been stripped from the incoming stream at this point
     std::string header1, header2;
@@ -52,7 +52,7 @@ void Serving::set_flavor(Flavor flavor) {
 
 //total retail price
 double Serving::get_total_retail_price() {
-		double total=0; 
+		double total=0;
 		total += _container.get_retail_price();
 
 		for(int i=0; i<_flavors.size(); i++){
@@ -70,7 +70,7 @@ double Serving::get_total_retail_price() {
 string Serving::get_report(){
 	string out;
 
-    	out = "\n("+to_string(++count)+")"+"\t"+"Container: "+(get_container()).get_name()+"\t"+"$"+to_string((get_container()).get_retail_price())+"\n";
+    	out = "\n("+to_string(++_count)+")"+"\t"+"Container: "+(get_container()).get_name()+"\t"+"$"+to_string((get_container()).get_retail_price())+"\n";
 	out+="\tFlavor:\n";
 	for(int i=0; i<(get_flavors()).size(); i++)
 		{
@@ -86,7 +86,7 @@ string Serving::get_report(){
 }
 
 double Serving::get_total_wholesale_price() {
-		double total=0; 
+		double total=0;
 		total += _container.get_wholesale_price();
 
 		for(int i=0; i<_flavors.size(); i++){
