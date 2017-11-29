@@ -103,6 +103,8 @@ bool Emporium::set_order_state(int id, string state, Server server) {
 	{
 		double trp = _orders[id].get_total_retail_price();
 		cash_register += trp;
+		double twp = _orders[id].get_total_wholesale_price();
+		_stocking_cost += twp;
 		
 		int sid = server.get_id();
 		_servers[sid].set_total_filled(1);
@@ -238,8 +240,8 @@ string Emporium::get_inventory_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
 	out += "		" + _location + "		" + "\n";
-	out += "		" + _phone + "		    "  + "\n\n";
-	out += "INVENTORY REPORT\n\n";
+	out += "		" + _phone + "		    "  + "\n______________________________\n";
+	out += "INVENTORY REPORT\n------------------------------\n";
 
 	out += "Containers Available:\n";
 
@@ -259,6 +261,7 @@ string Emporium::get_inventory_report() {
 		out += "\tTopping name: "+_toppings[i].get_name()+"\tStock Remainig: "+to_string(_toppings[i].get_stock())+"\n";
 	}
 
+	out += "\n______________________________\n";
 	return out;
 }
 
@@ -266,25 +269,35 @@ string Emporium::get_orders_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
 	out += "		" + _location + "		" + "\n";
-	out += "		" + _phone + "		    "  + "\n\n";
-	out += "ORDER REPORT\n\n";
-	out += "Filled/Paid Orders\n\n";
+	out += "		" + _phone + "		    "  + "\n______________________________\n";
+	out += "ORDER REPORT\n------------------------------\n";
+	for(int i=0; i<_orders.size(); i++){
+		if (_orders[i].get_state() == "Paid") {
+			out += "Paid Orders:\n";
+			break;
+		}
+	}
 
 	for(int i=0; i<_orders.size(); i++){
-		if (_orders[i].get_state() == "Filled") {
+		if (_orders[i].get_state() == "Paid") {
 		out += "\nOrder #" + to_string(_orders[i].get_id()) + "\n";
 		double retail = _orders[i].get_total_retail_price();
 		out += "\tWholesale cost: " + to_string(_orders[i].get_total_wholesale_price()) + "\n\tRetail cost: " + to_string(retail)+"\n";
 		double profit = retail - _orders[i].get_total_wholesale_price();
-		out += "\tProfit: " + to_string(profit) + "\n\n";
+		out += "\tProfit: " + to_string(profit) + "\n______________________________\n";
 		}
 	}
 
-	out += "\nCancelled Orders\n\n";
-
 	for(int i=0; i<_orders.size(); i++){
 		if (_orders[i].get_state() == "Cancelled") {
-		out += "\nOrder #" + to_string(_orders[i].get_id()) + "\n";
+			out += "\nCancelled Orders:\n";
+			break;
+		}
+	}
+	
+	for(int i=0; i<_orders.size(); i++){
+		if (_orders[i].get_state() == "Cancelled") {
+		out += "\n\tOrder #" + to_string(_orders[i].get_id()) + "\n______________________________\n";
 		}
 	}
 
@@ -295,8 +308,8 @@ string Emporium::get_pnl_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
 	out += "		" + _location + "		" + "\n";
-	out += "		" + _phone + "		    "  + "\n\n";
-	out += "PROFIT AND LOSS STATEMENT\n\n";
+	out += "		" + _phone + "		    "  + "\n______________________________\n";
+	out += "PROFIT AND LOSS STATEMENT\n------------------------------\n";
 
 	double orders_retail = 0;
 	double total_salary = 0;
@@ -324,7 +337,7 @@ string Emporium::get_pnl_report() {
 	{
 		out += "Profit: " + to_string(net);
 	}
-	out += "\n\n";
+	out += "\n______________________________\n";
 
 	return out;
 
@@ -402,7 +415,7 @@ void Emporium::restore_person(Person person, int id){
 }
 
 //Happy Hour
-void Emporium::happy_hour(){
+bool Emporium::happy_hour(){
 
 	if(_happy_hour == false){
 		for(int i=0; i<_containers.size(); i++){
@@ -434,7 +447,7 @@ void Emporium::happy_hour(){
 		}
 		_happy_hour = false;
 	}
-	
+	return _happy_hour;
 }
 
 //edit container
@@ -494,7 +507,7 @@ void Emporium::add_stock(Server server, int type, int index, int quantity) {
 
 //auto restock item
 void Emporium::auto_restock(Server server, int id){
-		int Q = 20; //default auto stock amount
+		int Q = 25; //default auto stock amount
 		
 		double twp = _orders[id].get_total_wholesale_price();
 		_stocking_cost += twp;
@@ -513,7 +526,9 @@ void Emporium::auto_restock(Server server, int id){
 		Containr c = s.get_container();
 			for(int i=0; i< _containers.size(); i++){
 				if(_containers[i].get_name() == c.get_name()){
-					_containers[i].set_stock(Q);
+					if(_containers[i].get_stock() < 1){
+						_containers[i].set_stock(Q);
+					}
 				}
 			}
 		
@@ -522,22 +537,27 @@ void Emporium::auto_restock(Server server, int id){
 		{
 			for(int j=0; j<fv.size(); j++){
 				if(_flavors[i].get_name() == fv[j].get_name()){
-					_flavors[i].set_stock(Q);
+					if(_flavors[i].get_stock() < 1){
+						_flavors[i].set_stock(Q);
+					}
 				}
 			}
 		}
 		
 		vector<Topping> tv = s.get_toppings();
-		
-		for (int i=0; i<_toppings.size(); i++)
-		{
-			for(int j=0; j<tv.size(); j++){
-				if(_toppings[i].get_name() == tv[j].get_name()){
-					_toppings[i].set_stock(Q);
+		if(tv.size()!=0){
+			for (int i=0; i<_toppings.size(); i++)
+			{
+				for(int j=0; j<tv.size(); j++){
+					if(_toppings[i].get_name() == tv[j].get_name()){
+						if(_toppings[i].get_stock() < 5){
+							_toppings[i].set_stock(Q);
+						}
+					}
 				}
 			}
-		}
 
+			}
 		}
 }
 
