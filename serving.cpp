@@ -7,7 +7,7 @@
 using namespace std;
 
 //constructor
-Serving::Serving(Containr container): _container{container} {}
+Serving::Serving(Containr container): _container{container}, _count{0} {}
 Serving::Serving(std::istream& ist) {
     // The header must have been stripped from the incoming stream at this point
     std::string header1, header2;
