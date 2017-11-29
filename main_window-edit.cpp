@@ -1,7 +1,14 @@
 #include "main_window.h"
 
 void Main_window::on_happy_hour_click() {
-    emp.happy_hour();
+    bool hour = emp.happy_hour();
+
+    Gtk::Image banner{"data/pictures/cancel.png"};
+
+    if(hour) {
+        vbox->pack_start(banner);
+        vbox->show_all();
+    } else vbox->remove(banner);
 }
 
 void Main_window::on_edit_item_click() {
