@@ -1,5 +1,27 @@
 #include "main_window.h"
 
+void Main_window::on_receipt_click() {
+	vector<string> names;
+	vector<Order> _orders = emp.get_orders();
+
+	if(_orders.size()==0) {
+		Gtk::MessageDialog dialog{*this, "No orders in the system!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
+	for(Order o: _orders) {
+		names.push_back("Order "+ to_string(o.get_id()));
+	}
+
+	int id = select_from_vector(names, "Order");
+
+	if(id!=-1) {
+		_orders[id].list_serving(id);
+	}
+
+}
 
 //report callbacks
 void Main_window::on_servers_report() {

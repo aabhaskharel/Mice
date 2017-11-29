@@ -21,7 +21,7 @@ void Main_window::on_cancel_order(){
 		return;
 	}
 
-    int id = select_from_vector(names, "Cancel Order");
+    int id = select_from_vector(names, "Order to Canel");
 
 	if (id!=-1) {
 		emp.set_order_state(o_id[id], "Cancelled", Server{"TBD", -1, "TBD", 0});
@@ -50,7 +50,7 @@ void Main_window::on_fill_order() {
 		return;
 	}
 
-	int id = select_from_vector(names, "Fill Order");
+	int id = select_from_vector(names, "Order to Fill");
 
 	if (id == -1) return;
 
@@ -98,7 +98,7 @@ void Main_window::on_pay_order() {
 		return;
 	}
 
-    int id = select_from_vector(names, "Pay Order");
+    int id = select_from_vector(names, "Order to Pay");
 
 	if (id!=-1) {
 		emp.set_order_state(o_id[id], "Paid", Server{"TBD", -1, "TBD", 0});

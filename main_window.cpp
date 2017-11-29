@@ -134,6 +134,10 @@ Main_window::Main_window() {
 	Gtk::Menu *report_menu = Gtk::manage(new Gtk::Menu());
 	menuitem_reports->set_submenu(*report_menu);
 
+	Gtk::MenuItem *menuitem_receipt = Gtk::manage(new Gtk::MenuItem("_Receipt", true));
+	menuitem_receipt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_receipt_click));
+	report_menu->append(*menuitem_receipt);
+
 	Gtk::MenuItem *menuitem_servers = Gtk::manage(new Gtk::MenuItem("_Servers Report", true));
 	menuitem_servers->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_servers_report));
 	report_menu->append(*menuitem_servers);
