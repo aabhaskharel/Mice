@@ -34,6 +34,16 @@ void Main_window::on_receipt_click() {
 
 //report callbacks
 void Main_window::on_servers_report() {
+
+	int size = emp.get_servers().size();
+
+	if(size==0) {
+		Gtk::MessageDialog dialog{*this, "No servers in the system!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
 	string res = emp.get_servers_report();
 
 	Gtk::Dialog s_dialog{"Servers Report", *this};
@@ -44,7 +54,18 @@ void Main_window::on_servers_report() {
 	s_dialog.show_all();
 	s_dialog.run();
 }
+
 void Main_window::on_customers_report() {
+
+	int size = emp.get_customers().size();
+
+	if(size==0) {
+		Gtk::MessageDialog dialog{*this, "No customers in the system!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
 	string res = emp.get_customers_report();
 
 	Gtk::Dialog c_dialog{"Customers Report", *this};
@@ -55,7 +76,20 @@ void Main_window::on_customers_report() {
 	c_dialog.show_all();
 	c_dialog.run();
 }
+
 void Main_window::on_inventory_report() {
+
+	int size = emp.get_containers().size();
+	size += emp.get_flavors().size();
+	size+= emp.get_toppings().size();
+
+	if(size==0) {
+		Gtk::MessageDialog dialog{*this, "No items in the system!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
 	string res = emp.get_inventory_report();
 
     Gtk::Dialog i_dialog{"Inventory Report", *this};
@@ -66,7 +100,18 @@ void Main_window::on_inventory_report() {
 	i_dialog.show_all();
 	i_dialog.run();
 }
+
 void Main_window::on_orders_report() {
+
+	int size = emp.get_orders().size();
+
+	if(size==0) {
+		Gtk::MessageDialog dialog{*this, "No orders in the system!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
 	string res = emp.get_orders_report();
 
     Gtk::Dialog o_dialog{"Orders Report", *this};
@@ -77,6 +122,7 @@ void Main_window::on_orders_report() {
 	o_dialog.show_all();
 	o_dialog.run();
 }
+
 void Main_window::on_pnl_report() {
 	string res = emp.get_pnl_report();
 
