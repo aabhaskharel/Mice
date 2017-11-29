@@ -67,6 +67,11 @@ Main_window::Main_window() {
 	editmenu->append(*menuitem_eserver);
 
 	//restore person
+	menuitem_restore_item = Gtk::manage(new Gtk::MenuItem("_Restore Item", true));
+	menuitem_restore_item->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_restore_item_click));
+	editmenu->append(*menuitem_restore_item);
+
+	//restore person
 	menuitem_restore_person = Gtk::manage(new Gtk::MenuItem("_Restore Person", true));
 	menuitem_restore_person->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_restore_person_click));
 	editmenu->append(*menuitem_restore_person);

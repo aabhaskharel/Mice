@@ -45,6 +45,7 @@ class Main_window : public Gtk::Window
         void on_happy_hour_click();
 
         void on_restore_person_click();
+        void on_restore_item_click();
 
     	//report callbacks
         void on_receipt_click();
@@ -82,6 +83,7 @@ class Main_window : public Gtk::Window
         Gtk::MenuItem *menuitem_eitem;
         Gtk::MenuItem *menuitem_happy_hour;
         Gtk::MenuItem *menuitem_eserver;
+        Gtk::MenuItem *menuitem_restore_item;
         Gtk::MenuItem *menuitem_restore_person;
 
         Gtk::MenuItem *menuitem_add_customer;

@@ -223,11 +223,18 @@ void Main_window::on_edit_item_click() {
 	        }
 		}
     }
+
     int index = c_index.get_active_row_number();
     string text = c_index.get_active_text();
 
     if (cretire) {
-        emp.retire_item(type, index);
+        if(index!=-1)
+            emp.retire_item(type, index);
+        else {
+            Gtk::MessageDialog dialog{*this, "Invalid Choice!"};
+			dialog.run();
+			dialog.close();
+        }
         return;
     }
 
@@ -236,7 +243,7 @@ void Main_window::on_edit_item_click() {
 		vector<string> names;
 
 		if(_servers.size() == 0) {
-			Gtk::MessageDialog dialog{*this, "No servers to restock!"};
+			Gtk::MessageDialog dialog{*this, "No servers to restock items!"};
 			dialog.run();
 			dialog.close();
 			return;
@@ -272,19 +279,79 @@ void Main_window::on_edit_item_click() {
     dialog.close();
 }
 
+void Main_window::on_restore_item_click() {
+    vector<string> names;
+    names.push_back("Container"); names.push_back("Flavor"); names.push_back("Topping");
+
+    int c_item = select_from_vector(names, "Item");
+
+    if(c_item==-1) return;
+
+    if(c_item == 0) {
+        vector<Containr> _containers = emp.get_retired_containers();
+        if(_containers.size() == 0 ) {
+            Gtk::MessageDialog dialog{*this, "No containers eligible to Restore"};
+		    dialog.run();
+		    dialog.close();
+			return;
+        }
+        names.clear();
+        for(Containr c: _containers) names.push_back(c.get_name());
+
+        int c_c = select_from_vector(names, "Container");
+        if(c_c == -1) return;
+
+        emp.restore_item(_containers[c_c], c_c);
+    }
+
+    if(c_item == 1) {
+        vector<Flavor> _flavors = emp.get_retired_flavors();
+        if(_flavors.size() == 0 ) {
+            Gtk::MessageDialog dialog{*this, "No flavors eligible to Restore"};
+		    dialog.run();
+		    dialog.close();
+			return;
+        }
+        names.clear();
+        for(Flavor f: _flavors) names.push_back(f.get_name());
+
+        int c_f = select_from_vector(names, "Flavor");
+        if(c_f == -1) return;
+
+        emp.restore_item(_flavors[c_f], c_f);
+    }
+
+    if(c_item == 2) {
+        vector<Topping> _toppings = emp.get_retired_toppings();
+        if(_toppings.size() == 0 ) {
+            Gtk::MessageDialog dialog{*this, "No toppings eligible to Restore"};
+		    dialog.run();
+		    dialog.close();
+			return;
+        }
+        names.clear();
+        for(Topping t: _toppings) names.push_back(t.get_name());
+
+        int c_top = select_from_vector(names, "Topping");
+        if(c_top == -1) return;
+
+        emp.restore_item(_toppings[c_top], c_top);
+    }
+}
+
 void Main_window::on_restore_person_click() {
 	vector<string> names;
 	names.push_back("Manager");
 	names.push_back("Server");
 
-	int mos = select_from_vector(names, "Manager or Server:");
+	int mos = select_from_vector(names, "Person");
 
 	if(mos==-1) return;
 
 	if (mos == 1) {
 		vector<Server> rservers = emp.get_retired_servers();
 		if(rservers.size() == 0) {
-			Gtk::MessageDialog dialog{*this, "No servers to Restore"};
+			Gtk::MessageDialog dialog{*this, "No servers eligible to Restore"};
 		    dialog.run();
 		    dialog.close();
 			return;
@@ -292,7 +359,7 @@ void Main_window::on_restore_person_click() {
 		names.clear();
 		for(Server s: rservers) names.push_back(s.get_name());
 
-		int sc = select_from_vector(names, "Select an Server");
+		int sc = select_from_vector(names, "Server");
 		if(sc == -1) return;
 
 		emp.restore_person(rservers[sc], sc);
@@ -301,7 +368,7 @@ void Main_window::on_restore_person_click() {
 	if (mos == 0) {
 		vector<Manager> rmanagers = emp.get_retired_managers();
 		if(rmanagers.size() == 0) {
-			Gtk::MessageDialog dialog{*this, "No managers to Restore"};
+			Gtk::MessageDialog dialog{*this, "No managers eligible to Restore"};
 		    dialog.run();
 		    dialog.close();
 			return;
@@ -309,7 +376,7 @@ void Main_window::on_restore_person_click() {
 		names.clear();
 		for(Manager m: rmanagers) names.push_back(m.get_name());
 
-		int mc = select_from_vector(names, "Select an Manager");
+		int mc = select_from_vector(names, "Manager");
 		if(mc == -1) return;
 
 		emp.restore_person(rmanagers[mc], mc);
