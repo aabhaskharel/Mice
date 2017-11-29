@@ -11,6 +11,7 @@ class Serving{
 		Containr _container{"", "", 0, 0, "", 0};
 		vector<Flavor>  _flavors;
 		vector<Topping> _toppings;
+		int count;
 
 	public:
 		Serving(Containr container);
@@ -24,6 +25,7 @@ class Serving{
 		vector<Topping> get_toppings() ;
 		double get_total_retail_price() ;
 		double get_total_wholesale_price();
+		string get_report();
 };
 
 std::ostream& operator<<(std::ostream& os, const Serving& serving);
