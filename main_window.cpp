@@ -196,20 +196,21 @@ Main_window::Main_window() {
 	new_item_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_item));
 	toolbar->append(*new_item_button);
 
-	//Login
-	Gtk::ToolButton *new_role_button = Gtk::manage(new Gtk::ToolButton("Change Role"));
-	new_role_button->set_tooltip_markup("Logout/Login to new Role");
-	new_role_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_role));
-	toolbar->append(*new_role_button);
+	Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
+	sep->set_expand(true);
+	toolbar->append(*sep);
 
-	Gtk::ToolButton *test_button = Gtk::manage(new Gtk::ToolButton("T"));
+	Gtk::ToolButton *test_button = Gtk::manage(new Gtk::ToolButton("Test"));
 	test_button->set_tooltip_markup("Test a feature");
 	test_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_test));
 	toolbar->append(*test_button);
 
-	Gtk::SeparatorToolItem *sep = Gtk::manage(new Gtk::SeparatorToolItem());
-	sep->set_expand(true);
-	toolbar->append(*sep);
+	//Login
+	Gtk::Image *change_role_image = Gtk::manage(new Gtk::Image("data/pictures/change_role.png"));
+	Gtk::ToolButton *new_role_button = Gtk::manage(new Gtk::ToolButton(*change_role_image));
+	new_role_button->set_tooltip_markup("Logout/Login to new Role");
+	new_role_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_new_role));
+	toolbar->append(*new_role_button);
 
 	Gtk::ToolButton *help_button = Gtk::manage(new Gtk::ToolButton(Gtk::Stock::HELP));
 	help_button->set_tooltip_markup("Show contents description.");
@@ -541,14 +542,15 @@ void Main_window::on_about_click() {   //shows company description
 	Gtk::AboutDialog dialog{};
 	dialog.set_transient_for(*this);
 	dialog.set_program_name("Mav's Ice Cream Emporium");
-	auto logo = Gdk::Pixbuf::create_from_file("logo.png");
+	auto logo = Gdk::Pixbuf::create_from_file("data/pictures/logo.png");
 	dialog.set_logo(logo);
 	dialog.set_version("Sprint 3");
 	dialog.set_copyright("Copyright 2017");
 	dialog.set_license_type(Gtk::License::LICENSE_GPL_3_0);
 	std::vector< Glib::ustring > authors = {"Safal Lamsal, Aabhas Kharel, Roshan Shrestha, Bibek Sapkota"};
 	dialog.set_authors(authors);
-	std::vector< Glib::ustring > artists = {"Logo by weewilliewinkie https://pixabay.com/en/ice-cream-cup-summer-glass-wafer-2109460/\nStore Contents design by Jeevan Gyawali"};
+	std::vector< Glib::ustring > artists = {"Logo by weewilliewinkie https://pixabay.com/en/ice-cream-cup-summer-glass-wafer-2109460"
+	, "Store Contents design by Jeevan Gyawali", "Icons by Iconsflow https://iconsflow.com/"};
 	dialog.set_artists(artists);
 	dialog.run();
 }

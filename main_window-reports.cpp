@@ -18,7 +18,16 @@ void Main_window::on_receipt_click() {
 	int id = select_from_vector(names, "Order");
 
 	if(id!=-1) {
-		_orders[id].list_serving(id);
+		string out = _orders[id].list_serving(id);
+
+		Gtk::Dialog o_dialog{"Order " + to_string(id), *this};
+		Gtk::Label l_text{out};
+		o_dialog.get_vbox()->pack_start(l_text, Gtk::PACK_SHRINK);
+
+		o_dialog.add_button("Ok", 1);
+		o_dialog.show_all();
+		o_dialog.run();
+		o_dialog.close();
 	}
 
 }

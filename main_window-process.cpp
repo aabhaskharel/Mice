@@ -9,7 +9,7 @@ void Main_window::on_cancel_order(){
 
     for(Order s: orders) {
 		if(s.get_state() == "Unfilled") {
-			names.push_back(to_string(s.get_id()));
+			names.push_back("Order "+ to_string(s.get_id()));
 			o_id.push_back(s.get_id());
 		}
 	}
@@ -38,7 +38,7 @@ void Main_window::on_fill_order() {
 
     for(Order s: orders) {
 		if(s.get_state() == "Unfilled") {
-			names.push_back(to_string(s.get_id()));
+			names.push_back("Order "+ to_string(s.get_id()));
 			o_id.push_back(s.get_id());
 		}
 	}
@@ -86,7 +86,7 @@ void Main_window::on_pay_order() {
 
     for(Order s: orders) {
 		if(s.get_state() == "Filled") {
-			names.push_back(to_string(s.get_id()));
+			names.push_back("Order "+ to_string(s.get_id()));
 			o_id.push_back(s.get_id());
 		}
 	}
