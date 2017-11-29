@@ -62,7 +62,18 @@ void Main_window::on_fill_order() {
 	int s_c = select_from_vector(names, "Server");
 
 	if (id!=-1 && s_c!=-1) {
-		emp.set_order_state(o_id[id], "Filled", _servers[s_c]);
+		bool status = emp.set_order_state(o_id[id], "Filled", _servers[s_c]);
+
+		if (!status) {
+			Gtk::Dialog ardlg{"Re-Stock Stragedy", *this};
+			ardlg.add_button("Manuel", 0);
+			ardlg.add_button("Auto Re-Stock", 1);
+
+			if(ardlg.run() == 1) {
+				emp.auto_restock(_servers[s_c], o_id[id]);
+				emp.set_order_state(o_id[id], "Filled", _servers[s_c]);
+			}
+		}
 	}
 
 	on_order_update();

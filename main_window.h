@@ -47,6 +47,7 @@ class Main_window : public Gtk::Window
         void on_restore_person_click();
 
     	//report callbacks
+        void on_receipt_click();
     	void on_servers_report();
     	void on_customers_report();
     	void on_inventory_report();
