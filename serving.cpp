@@ -70,7 +70,7 @@ double Serving::get_total_retail_price() {
 string Serving::get_report(){
 	string out;
 
-    	out = "\n("+to_string(1.)+")"+"\t"+"Container: "+(get_container()).get_name()+"\t"+"$"+to_string((get_container()).get_retail_price())+"\n";
+    	out = "\n("+to_string(++count)+")"+"\t"+"Container: "+(get_container()).get_name()+"\t"+"$"+to_string((get_container()).get_retail_price())+"\n";
 	out+="\tFlavor:\n";
 	for(int i=0; i<(get_flavors()).size(); i++)
 		{

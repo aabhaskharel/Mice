@@ -11,6 +11,7 @@ class Serving{
 		Containr _container{"", "", 0, 0, "", 0};
 		vector<Flavor>  _flavors;
 		vector<Topping> _toppings;
+		int count;
 
 	public:
 		Serving(Containr container);
