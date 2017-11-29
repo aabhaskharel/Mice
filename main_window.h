@@ -41,6 +41,8 @@ class Main_window : public Gtk::Window
     	//edit calls
     	void on_edit_item_click();
         void on_edit_server_click();
+        void on_edit_customer_click();
+        void on_edit_manager_click();
 
         void on_happy_hour_click();
 
@@ -85,7 +87,9 @@ class Main_window : public Gtk::Window
         Gtk::MenuItem *menuitem_edit;
         Gtk::MenuItem *menuitem_eitem;
         Gtk::MenuItem *menuitem_happy_hour;
+        Gtk::MenuItem *menuitem_ecustomer;
         Gtk::MenuItem *menuitem_eserver;
+        Gtk::MenuItem *menuitem_emanager;
         Gtk::MenuItem *menuitem_restore_item;
         Gtk::MenuItem *menuitem_restore_person;
 

@@ -61,10 +61,20 @@ Main_window::Main_window() {
 	menuitem_eitem->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_item_click));
 	editmenu->append(*menuitem_eitem);
 
+	//edit customer
+	menuitem_ecustomer = Gtk::manage(new Gtk::MenuItem("_Edit Customer", true));
+	menuitem_ecustomer->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_customer_click));
+	editmenu->append(*menuitem_ecustomer);
+
 	//edit server
 	menuitem_eserver = Gtk::manage(new Gtk::MenuItem("_Edit Server", true));
 	menuitem_eserver->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_server_click));
 	editmenu->append(*menuitem_eserver);
+
+	//edit server
+	menuitem_emanager = Gtk::manage(new Gtk::MenuItem("_Edit Manager", true));
+	menuitem_emanager->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_manager_click));
+	editmenu->append(*menuitem_emanager);
 
 	//restore person
 	menuitem_restore_item = Gtk::manage(new Gtk::MenuItem("_Restore Item", true));
@@ -469,6 +479,7 @@ void Main_window::on_new_role() {
 			menuitem_eitem->show();
 			menuitem_eserver->show();
 			menuitem_restore_person->show();
+
 
 			menuitem_add_customer->show();
 			menuitem_item->show();
