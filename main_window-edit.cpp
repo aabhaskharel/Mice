@@ -1,14 +1,17 @@
 #include "main_window.h"
 
 void Main_window::on_happy_hour_click() {
+
+    if (p_banner) vbox->remove(*banner);
+
     bool hour = emp.happy_hour();
 
-    Gtk::Image banner{"data/pictures/cancel.png"};
-
     if(hour) {
-        vbox->pack_start(banner);
+        banner = Gtk::manage(new Gtk::Image("data/pictures/banner.png"));
+        vbox->pack_start(*banner);
         vbox->show_all();
-    } else vbox->remove(banner);
+        p_banner = true;
+    }
 }
 
 void Main_window::on_edit_item_click() {

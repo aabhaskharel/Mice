@@ -70,7 +70,9 @@ class Main_window : public Gtk::Window
         Gtk::Box *vbox;
 
         Gtk::ScrolledWindow *s_window;
+        Gtk::Image *banner;
         bool present = false; //presence of ScrolledWindow
+        bool p_banner = false;
 
         Gtk::MenuItem *menuitem_new;
         Gtk::MenuItem *menuitem_save;
