@@ -76,12 +76,15 @@ string Serving::get_report(){
 		{
 		out+="\t\t"+(get_flavors())[i].get_name()+"\t"+"\t$"+to_string((get_flavors())[i].get_retail_price())+"\n";
 		}
-	out+="\tTopping:\n";
-	for(int i=0; i<(get_toppings()).size(); i++)
-		{
-		int amt = (get_toppings())[i].get_amount();
-		out+="\t\t"+(get_toppings())[i].get_name()+"\t"+"\t$"+to_string(((get_toppings())[i].get_retail_price())*amt)+"\n";
-		}
+		
+	if(get_toppings().size() != 0){
+		out+="\tTopping:\n";
+		for(int i=0; i<(get_toppings()).size(); i++)
+			{
+			int amt = (get_toppings())[i].get_amount();
+			out+="\t\t"+(get_toppings())[i].get_name()+"\t"+"\t$"+to_string(((get_toppings())[i].get_retail_price())*amt)+"\n";
+			}
+	}
 	return out;
 }
 

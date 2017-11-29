@@ -145,14 +145,18 @@ string Order::list_serving(int index){
 		{
 		out+="\t\t"+(_servings[index].get_flavors())[i].get_name()+"\t"+"\t$"+to_string((_servings[index].get_flavors())[i].get_retail_price())+"\n";
 		}
+	
+	if((_servings[index].get_toppings()).size() != 0){
 	out+="\tTopping:\n";
 	for(int i=0; i<(_servings[index].get_toppings()).size(); i++)
 		{
 		int amt = (_servings[index].get_toppings())[i].get_amount();
 		out+="\t\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"\t$"+to_string(((_servings[index].get_toppings())[i].get_retail_price())*amt)+"\n";
 		}
+	}
 	return out;
 }
+	
 
 //list order
 string Order::list_order(){
