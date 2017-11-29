@@ -53,7 +53,7 @@ class Emporium{
 		void change_salary(int server_id, double salary);
 
 		void write(string filename);
-		void happy_hour();
+		bool happy_hour();
 		void auto_restock(Server sever, int id);
 		
 		//report calls

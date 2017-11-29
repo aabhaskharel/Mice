@@ -240,8 +240,8 @@ string Emporium::get_inventory_report() {
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
 	out += "		" + _location + "		" + "\n";
-	out += "		" + _phone + "		    "  + "\n\n";
-	out += "INVENTORY REPORT\n\n";
+	out += "		" + _phone + "		    "  + "\n______________________________\n";
+	out += "INVENTORY REPORT\n------------------------------\n";
 
 	out += "Containers Available:\n";
 
@@ -261,6 +261,7 @@ string Emporium::get_inventory_report() {
 		out += "\tTopping name: "+_toppings[i].get_name()+"\tStock Remainig: "+to_string(_toppings[i].get_stock())+"\n";
 	}
 
+	out += "\n______________________________\n";
 	return out;
 }
 
@@ -414,7 +415,7 @@ void Emporium::restore_person(Person person, int id){
 }
 
 //Happy Hour
-void Emporium::happy_hour(){
+bool Emporium::happy_hour(){
 
 	if(_happy_hour == false){
 		for(int i=0; i<_containers.size(); i++){
@@ -446,7 +447,7 @@ void Emporium::happy_hour(){
 		}
 		_happy_hour = false;
 	}
-	
+	return _happy_hour;
 }
 
 //edit container
