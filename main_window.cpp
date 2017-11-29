@@ -316,7 +316,7 @@ void Main_window::on_save_click() {
 		} else valid_data = true;
 	}
 
-    string s = e.get_text() + ".txt";
+    string s = "data/" + e.get_text() + ".txt";
 
     dlg.close();
 
@@ -530,7 +530,7 @@ void Main_window::on_contents_click() {   //shows help or program documentation
 	dialog.get_vbox()->pack_start(but4, Gtk::PACK_SHRINK);
 
 	dialog.show_all();
-	dialog.run();
+	std::cout << "ID:" << dialog.run() << '\n';
 }
 
 void Main_window::on_about_click() {   //shows company description

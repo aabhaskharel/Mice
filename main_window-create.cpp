@@ -202,11 +202,23 @@ void Main_window::on_new_order() {
 	order_dialog.show_all();
 	int result = order_dialog.run();
 
+    string info = ""; //stores serving report
+
 	while(result==1) {
+
 		try {
 			Serving serving = create_serving();
 			order.add_serving(serving);
-		} catch (std::runtime_error e) {}
+
+            info+="New ";
+
+		} catch (std::runtime_error e) {
+            std::cerr << e.what() << '\n';
+        }
+
+        Gtk::Label label{info};
+        order_dialog.get_vbox()->pack_start(label, Gtk::PACK_SHRINK);
+        order_dialog.show_all();
 
 		result = order_dialog.run();
 	}
@@ -268,7 +280,7 @@ Serving Main_window::create_serving() {
 
             try{
                 int a_c = select_from_vector(amounts, "Amount");
-                _toppings[topping].set_amount(a_c);
+                _toppings[topping].set_amount(a_c+1);
             } catch (std::exception e) {
                 std::cerr << e.what() << '\n';
                 break;
