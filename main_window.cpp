@@ -262,12 +262,17 @@ void Main_window::on_order_update() {
 	table->attach(*l1,0,1,0,1);
 	table->attach(*l2,1,2,0,1);
 
-	for(int i = 0; i < orders.size(); i++) {
-		Gtk::Label *l_id = Gtk::manage(new Gtk::Label(to_string(orders[i].get_id())));
-		table->attach(*l_id, 0, 1, i+1, i+2);
+	int iter = 1;
 
-		Gtk::Label *l_state = Gtk::manage(new Gtk::Label(orders[i].get_state()));
-		table->attach(*l_state, 1, 2, i+1, i+2);
+	for(int i = 0; i < orders.size(); i++) {
+		if(orders[i].get_state() == "Filled" || orders[i].get_state() == "Unfilled") {
+			Gtk::Label *l_id = Gtk::manage(new Gtk::Label(to_string(orders[i].get_id())));
+			table->attach(*l_id, 0, 1, iter, iter+1);
+
+			Gtk::Label *l_state = Gtk::manage(new Gtk::Label(orders[i].get_state()));
+			table->attach(*l_state, 1, 2, iter, iter+1);
+			iter++;
+		}
 	}
 
 	vbox->pack_start(*s_window);
@@ -338,9 +343,11 @@ void Main_window::on_new_mgmt_click() {
 		return;
 	}
 
+	all_pnl[emp_id] = emp.get_pnl_report();
 	emp_id++;
     Emporium new_emp{emp_id, e_location.get_text(), e_phone.get_text()};
     emp = new_emp;
+	first_report = true;
 }
 
 void Main_window::on_pop_mgmt_click() {
@@ -427,6 +434,7 @@ void Main_window::on_load_click() {
 
 	try {
         std::ifstream ifs{filename, std::ifstream::in};
+		//all_pnl+=emp.get_pnl_report();
 		Emporium new_emp{ifs};
         emp = new_emp;
     } catch (std::exception& e) {

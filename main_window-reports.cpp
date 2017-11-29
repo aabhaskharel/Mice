@@ -124,10 +124,14 @@ void Main_window::on_orders_report() {
 }
 
 void Main_window::on_pnl_report() {
-	string res = emp.get_pnl_report();
+	//string res = emp.get_pnl_report();
+	if(first_report) {
+		all_pnl.push_back(emp.get_pnl_report());
+		first_report = false;
+	}	else all_pnl[emp_id] = emp.get_pnl_report();
 
 	Gtk::Dialog p_dialog{"Profit & Loss Report", *this};
-	Gtk::Label lp_text{res};
+	Gtk::Label lp_text{all_pnl[emp_id]};
 	p_dialog.get_vbox()->pack_start(lp_text, Gtk::PACK_SHRINK);
 
 	p_dialog.add_button("Ok", 1);

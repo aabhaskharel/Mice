@@ -55,7 +55,7 @@ class Emporium{
 		void write(string filename);
 		bool happy_hour();
 		void auto_restock(Server sever, int id);
-		
+
 		//report calls
 		string get_servers_report();
 		string get_customers_report();

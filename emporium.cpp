@@ -90,10 +90,9 @@ void Emporium::add_order(Order order) {
     _orders.push_back(order);
 }
 
-//template<typename T>
-//void Emporium::all_id(T id){
-//	return T.get_id();
-//}
+int Emporium::get_id(){
+	return _id;
+}
 
 bool Emporium::set_order_state(int id, string state, Server server) {
 
@@ -105,7 +104,7 @@ bool Emporium::set_order_state(int id, string state, Server server) {
 		cash_register += trp;
 		double twp = _orders[id].get_total_wholesale_price();
 		_stocking_cost += twp;
-		
+
 		int sid = server.get_id();
 		_servers[sid].set_total_filled(1);
 
@@ -116,7 +115,7 @@ bool Emporium::set_order_state(int id, string state, Server server) {
 		}
 
 		vector<Serving> svg = _orders[id].get_servings();
-		
+
 		for (Serving s: svg) {
 		Containr c = s.get_container();
 			for(int i=0; i< _containers.size(); i++){
@@ -125,7 +124,7 @@ bool Emporium::set_order_state(int id, string state, Server server) {
 					else{_containers[i].set_stock(-1);}
 				}
 			}
-		
+
 		vector<Flavor> fv = s.get_flavors();
 		for (int i=0; i<_flavors.size(); i++)
 		{
@@ -136,9 +135,9 @@ bool Emporium::set_order_state(int id, string state, Server server) {
 				}
 			}
 		}
-		
+
 		vector<Topping> tv = s.get_toppings();
-		
+
 		for (int i=0; i<_toppings.size(); i++)
 		{
 			for(int j=0; j<tv.size(); j++){
@@ -152,9 +151,9 @@ bool Emporium::set_order_state(int id, string state, Server server) {
 
 		}
 	}
-	
+
 	if (check) _orders[id].process_event(state, server);
-	
+
 	return check;
 }
 
@@ -294,7 +293,7 @@ string Emporium::get_orders_report() {
 			break;
 		}
 	}
-	
+
 	for(int i=0; i<_orders.size(); i++){
 		if (_orders[i].get_state() == "Cancelled") {
 		out += "\n\tOrder #" + to_string(_orders[i].get_id()) + "\n______________________________\n";
@@ -421,27 +420,27 @@ bool Emporium::happy_hour(){
 		for(int i=0; i<_containers.size(); i++){
 			_containers[i].set_retail_price(_containers[i].get_retail_price()*0.7);
 		}
-	
+
 		for(int i=0; i<_flavors.size(); i++){
 			_flavors[i].set_retail_price(_flavors[i].get_retail_price()*0.7);
 		}
-	
+
 		for(int i=0; i<_toppings.size(); i++){
 			_toppings[i].set_retail_price(_toppings[i].get_retail_price()*0.7);
 		}
-		
+
 		_happy_hour = true;
 	}
-	
+
 	else{
 		for(int i=0; i<_containers.size(); i++){
 			_containers[i].set_retail_price(_containers[i].get_retail_price()/0.7);
 		}
-	
+
 		for(int i=0; i<_flavors.size(); i++){
 			_flavors[i].set_retail_price(_flavors[i].get_retail_price()/0.7);
 		}
-	
+
 		for(int i=0; i<_toppings.size(); i++){
 			_toppings[i].set_retail_price(_toppings[i].get_retail_price()/0.7);
 		}
@@ -473,29 +472,29 @@ void Emporium::add_stock(Server server, int type, int index, int quantity) {
 
 	if(type == 0){
 		_containers[index].set_stock(quantity);
-		
+
 		double wp = quantity * _containers[index].get_wholesale_price();
 		_stocking_cost += wp;
 		cash_register -= wp;
 	}
-	
+
 	if(type == 1){
 		_flavors[index].set_stock(quantity);
-		
+
 		double wp = quantity * _flavors[index].get_wholesale_price();
 		_stocking_cost += wp;
 		cash_register -= wp;
 	}
-	
+
 	if(type == 2){
 		_toppings[index].set_stock(quantity);
-		
+
 		double wp = quantity * _toppings[index].get_wholesale_price();
 		_stocking_cost += wp;
 		cash_register -= wp;
 	}
-		
-	
+
+
 	int sid = server.get_id();
 	_servers[sid].set_total_filled(2);
 		if (_servers[sid].pay())
@@ -508,10 +507,10 @@ void Emporium::add_stock(Server server, int type, int index, int quantity) {
 //auto restock item
 void Emporium::auto_restock(Server server, int id){
 		int Q = 25; //default auto stock amount
-		
+
 		double twp = _orders[id].get_total_wholesale_price();
 		_stocking_cost += twp;
-		
+
 		int sid = server.get_id();
 
 		if (_servers[sid].pay())
@@ -521,7 +520,7 @@ void Emporium::auto_restock(Server server, int id){
 		}
 
 		vector<Serving> svg = _orders[id].get_servings();
-		
+
 		for (Serving s: svg) {
 		Containr c = s.get_container();
 			for(int i=0; i< _containers.size(); i++){
@@ -531,7 +530,7 @@ void Emporium::auto_restock(Server server, int id){
 					}
 				}
 			}
-		
+
 		vector<Flavor> fv = s.get_flavors();
 		for (int i=0; i<_flavors.size(); i++)
 		{
@@ -543,7 +542,7 @@ void Emporium::auto_restock(Server server, int id){
 				}
 			}
 		}
-		
+
 		vector<Topping> tv = s.get_toppings();
 		if(tv.size()!=0){
 			for (int i=0; i<_toppings.size(); i++)
