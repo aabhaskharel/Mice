@@ -229,6 +229,8 @@ Main_window::Main_window() {
 
 	// Make the box and everything in it visible
 	vbox->show_all();
+
+	on_new_role();
 }
 
 Main_window::~Main_window() { }
@@ -276,6 +278,8 @@ void Main_window::on_order_update() {
 
 void Main_window::on_new_mgmt_click() {
 
+	const int WIDTH = 15;
+
 	Gtk::Dialog dlg{"New Emporium", *this};
 
 	Gtk::Label l_st{"Do you want to save your current emporium?"};
@@ -292,7 +296,50 @@ void Main_window::on_new_mgmt_click() {
 
 	if(result == 1) on_save_click();
 
-    Emporium new_emp{1, "Bedford", "817-464-1293"};
+	Gtk::Dialog dialog{"New Emporium Info", *this};
+
+	// location
+    Gtk::HBox b_location;
+
+    Gtk::Label l_location{"Location:"};
+    l_location.set_width_chars(WIDTH);
+    b_location.pack_start(l_location, Gtk::PACK_SHRINK);
+
+    Gtk::Entry e_location;
+    e_location.set_max_length(WIDTH*4);
+    b_location.pack_start(e_location, Gtk::PACK_SHRINK);
+    dialog.get_vbox()->pack_start(b_location, Gtk::PACK_SHRINK);
+
+	// Phone
+	Gtk::HBox b_phone;
+
+	Gtk::Label l_phone{"Phone:"};
+	l_phone.set_width_chars(WIDTH);
+	b_phone.pack_start(l_phone, Gtk::PACK_SHRINK);
+
+	Gtk::Entry e_phone;
+	e_phone.set_max_length(WIDTH*4);
+	b_phone.pack_start(e_phone, Gtk::PACK_SHRINK);
+	dialog.get_vbox()->pack_start(b_phone, Gtk::PACK_SHRINK);
+
+	dialog.add_button("Cancel", 0);
+	dialog.add_button("Submit", 1);
+
+	dialog.show_all();
+	int res = dialog.run();
+
+	if (res == -1) return;
+
+	if(e_location.get_text() == "" || e_phone.get_text()== "") {
+		Gtk::MessageDialog dialog{*this, "Invalid Info"};
+        dialog.set_secondary_text("Unable to create new emporium!");
+        dialog.run();
+        dialog.close();
+		return;
+	}
+
+	emp_id++;
+    Emporium new_emp{emp_id, e_location.get_text(), e_phone.get_text()};
     emp = new_emp;
 }
 
@@ -400,7 +447,7 @@ void Main_window::on_new_role() {
 
 	int role = select_from_vector(names, "Role");
 
-	if (role == -1) return;
+	if (role == -1) role = 3;
 
 	switch (role) {
 		case 0: {

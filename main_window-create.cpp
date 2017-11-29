@@ -194,7 +194,7 @@ void Main_window::on_new_order() {
 	Gtk::Dialog order_dialog{"New Order", *this};
 
 	//buttons
-	order_dialog.add_button("Cancel Order", 0);
+	order_dialog.add_button("Cancel", 0);
 	order_dialog.add_button("New Serving", 1);
 	order_dialog.add_button("Finish Order", 2);
 

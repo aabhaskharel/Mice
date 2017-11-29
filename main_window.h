@@ -66,7 +66,8 @@ class Main_window : public Gtk::Window
     	Serving create_serving();
 
     private:
-        Emporium emp{1,"Euless", "817-722-1222"};
+        int emp_id = 1;
+        Emporium emp{ emp_id, "Euless", "817-722-1222"};
 
         Gtk::Box *vbox;
 
