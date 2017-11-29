@@ -24,6 +24,7 @@ class Serving{
 		vector<Topping> get_toppings() ;
 		double get_total_retail_price() ;
 		double get_total_wholesale_price();
+		string get_report();
 };
 
 std::ostream& operator<<(std::ostream& os, const Serving& serving);

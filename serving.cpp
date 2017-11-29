@@ -66,6 +66,25 @@ double Serving::get_total_retail_price() {
 	return total;
 }
 
+//list serving
+string Serving::get_report(){
+	string out;
+
+    	out = "\n("+to_string(1.)+")"+"\t"+"Container: "+(get_container()).get_name()+"\t"+"$"+to_string((get_container()).get_retail_price())+"\n";
+	out+="\tFlavor:\n";
+	for(int i=0; i<(get_flavors()).size(); i++)
+		{
+		out+="\t\t"+(get_flavors())[i].get_name()+"\t"+"\t$"+to_string((get_flavors())[i].get_retail_price())+"\n";
+		}
+	out+="\tTopping:\n";
+	for(int i=0; i<(get_toppings()).size(); i++)
+		{
+		int amt = (get_toppings())[i].get_amount();
+		out+="\t\t"+(get_toppings())[i].get_name()+"\t"+"\t$"+to_string(((get_toppings())[i].get_retail_price())*amt)+"\n";
+		}
+	return out;
+}
+
 double Serving::get_total_wholesale_price() {
 		double total=0; 
 		total += _container.get_wholesale_price();

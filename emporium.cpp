@@ -3,6 +3,7 @@
 #include <fstream>
 #include <stdexcept>
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -94,17 +95,15 @@ void Emporium::add_order(Order order) {
 //	return T.get_id();
 //}
 
-void Emporium::set_order_state(int id, string state, Server server) {
-	_orders[id].process_event(state, server);
-	_orders[id].set_state(state);
+bool Emporium::set_order_state(int id, string state, Server server) {
+
+	bool check = true;
 
 	if (state == "Filled")
 	{
 		double trp = _orders[id].get_total_retail_price();
-		double twp = _orders[id].get_total_wholesale_price();
-		_stocking_cost += twp;
 		cash_register += trp;
-		//Server server = _orders[id].get_server();
+		
 		int sid = server.get_id();
 		_servers[sid].set_total_filled(1);
 
@@ -120,7 +119,8 @@ void Emporium::set_order_state(int id, string state, Server server) {
 		Containr c = s.get_container();
 			for(int i=0; i< _containers.size(); i++){
 				if(_containers[i].get_name() == c.get_name()){
-					_containers[i].set_stock(-1);
+					if(_containers[i].get_stock() == 0) { check = false; }
+					else{_containers[i].set_stock(-1);}
 				}
 			}
 		
@@ -129,7 +129,8 @@ void Emporium::set_order_state(int id, string state, Server server) {
 		{
 			for(int j=0; j<fv.size(); j++){
 				if(_flavors[i].get_name() == fv[j].get_name()){
-					_flavors[i].set_stock(-1);
+					if(_flavors[i].get_stock() == 0) {check = false;}
+					else{_flavors[i].set_stock(-1);}
 				}
 			}
 		}
@@ -141,13 +142,18 @@ void Emporium::set_order_state(int id, string state, Server server) {
 			for(int j=0; j<tv.size(); j++){
 				if(_toppings[i].get_name() == tv[j].get_name()){
 					int amount = tv[j].get_amount();
-					_toppings[i].set_stock(-amount);
+					if(_toppings[i].get_stock() < amount){check = false;}
+					else{_toppings[i].set_stock(-amount);}
 				}
 			}
 		}
 
 		}
 	}
+	
+	if (check) _orders[id].process_event(state, server);
+	
+	return check;
 }
 
 //getters
@@ -379,6 +385,7 @@ void Emporium::restore_item(Items item, int id){
 	}
 }
 
+//restore person
 void Emporium::restore_person(Person person, int id){
 	int type = person.get_type();
 	if (type == 2)
@@ -393,116 +400,6 @@ void Emporium::restore_person(Person person, int id){
 	}
 
 }
-
-//write to a file
-/*
-void Emporium::write(string filename){
-
-	ofstream ofs {filename};
-	if(!ofs) throw runtime_error("can't open output file " + filename);
-
-	ofs << "-co" << endl;
-
-	//writing containers data
-	for(int i=0; i<_containers.size(); i++){
-		ofs << _containers[i].get_name() << "," << _containers[i].get_description() << "," << _containers[i].get_wholesale_price() << "," << _containers[i].get_retail_price() << "," << _containers[i].get_stock() << "," << _containers[i].get_image_path() << "," << _containers[i].get_scoop() << endl;
-	}
-
-	ofs << "-rc" << endl;
-	//retired containers
-	for(int i=0; i<_retired_containers.size(); i++){
-		ofs << _retired_containers[i].get_name() << "," << _retired_containers[i].get_description() << "," << _retired_containers[i].get_wholesale_price() << "," << _retired_containers[i].get_retail_price() << "," << _retired_containers[i].get_stock() << "," << _retired_containers[i].get_image_path() << "," << _retired_containers[i].get_scoop() << endl;
-	}
-
-
-	//writing flavors data
-	ofs << "-fl" << endl;
-
-	for(int i=0; i<_flavors.size(); i++){
-		ofs << _flavors[i].get_name() << "," << _flavors[i].get_description() << "," << _flavors[i].get_wholesale_price() << "," << _flavors[i].get_retail_price() << "," << _flavors[i].get_stock() << "," << _flavors[i].get_image_path() << endl;
-	}
-
-	//retired flavors
-	ofs << "-rf" << endl;
-
-	for(int i=0; i<_retired_flavors.size(); i++){
-		ofs << _retired_flavors[i].get_name() << "," << _retired_flavors[i].get_description() << "," << _retired_flavors[i].get_wholesale_price() << "," << _retired_flavors[i].get_retail_price() << "," << _retired_flavors[i].get_stock() << "," << _retired_flavors[i].get_image_path() << endl;
-	}
-
-	ofs << "-to" << endl;
-
-	for(int i=0; i<_toppings.size(); i++){
-		ofs << _toppings[i].get_name() << "," << _toppings[i].get_description() << "," << _toppings[i].get_wholesale_price() << "," << _toppings[i].get_retail_price() << "," << _toppings[i].get_stock() << "," << _toppings[i].get_image_path() << "," << endl;
-	}
-
-	ofs << "-rt" << endl;
-
-	for(int i=0; i<_retired_toppings.size(); i++){
-		ofs << _retired_toppings[i].get_name() << "," << _retired_toppings[i].get_description() << "," << _retired_toppings[i].get_wholesale_price() << "," << _retired_toppings[i].get_retail_price() << "," << _retired_toppings[i].get_stock() << "," << _retired_toppings[i].get_image_path() << "," << endl;
-	}
-
-	ofs << "-ma" << endl;
-
-	for(int i=0; i<_managers.size(); i++){
-		ofs << _managers[i].get_name() << "," << _managers[i].get_id() << "," << _managers[i].get_phone() << endl;
-	}
-
-	ofs << "-rm" << endl;
-
-	for(int i=0; i<_retired_managers.size(); i++){
-		ofs << _retired_managers[i].get_name() << "," << _retired_managers[i].get_id() << "," << _retired_managers[i].get_phone() << endl;
-	}
-
-	ofs << "-se" << endl;
-	for(int i=0; i<_servers.size(); i++){
-		ofs << _servers[i].get_name() << "," << _servers[i].get_id() << "," << _servers[i].get_phone() << "," << _servers[i].get_hourly_salary() << "," << _servers[i].get_total_filled() << endl;
-	}
-
-	ofs << "-rs" << endl;
-	for(int i=0; i<_retired_servers.size(); i++){
-		ofs << _retired_servers[i].get_name() << "," << _retired_servers[i].get_id() << "," << _retired_servers[i].get_phone() << "," << _retired_servers[i].get_hourly_salary() << "," << _retired_servers[i].get_total_filled() << endl;
-	}
-
-	ofs << "-cu" << endl;
-
-	for(int i=0; i<_customers.size(); i++){
-		ofs << _customers[i].get_name() << "," << _customers[i].get_id() << "," << _customers[i].get_phone() << endl;
-	}
-
-	ofs << "-or" << endl;
-
-	for(int i=0; i<_orders.size(); i++) {
-		string svng = "";
-		vector<Serving> servng = _orders[i].get_servings();
-		for (int j = 0; j<servng.size(); j++)
-		{
-			svng += servng[i].get_container().get_name();
-			vector<Flavor> flv = servng[i].get_flavors();
-			svng += "," + flv.size();
-			for (Flavor f: flv)
-			{
-				svng += "," + f.get_name();
-			}
-			vector<Topping> tps = servng[i].get_toppings();
-			vector<int> tk = servng[i].get_top_kind();
-			svng += "," + tps.size();
-			for (Topping t: tps)
-			{
-				svng += "," + t.get_name();
-			}
-			for (int x: tk)
-			{
-				svng += "," + x;
-			}
-		}
-
-		ofs << _orders[i].get_id() << "," << _orders[i].get_server().get_id() << "," << _orders[i].get_customer().get_id() << "," << svng << "," << _orders[i].get_state() << "," << endl;
-	}
-
-	ofs << "-cr" << endl;
-	ofs << cash_register << endl;
-}
-*/
 
 //Happy Hour
 void Emporium::happy_hour(){
@@ -558,6 +455,7 @@ void Emporium::edit_topping(int id, Topping topping){
 
 }
 
+//add stock
 void Emporium::add_stock(Server server, int type, int index, int quantity) {
 
 	if(type == 0){
@@ -594,7 +492,54 @@ void Emporium::add_stock(Server server, int type, int index, int quantity) {
 		}
 	}
 
+//auto restock item
+void Emporium::auto_restock(Server server, int id){
+		int Q = 20; //default auto stock amount
+		
+		double twp = _orders[id].get_total_wholesale_price();
+		_stocking_cost += twp;
+		
+		int sid = server.get_id();
 
+		if (_servers[sid].pay())
+		{
+			cash_register -= server.get_hourly_salary();
+			_servers[sid].set_total_pay(server.get_hourly_salary());
+		}
+
+		vector<Serving> svg = _orders[id].get_servings();
+		
+		for (Serving s: svg) {
+		Containr c = s.get_container();
+			for(int i=0; i< _containers.size(); i++){
+				if(_containers[i].get_name() == c.get_name()){
+					_containers[i].set_stock(Q);
+				}
+			}
+		
+		vector<Flavor> fv = s.get_flavors();
+		for (int i=0; i<_flavors.size(); i++)
+		{
+			for(int j=0; j<fv.size(); j++){
+				if(_flavors[i].get_name() == fv[j].get_name()){
+					_flavors[i].set_stock(Q);
+				}
+			}
+		}
+		
+		vector<Topping> tv = s.get_toppings();
+		
+		for (int i=0; i<_toppings.size(); i++)
+		{
+			for(int j=0; j<tv.size(); j++){
+				if(_toppings[i].get_name() == tv[j].get_name()){
+					_toppings[i].set_stock(Q);
+				}
+			}
+		}
+
+		}
+}
 void Emporium:: populate_emporium(){
     Containr cont("Cup", "A freshly baked waffle cone.", 0.1, 0.6, "picture.png", 3);
     Containr cont2("Regular Cone", "Everyone's Favroite", 0.2, 0.8, "picture.png", 1);

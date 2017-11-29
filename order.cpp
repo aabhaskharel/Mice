@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <stdexcept>
 #include <iostream>
+#include <ctime>
 
 using namespace std;
 
@@ -147,7 +148,8 @@ string Order::list_serving(int index){
 	out+="\tTopping:\n";
 	for(int i=0; i<(_servings[index].get_toppings()).size(); i++)
 		{
-		out+="\t\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"\t$"+to_string((_servings[index].get_toppings())[i].get_retail_price())+"\n";
+		int amt = (_servings[index].get_toppings())[i].get_amount();
+		out+="\t\t"+(_servings[index].get_toppings())[i].get_name()+"\t"+"\t$"+to_string(((_servings[index].get_toppings())[i].get_retail_price())*amt)+"\n";
 		}
 	return out;
 }

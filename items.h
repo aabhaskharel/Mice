@@ -48,7 +48,7 @@ class Topping : public Items{
 		int get_amount();
 		void set_amount(int amount);
 	private:
-		int _amount = -1; // 0 - Light, 1 - Normal, 2 - Extra, 3 - Drenched
+		int _amount = 0; // 1 - Light, 2 - Normal, 3 - Extra, 4 - Drenched
 };
 class Containr : public Items{
 	public:
