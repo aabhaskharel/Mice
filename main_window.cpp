@@ -303,6 +303,7 @@ void Main_window::on_order_update() {
 			Gtk::Label *l_state = Gtk::manage(new Gtk::Label(orders[i].get_state()));
 			table->attach(*l_state, 3, 4, iter, iter+1);
 			iter++;
+
 		}
 	}
 
@@ -310,6 +311,7 @@ void Main_window::on_order_update() {
 	s_window->add(*table);
 	vbox->show_all();
 	present = true;
+
 }
 
 void Main_window::on_new_mgmt_click() {
@@ -380,6 +382,8 @@ void Main_window::on_new_mgmt_click() {
 
     Emporium new_emp{emp_id++, e_location.get_text(), e_phone.get_text()};
     emp = new_emp;
+
+	on_order_update();
 }
 
 void Main_window::on_pop_mgmt_click() {
@@ -426,6 +430,8 @@ void Main_window::on_save_click() {
         dialog.close();
     }
 
+
+	on_order_update();
 }
 
 void Main_window::on_load_click() {
@@ -475,6 +481,8 @@ void Main_window::on_load_click() {
         dialog.run();
         dialog.close();
     }
+
+	on_order_update();
 }
 
 void Main_window::on_new_role() {
