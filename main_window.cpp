@@ -149,31 +149,31 @@ Main_window::Main_window() {
 	Gtk::Menu *report_menu = Gtk::manage(new Gtk::Menu());
 	menuitem_reports->set_submenu(*report_menu);
 
-	Gtk::MenuItem *menuitem_receipt = Gtk::manage(new Gtk::MenuItem("_Receipt", true));
+	menuitem_receipt = Gtk::manage(new Gtk::MenuItem("_Receipt", true));
 	menuitem_receipt->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_receipt_click));
 	report_menu->append(*menuitem_receipt);
 
-	Gtk::MenuItem *menuitem_servers = Gtk::manage(new Gtk::MenuItem("_Servers Report", true));
+	menuitem_servers = Gtk::manage(new Gtk::MenuItem("_Servers Report", true));
 	menuitem_servers->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_servers_report));
 	report_menu->append(*menuitem_servers);
 
-	Gtk::MenuItem *menuitem_customers = Gtk::manage(new Gtk::MenuItem("_Customers Report", true));
+	menuitem_customers = Gtk::manage(new Gtk::MenuItem("_Customers Report", true));
 	menuitem_customers->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_customers_report));
 	report_menu->append(*menuitem_customers);
 
-	Gtk::MenuItem *menuitem_inventory = Gtk::manage(new Gtk::MenuItem("_Inventory Report", true));
+	menuitem_inventory = Gtk::manage(new Gtk::MenuItem("_Inventory Report", true));
 	menuitem_inventory->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_inventory_report));
 	report_menu->append(*menuitem_inventory);
 
-	Gtk::MenuItem *menuitem_orders = Gtk::manage(new Gtk::MenuItem("_Orders Report", true));
+	menuitem_orders = Gtk::manage(new Gtk::MenuItem("_Orders Report", true));
 	menuitem_orders->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_orders_report));
 	report_menu->append(*menuitem_orders);
 
-	Gtk::MenuItem *menuitem_pnl = Gtk::manage(new Gtk::MenuItem("_Profit & Loss Report", true));
+	menuitem_pnl = Gtk::manage(new Gtk::MenuItem("_Profit & Loss Report", true));
 	menuitem_pnl->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pnl_report));
 	report_menu->append(*menuitem_pnl);
 
-	Gtk::MenuItem *menuitem_all_pnl = Gtk::manage(new Gtk::MenuItem("_Aggregate P&L Report", true));
+	menuitem_all_pnl = Gtk::manage(new Gtk::MenuItem("_Aggregate P&L Report", true));
 	menuitem_all_pnl->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_all_pnl_report));
 	report_menu->append(*menuitem_all_pnl);
 
@@ -499,8 +499,11 @@ void Main_window::on_new_role() {
 			menuitem_edit->show();
 			menuitem_eitem->show();
 			menuitem_eserver->show();
+			menuitem_happy_hour->show();
+			menuitem_ecustomer->show();
+			menuitem_emanager->show();
+			menuitem_restore_item->show();
 			menuitem_restore_person->show();
-
 
 			menuitem_add_customer->show();
 			menuitem_item->show();
@@ -511,6 +514,13 @@ void Main_window::on_new_role() {
 			menuitem_pay->show();
 
 			menuitem_reports->show();
+			menuitem_receipt->show();
+			menuitem_servers->show();
+			menuitem_customers->show();
+			menuitem_inventory->show();
+			menuitem_orders->show();
+			menuitem_pnl->show();
+			menuitem_all_pnl->show();
 
 			new_customer_button->show();
 			new_item_button->show();
@@ -527,6 +537,10 @@ void Main_window::on_new_role() {
 			menuitem_edit->show();
 			menuitem_eitem->show();
 			menuitem_eserver->show();
+			menuitem_happy_hour->show();
+			menuitem_ecustomer->show();
+			menuitem_emanager->hide();
+			menuitem_restore_item->show();
 			menuitem_restore_person->hide();
 
 			menuitem_add_customer->show();
@@ -538,6 +552,13 @@ void Main_window::on_new_role() {
 			menuitem_pay->show();
 
 			menuitem_reports->show();
+			menuitem_receipt->show();
+			menuitem_servers->show();
+			menuitem_customers->show();
+			menuitem_inventory->show();
+			menuitem_orders->show();
+			menuitem_pnl->show();
+			menuitem_all_pnl->hide();
 
 			new_customer_button->show();
 			new_item_button->show();
@@ -551,7 +572,14 @@ void Main_window::on_new_role() {
 			menuitem_save->hide();
 			menuitem_load->hide();
 
-			menuitem_edit->hide();
+			menuitem_edit->show();
+			menuitem_eitem->hide();
+			menuitem_eserver->hide();
+			menuitem_happy_hour->hide();
+			menuitem_ecustomer->show();
+			menuitem_emanager->hide();
+			menuitem_restore_item->hide();
+			menuitem_restore_person->hide();
 
 			menuitem_add_customer->show();
 			menuitem_item->hide();
@@ -561,7 +589,14 @@ void Main_window::on_new_role() {
 			menuitem_fill->show();
 			menuitem_pay->show();
 
-			menuitem_reports->hide();
+			menuitem_reports->show();
+			menuitem_receipt->show();
+			menuitem_servers->hide();
+			menuitem_customers->hide();
+			menuitem_inventory->hide();
+			menuitem_orders->hide();
+			menuitem_pnl->hide();
+			menuitem_all_pnl->hide();
 
 			new_customer_button->show();
 			new_item_button->hide();
@@ -585,7 +620,14 @@ void Main_window::on_new_role() {
 			menuitem_fill->hide();
 			menuitem_pay->hide();
 
-			menuitem_reports->hide();
+			menuitem_reports->show();
+			menuitem_receipt->show();
+			menuitem_servers->hide();
+			menuitem_customers->hide();
+			menuitem_inventory->hide();
+			menuitem_orders->hide();
+			menuitem_pnl->hide();
+			menuitem_all_pnl->hide();
 
 			new_customer_button->hide();
 			new_item_button->hide();

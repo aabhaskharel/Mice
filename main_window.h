@@ -103,6 +103,13 @@ class Main_window : public Gtk::Window
         Gtk::MenuItem *menuitem_pay;
 
         Gtk::MenuItem *menuitem_reports;
+        Gtk::MenuItem *menuitem_receipt;
+        Gtk::MenuItem *menuitem_servers;
+        Gtk::MenuItem *menuitem_customers;
+        Gtk::MenuItem *menuitem_inventory;
+        Gtk::MenuItem *menuitem_orders;
+        Gtk::MenuItem *menuitem_pnl;
+        Gtk::MenuItem *menuitem_all_pnl;
 
         Gtk::ToolButton *new_customer_button;
         Gtk::ToolButton *new_item_button;
