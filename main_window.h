@@ -75,6 +75,8 @@ class Main_window : public Gtk::Window
 
         Gtk::Box *vbox;
 
+        Gtk::Label *msg;
+
         Gtk::ScrolledWindow *s_window;
         Gtk::Image *banner;
         bool present = false; //presence of ScrolledWindow

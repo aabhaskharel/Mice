@@ -237,6 +237,12 @@ Main_window::Main_window() {
 	exit_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_quit_click));
 	toolbar->append(*exit_button);
 
+	// S T A T U S   B A R   D I S P L A Y
+    // Provide a status bar for emporium messages
+    msg = Gtk::manage(new Gtk::Label());
+    msg->set_hexpand(true);
+    vbox->add(*msg);
+
 	// Make the box and everything in it visible
 	vbox->show_all();
 
@@ -267,10 +273,14 @@ void Main_window::on_order_update() {
 
 	Gtk::Table *table = Gtk::manage(new Gtk::Table(orders.size()+1,2,true));
 	Gtk::Label *l1 = Gtk::manage(new Gtk::Label("Order No."));
-	Gtk::Label *l2 = Gtk::manage(new Gtk::Label("State"));
+	Gtk::Label *l2 = Gtk::manage(new Gtk::Label("Customer"));
+	Gtk::Label *l3 = Gtk::manage(new Gtk::Label("Price"));
+	Gtk::Label *l4 = Gtk::manage(new Gtk::Label("State"));
 
 	table->attach(*l1,0,1,0,1);
 	table->attach(*l2,1,2,0,1);
+	table->attach(*l3,2,3,0,1);
+	table->attach(*l4,3,4,0,1);
 
 	int iter = 1;
 
@@ -279,8 +289,15 @@ void Main_window::on_order_update() {
 			Gtk::Label *l_id = Gtk::manage(new Gtk::Label(to_string(orders[i].get_id())));
 			table->attach(*l_id, 0, 1, iter, iter+1);
 
+			Customer c = orders[i].get_customer();
+			Gtk::Label *l_customer = Gtk::manage(new Gtk::Label(c.get_name()));
+			table->attach(*l_customer, 1, 2, iter, iter+1);
+
+			Gtk::Label *l_price = Gtk::manage(new Gtk::Label(to_string(orders[i].get_total_retail_price())));
+			table->attach(*l_price, 2, 3, iter, iter+1);
+
 			Gtk::Label *l_state = Gtk::manage(new Gtk::Label(orders[i].get_state()));
-			table->attach(*l_state, 1, 2, iter, iter+1);
+			table->attach(*l_state, 3, 4, iter, iter+1);
 			iter++;
 		}
 	}
@@ -457,6 +474,8 @@ void Main_window::on_load_click() {
 
 void Main_window::on_new_role() {
 
+	Glib::ustring s = "";
+
 	vector<string> names;
 	names.push_back("Owner");
 	names.push_back("Manager");
@@ -469,7 +488,7 @@ void Main_window::on_new_role() {
 
 	switch (role) {
 		case 0: {
-			std::cout << "Owner" << '\n';
+			s = "Owner";
 
 			menuitem_new->show();
 			menuitem_save->show();
@@ -497,7 +516,7 @@ void Main_window::on_new_role() {
 			break;
 		}
 		case 1: {
-			std::cout << "Manager" << '\n';
+			s = "Manager";
 
 			menuitem_new->hide();
 			menuitem_save->hide();
@@ -524,7 +543,7 @@ void Main_window::on_new_role() {
 			break;
 		}
 		case 2: {
-			std::cout << "Server" << '\n';
+			s = "Server";
 
 			menuitem_new->hide();
 			menuitem_save->hide();
@@ -548,7 +567,7 @@ void Main_window::on_new_role() {
 			break;
 		}
 		case 3: {
-			std::cout << "Customer" << '\n';
+			s = "Customer";
 
 			menuitem_new->hide();
 			menuitem_save->hide();
@@ -573,6 +592,8 @@ void Main_window::on_new_role() {
 		}
 		default : std::cerr << "Invalid Choice" << '\n'; break;
 	}
+
+	msg->set_markup(s);
 }
 
 void Main_window::on_contents_click() {   //shows help or program documentation
