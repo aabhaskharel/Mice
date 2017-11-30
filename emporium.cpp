@@ -345,6 +345,11 @@ string Emporium::get_pnl_report() {
 
 }
 
+//aggregate Profit and Loss statement
+string Emporium::get_all_pnl_report(){
+
+}
+
 //change server's salary
 void Emporium::change_salary(int server_id, double salary){
 	_servers[server_id].set_hourly_salary(salary);
@@ -481,18 +486,22 @@ void Emporium::edit_topping(int id, Topping topping){
 }
 
 //edit customer
-void Emporium::edit_customer(Customer customer, int id){
-	_customers[id] = customer;
+void Emporium::edit_customer(string name, string phone, int id){
+	_customers[id].set_name(name);
+	_customers[id].set_phone(phone);
 }
 
 //edit server
-void Emporium::edit_server(Server server, int id){
-	_servers[id] = server;
+void Emporium::edit_server(string name, string phone, double salary, int id){
+	_servers[id].set_name(name);
+	_servers[id].set_phone(phone);
+	_servers[id].set_hourly_salary(salary);
 }
 
 //edit manager
-void Emporium::edit_manager(Manager manager, int id){
-	_managers[id] = manager;
+void Emporium::edit_manager(string name, string phone, int id){
+	_managers[id].set_name(name);
+	_managers[id].set_phone(phone);
 }
 
 //add stock

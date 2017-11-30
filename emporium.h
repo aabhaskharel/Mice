@@ -50,9 +50,9 @@ class Emporium{
 		void edit_container(int id, Containr container);
 		void edit_flavor(int id, Flavor flavor);
 		void edit_topping(int id, Topping topping);
-		void edit_customer(Customer customer, int id);
-		void edit_server(Server server, int id);
-		void edit_manager(Manager manager, int id);
+		void edit_customer(string name, string phone, int id);
+		void edit_server(string name, string phone, double salary, int id);
+		void edit_manager(string name, string phone, int id);
 		void change_salary(int server_id, double salary);
 
 		void write(string filename);
@@ -65,6 +65,7 @@ class Emporium{
 		string get_inventory_report();
 		string get_orders_report();
 		string get_pnl_report();
+		string get_all_pnl_report();
 
 		void populate_emporium();
 	private:
