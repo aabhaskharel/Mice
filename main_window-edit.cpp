@@ -332,8 +332,7 @@ void Main_window::on_edit_manager_click() {
 	int result = dlg.run();
 
     if(result == 1) {
-        //TODO
-
+        emp.edit_manager(_managers[s_c], s_c);
     }
 
 	if(result == 2) {
@@ -396,9 +395,8 @@ void Main_window::on_edit_customer_click() {
 	int result = dlg.run();
 
     if(result == 1) {
-        //TODO
-        //double m = e_wage.get_value();
-        //emp.change_salary(s_c, m);
+        std::cout << "EDIT CUSTOMER" << '\n';
+        emp.edit_customer(_customers[s_c], s_c);
     }
 
 	if(result == 2) {
@@ -477,7 +475,7 @@ void Main_window::on_edit_server_click() {
 	int result = dlg.run();
 
     if(result == 1) {
-
+        emp.edit_server(_servers[s_c], s_c);
     }
 
 	if(result == 2) {
