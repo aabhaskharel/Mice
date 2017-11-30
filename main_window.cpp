@@ -222,7 +222,7 @@ Main_window::Main_window() {
 	Gtk::ToolButton *test_button = Gtk::manage(new Gtk::ToolButton("Test"));
 	test_button->set_tooltip_markup("Test a feature");
 	test_button->signal_clicked().connect(sigc::mem_fun(*this, &Main_window::on_test));
-	toolbar->append(*test_button);
+	//toolbar->append(*test_button);
 
 	//Login
 	Gtk::Image *change_role_image = Gtk::manage(new Gtk::Image("data/pictures/change_role.png"));

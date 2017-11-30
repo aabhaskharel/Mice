@@ -338,12 +338,12 @@ void Main_window::on_edit_manager_click() {
     	    dialog.close();
             return;
         }
-        //emp.edit_manager(e_name.get_text(), e_phone.get_text(), s_c);
+        emp.edit_manager(e_name.get_text(), e_phone.get_text(), s_c);
     }
 
 	if(result == 2) {
         //SUSPEND
-        emp.retire_person(_managers[s_c], s_c);
+        emp.retire_person(0, s_c);
     }
 }
 
@@ -405,12 +405,12 @@ void Main_window::on_edit_customer_click() {
     	    dialog.close();
             return;
         }
-        //emp.edit_customer(e_name.get_text(), e_phone.get_text(), s_c);
+        emp.edit_customer(e_name.get_text(), e_phone.get_text(), s_c);
     }
 
 	if(result == 2) {
         //SUSPEND
-		emp.retire_person(_customers[s_c], s_c);
+		emp.retire_person(2, s_c);
 	}
 
     dlg.close();
@@ -490,12 +490,12 @@ void Main_window::on_edit_server_click() {
     	    dialog.close();
             return;
         }
-        //emp.edit_server(e_name.get_text(), e_phone.get_text(), e_wage.get_value(), s_c);
+        emp.edit_server(e_name.get_text(), e_phone.get_text(), e_wage.get_value(), s_c);
     }
 
 	if(result == 2) {
         //SUSPEND
-		emp.retire_person(_servers[s_c], s_c);
+		emp.retire_person(1, s_c);
 	}
 
     dlg.close();
@@ -586,7 +586,7 @@ void Main_window::on_restore_person_click() {
 		int sc = select_from_vector(names, "Customer");
 		if(sc == -1) return;
 
-		emp.restore_person(rcustomers[sc], sc);
+		emp.restore_person(2, sc);
 	}
 
 	if (mos == 1) {
@@ -603,7 +603,7 @@ void Main_window::on_restore_person_click() {
 		int sc = select_from_vector(names, "Server");
 		if(sc == -1) return;
 
-		emp.restore_person(rservers[sc], sc);
+		emp.restore_person(1, sc);
 	}
 
 	if (mos == 0) {
@@ -620,6 +620,6 @@ void Main_window::on_restore_person_click() {
 		int mc = select_from_vector(names, "Manager");
 		if(mc == -1) return;
 
-		emp.restore_person(rmanagers[mc], mc);
+		emp.restore_person(0, mc);
 	}
 }
