@@ -65,6 +65,7 @@ class Emporium{
 		string get_inventory_report();
 		string get_orders_report();
 		string get_pnl_report();
+		string get_all_pnl_report();
 
 		void populate_emporium();
 	private:

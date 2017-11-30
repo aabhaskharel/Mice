@@ -85,8 +85,8 @@ int Customer::get_type() {return 4;}
 int Server::get_total_filled() {return _total_filled;}
 double Server::get_hourly_salary() {return _hourly_salary;}
 void Server::set_hourly_salary(double salary) { _hourly_salary = salary;}
-void Server::set_name(string name){_name = name;}
-void Server::set_phone(string phone){_phone = phone;}
+void Person::set_name(string name){_name = name;}
+void Person::set_phone(string phone){_phone = phone;}
 
 double Server::get_total_pay() {return total_pay;}
 void Server::set_total_pay(double total) { total_pay += total; }

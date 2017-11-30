@@ -345,6 +345,11 @@ string Emporium::get_pnl_report() {
 
 }
 
+//aggregate Profit and Loss statement
+string Emporium::get_all_pnl_report(){
+
+}
+
 //change server's salary
 void Emporium::change_salary(int server_id, double salary){
 	_servers[server_id].set_hourly_salary(salary);
