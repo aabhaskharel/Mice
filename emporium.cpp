@@ -185,6 +185,9 @@ vector<Server> Emporium::get_retired_servers() {
 vector<Manager> Emporium::get_retired_managers() {
     return _retired_managers;
 }
+vector<Customer> Emporium::get_retired_customers(){
+	return _retired_customers;
+}
 vector<Customer> Emporium::get_customers(){
 	return _customers;
 }
@@ -371,10 +374,15 @@ void Emporium::retire_person(Person person, int id){
 		_retired_managers.push_back(_managers[id]);
 		_managers.erase(_managers.begin()+id);
 	}
-	else
+	else if (type == 3)
 	{
 		_retired_servers.push_back(_servers[id]);
 		_servers.erase(_servers.begin()+id);
+	}
+	else if (type == 4)
+	{
+		_retired_customers.push_back(_customers[id]);
+		_customers.erase(_customers.begin()+id);
 	}
 
 }
@@ -405,10 +413,15 @@ void Emporium::restore_person(Person person, int id){
 		_managers.push_back(_retired_managers[id]);
 		_retired_managers.erase(_retired_managers.begin()+id);
 	}
-	else
+	else if (type == 3)
 	{
 		_servers.push_back(_retired_servers[id]);
 		_retired_servers.erase(_retired_servers.begin()+id);
+	}
+	else 
+	{
+		_customers.push_back(_retired_customers[id]);
+		_retired_customers.erase(_retired_customers.begin()+id);
 	}
 
 }
