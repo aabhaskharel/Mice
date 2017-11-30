@@ -307,6 +307,7 @@ string Emporium::get_orders_report() {
 }
 
 string Emporium::get_pnl_report() {
+
 	string out = "\n";
 	out += "		Mavs Ice Cream Emporium -- " + to_string(_id) + "		" + "\n";
 	out += "		" + _location + "		" + "\n";
@@ -317,7 +318,9 @@ string Emporium::get_pnl_report() {
 	double total_salary = 0;
 
 	for(int i=0; i<_orders.size(); i++){
-		orders_retail += _orders[i].get_total_retail_price();
+		if(_orders[i].get_state() == "Paid"){
+			orders_retail += _orders[i].get_total_retail_price();
+		}
 	}
 
 	for(int i=0; i<_servers.size(); i++){
