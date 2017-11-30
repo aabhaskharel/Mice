@@ -70,6 +70,7 @@ class Main_window : public Gtk::Window
 
     private:
         Emporium emp{ 1, "Euless", "817-722-1222"};
+        vector<string> all_pnl;
 
         Gtk::Box *vbox;
 

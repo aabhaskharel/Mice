@@ -141,7 +141,11 @@ void Main_window::on_pnl_report() {
 }
 
 void Main_window::on_all_pnl_report() {
-	string res = "";//emp.get_all_pnl_report();
+	string res = emp.get_pnl_report();
+
+	for(int i = 0; i < all_pnl.size(); i++) {
+		res += all_pnl[i];
+	}
 
 	Gtk::Dialog p_dialog{"Aggregate Profit & Loss Report", *this};
 	Gtk::Label lp_text{res};

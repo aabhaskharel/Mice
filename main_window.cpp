@@ -375,6 +375,9 @@ void Main_window::on_new_mgmt_click() {
 	}
 
 	int emp_id = emp.get_id();
+
+	all_pnl.push_back(emp.get_pnl_report());
+
     Emporium new_emp{emp_id++, e_location.get_text(), e_phone.get_text()};
     emp = new_emp;
 }
@@ -463,7 +466,7 @@ void Main_window::on_load_click() {
 
 	try {
         std::ifstream ifs{filename, std::ifstream::in};
-		//all_pnl+=emp.get_pnl_report();
+		all_pnl.push_back(emp.get_pnl_report());
 		Emporium new_emp{ifs};
         emp = new_emp;
     } catch (std::exception& e) {
