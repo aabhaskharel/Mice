@@ -21,6 +21,7 @@ class Emporium{
 		vector<Flavor> get_retired_flavors();
 		vector<Server> get_retired_servers();
 		vector<Manager> get_retired_managers();
+		vector<Customer> get_retired_customers();
 		vector<Customer> get_customers();
 		vector<Order> get_orders();
 		vector<Manager> get_managers();
@@ -85,5 +86,6 @@ class Emporium{
 		vector<Topping> _retired_toppings;
 		vector<Manager> _retired_managers;
 		vector<Server> _retired_servers;
+		vector<Customer> _retired_customers;
 };
 #endif
