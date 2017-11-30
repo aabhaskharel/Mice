@@ -9,6 +9,8 @@ using namespace std;
 class Person {
 public:
 	Person(string name, int id, string phone);
+	void set_name(string name);
+	void set_phone(string phone);
     Person();
 	string get_name();
 	int get_id();
