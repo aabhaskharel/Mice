@@ -56,6 +56,11 @@ Main_window::Main_window() {
 	Gtk::Menu *editmenu = Gtk::manage(new Gtk::Menu());
 	menuitem_edit->set_submenu(*editmenu);
 
+	//happy hour
+	menuitem_happy_hour = Gtk::manage(new Gtk::MenuItem("_Happy Hour", true));
+	menuitem_happy_hour->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_happy_hour_click));
+	editmenu->append(*menuitem_happy_hour);
+
 	// edit item
 	menuitem_eitem = Gtk::manage(new Gtk::MenuItem("_Edit Item", true));
 	menuitem_eitem->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_edit_item_click));
@@ -85,11 +90,6 @@ Main_window::Main_window() {
 	menuitem_restore_person = Gtk::manage(new Gtk::MenuItem("_Restore Person", true));
 	menuitem_restore_person->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_restore_person_click));
 	editmenu->append(*menuitem_restore_person);
-
-	//happy hour
-	menuitem_happy_hour = Gtk::manage(new Gtk::MenuItem("_Happy Hour", true));
-	menuitem_happy_hour->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_happy_hour_click));
-	editmenu->append(*menuitem_happy_hour);
 
 	//create menu
 	Gtk::MenuItem *menuitem_create = Gtk::manage(new Gtk::MenuItem("_Create", true));

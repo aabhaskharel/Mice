@@ -279,6 +279,189 @@ void Main_window::on_edit_item_click() {
     dialog.close();
 }
 
+
+void Main_window::on_edit_manager_click() {
+
+    const int WIDTH = 15;
+
+    vector<Manager> _managers = emp.get_managers();
+    vector<string> names;
+
+	if(_managers.size() == 0) {
+		Gtk::MessageDialog dialog{*this, "No managers to Edit!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
+    for(Manager s: _managers) names.push_back(s.get_name());
+    int s_c = select_from_vector(names, "Manager");
+
+    if(s_c == -1) return;
+
+    Gtk::Dialog dlg{"Edit "+_managers[s_c].get_name(), *this};
+
+    Gtk::HBox b_name;
+
+    Gtk::Label l_name{"Name: "};
+    l_name.set_width_chars(WIDTH);
+    b_name.pack_start(l_name, Gtk::PACK_SHRINK);
+
+    Gtk::Entry e_name;
+	e_name.set_max_length(WIDTH*4);
+	b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+	dlg.get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
+
+	// Phone
+	Gtk::HBox b_phone;
+
+	Gtk::Label l_phone{"Phone:"};
+	l_phone.set_width_chars(WIDTH);
+	b_phone.pack_start(l_phone, Gtk::PACK_SHRINK);
+
+	Gtk::Entry e_phone;
+	e_phone.set_max_length(WIDTH*4);
+	b_phone.pack_start(e_phone, Gtk::PACK_SHRINK);
+	dlg.get_vbox()->pack_start(b_phone, Gtk::PACK_SHRINK);
+
+    dlg.add_button("Cancel", 0);
+	dlg.add_button("Suspend", 2);
+    dlg.add_button("Done", 1);
+    dlg.show_all();
+
+	int result = dlg.run();
+
+    if(result == 1) {
+        //TODO
+        //double m = e_wage.get_value();
+        //emp.change_salary(s_c, m);
+    }
+
+	if(result == 2) {
+		emp.retire_person(_managers[s_c], s_c);
+	}
+
+    dlg.close();
+}
+
+void Main_window::on_edit_customer_click() {
+
+    const int WIDTH = 15;
+
+    vector<Customer> _customers = emp.get_customers();
+    vector<string> names;
+
+	if(_customers.size() == 0) {
+		Gtk::MessageDialog dialog{*this, "No customers to Edit!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
+    for(Customer s: _customers) names.push_back(s.get_name());
+    int s_c = select_from_vector(names, "Customer");
+
+    if(s_c == -1) return;
+
+    Gtk::Dialog dlg{"Edit "+_customers[s_c].get_name(), *this};
+
+    Gtk::HBox b_name;
+
+    Gtk::Label l_name{"Name: "};
+    l_name.set_width_chars(WIDTH);
+    b_name.pack_start(l_name, Gtk::PACK_SHRINK);
+
+    Gtk::Entry e_name;
+	e_name.set_max_length(WIDTH*4);
+	b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+	dlg.get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
+
+	// Phone
+	Gtk::HBox b_phone;
+
+	Gtk::Label l_phone{"Phone:"};
+	l_phone.set_width_chars(WIDTH);
+	b_phone.pack_start(l_phone, Gtk::PACK_SHRINK);
+
+	Gtk::Entry e_phone;
+	e_phone.set_max_length(WIDTH*4);
+	b_phone.pack_start(e_phone, Gtk::PACK_SHRINK);
+	dlg.get_vbox()->pack_start(b_phone, Gtk::PACK_SHRINK);
+
+    dlg.add_button("Cancel", 0);
+	dlg.add_button("Suspend", 2);
+    dlg.add_button("Done", 1);
+    dlg.show_all();
+
+	int result = dlg.run();
+
+    if(result == 1) {
+        //TODO
+        //double m = e_wage.get_value();
+        //emp.change_salary(s_c, m);
+    }
+
+	if(result == 2) {
+		emp.retire_person(_customers[s_c], s_c);
+	}
+
+    dlg.close();
+}
+
+void Main_window::on_edit_server_click() {
+
+    vector<Server> _servers = emp.get_servers();
+    vector<string> names;
+
+	if(_servers.size() == 0) {
+		Gtk::MessageDialog dialog{*this, "No servers to Edit!"};
+	    dialog.run();
+	    dialog.close();
+		return;
+	}
+
+    for(Server s: _servers) names.push_back(s.get_name());
+    int s_c = select_from_vector(names, "Server");
+
+    if(s_c == -1) return;
+
+    Gtk::Dialog dlg{"New Salary Input", *this};
+
+    Gtk::HBox b_wage;
+    Gtk::Label l_wage{"Hourly Salary: "};
+    l_wage.set_width_chars(20);
+    b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
+
+    Gtk::SpinButton e_wage(0,0);
+    e_wage.set_increments(0.1,0.01);
+    e_wage.set_increments(0.1,0.01);
+    e_wage.set_range(0.00,99999.00);
+    e_wage.set_digits(2);
+    e_wage.set_wrap(true);
+    e_wage.set_numeric();
+    b_wage.pack_start(e_wage, Gtk::PACK_SHRINK);
+    dlg.get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
+
+    dlg.add_button("Cancel", 0);
+	dlg.add_button("Suspend", 2);
+    dlg.add_button("Done", 1);
+    dlg.show_all();
+
+	int result = dlg.run();
+
+    if(result == 1) {
+        double m = e_wage.get_value();
+        emp.change_salary(s_c, m);
+    }
+
+	if(result == 2) {
+		emp.retire_person(_servers[s_c], s_c);
+	}
+
+    dlg.close();
+}
+
+
 void Main_window::on_restore_item_click() {
     vector<string> names;
     names.push_back("Container"); names.push_back("Flavor"); names.push_back("Topping");
@@ -381,125 +564,4 @@ void Main_window::on_restore_person_click() {
 
 		emp.restore_person(rmanagers[mc], mc);
 	}
-}
-
-void Main_window::on_edit_manager_click() {
-
-    const int WIDTH = 15;
-
-    vector<Manager> _managers = emp.get_managers();
-    vector<string> names;
-
-	if(_managers.size() == 0) {
-		Gtk::MessageDialog dialog{*this, "No managers to Edit!"};
-	    dialog.run();
-	    dialog.close();
-		return;
-	}
-
-    for(Manager s: _managers) names.push_back(s.get_name());
-    int s_c = select_from_vector(names, "Manager");
-
-    if(s_c == -1) return;
-
-    Gtk::Dialog dlg{"Edit"+_managers[s_c].get_name(), *this};
-
-    Gtk::HBox b_name;
-
-    Gtk::Label l_name{"Name: "};
-    l_name.set_width_chars(WIDTH);
-    b_name.pack_start(l_name, Gtk::PACK_SHRINK);
-
-    Gtk::Entry e_name;
-	e_name.set_max_length(WIDTH*4);
-	b_name.pack_start(e_name, Gtk::PACK_SHRINK);
-	dlg.get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
-
-	// Phone
-	Gtk::HBox b_phone;
-
-	Gtk::Label l_phone{"Phone:"};
-	l_phone.set_width_chars(WIDTH);
-	b_phone.pack_start(l_phone, Gtk::PACK_SHRINK);
-
-	Gtk::Entry e_phone;
-	e_phone.set_max_length(WIDTH*4);
-	b_phone.pack_start(e_phone, Gtk::PACK_SHRINK);
-	dlg.get_vbox()->pack_start(b_phone, Gtk::PACK_SHRINK);
-
-    dlg.add_button("Cancel", 0);
-	dlg.add_button("Suspend", 2);
-    dlg.add_button("Done", 1);
-    dlg.show_all();
-
-	int result = dlg.run();
-
-    if(result == 1) {
-        //TODO
-        //double m = e_wage.get_value();
-        //emp.change_salary(s_c, m);
-    }
-
-	if(result == 2) {
-		emp.retire_person(_managers[s_c], s_c);
-	}
-
-    dlg.close();
-}
-
-void Main_window::on_edit_customer_click() {
-
-}
-
-void Main_window::on_edit_server_click() {
-
-    vector<Server> _servers = emp.get_servers();
-    vector<string> names;
-
-	if(_servers.size() == 0) {
-		Gtk::MessageDialog dialog{*this, "No servers to Edit!"};
-	    dialog.run();
-	    dialog.close();
-		return;
-	}
-
-    for(Server s: _servers) names.push_back(s.get_name());
-    int s_c = select_from_vector(names, "Server");
-
-    if(s_c == -1) return;
-
-    Gtk::Dialog dlg{"New Salary Input", *this};
-
-    Gtk::HBox b_wage;
-    Gtk::Label l_wage{"Hourly Salary: "};
-    l_wage.set_width_chars(20);
-    b_wage.pack_start(l_wage, Gtk::PACK_SHRINK);
-
-    Gtk::SpinButton e_wage(0,0);
-    e_wage.set_increments(0.1,0.01);
-    e_wage.set_increments(0.1,0.01);
-    e_wage.set_range(0.00,99999.00);
-    e_wage.set_digits(2);
-    e_wage.set_wrap(true);
-    e_wage.set_numeric();
-    b_wage.pack_start(e_wage, Gtk::PACK_SHRINK);
-    dlg.get_vbox()->pack_start(b_wage, Gtk::PACK_SHRINK);
-
-    dlg.add_button("Cancel", 0);
-	dlg.add_button("Suspend", 2);
-    dlg.add_button("Done", 1);
-    dlg.show_all();
-
-	int result = dlg.run();
-
-    if(result == 1) {
-        double m = e_wage.get_value();
-        emp.change_salary(s_c, m);
-    }
-
-	if(result == 2) {
-		emp.retire_person(_servers[s_c], s_c);
-	}
-
-    dlg.close();
 }
