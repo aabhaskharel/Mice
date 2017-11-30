@@ -173,6 +173,10 @@ Main_window::Main_window() {
 	menuitem_pnl->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_pnl_report));
 	report_menu->append(*menuitem_pnl);
 
+	Gtk::MenuItem *menuitem_all_pnl = Gtk::manage(new Gtk::MenuItem("_Aggregate P&L Report", true));
+	menuitem_all_pnl->signal_activate().connect(sigc::mem_fun(*this, &Main_window::on_all_pnl_report));
+	report_menu->append(*menuitem_all_pnl);
+
 	//help menu
 	Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
 	menubar->append(*menuitem_help);
@@ -370,11 +374,9 @@ void Main_window::on_new_mgmt_click() {
 		return;
 	}
 
-	all_pnl[emp_id] = emp.get_pnl_report();
-	emp_id++;
-    Emporium new_emp{emp_id, e_location.get_text(), e_phone.get_text()};
+	int emp_id = emp.get_id();
+    Emporium new_emp{emp_id++, e_location.get_text(), e_phone.get_text()};
     emp = new_emp;
-	first_report = true;
 }
 
 void Main_window::on_pop_mgmt_click() {
