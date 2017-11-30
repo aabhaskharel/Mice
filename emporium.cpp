@@ -480,6 +480,21 @@ void Emporium::edit_topping(int id, Topping topping){
 
 }
 
+//edit customer
+void Emporium::edit_customer(Customer customer, int id){
+	_customers[id] = customer;
+}
+
+//edit server
+void Emporium::edit_server(Server server, int id){
+	_servers[id] = server;
+}
+
+//edit manager
+void Emporium::edit_manager(Manager manager, int id){
+	_managers[id] = manager;
+}
+
 //add stock
 void Emporium::add_stock(Server server, int type, int index, int quantity) {
 

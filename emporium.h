@@ -50,7 +50,9 @@ class Emporium{
 		void edit_container(int id, Containr container);
 		void edit_flavor(int id, Flavor flavor);
 		void edit_topping(int id, Topping topping);
-
+		void edit_customer(Customer customer, int id);
+		void edit_server(Server server, int id);
+		void edit_manager(Manager manager, int id);
 		void change_salary(int server_id, double salary);
 
 		void write(string filename);
