@@ -372,19 +372,19 @@ void Emporium::retire_item(int item, int id){
 	}
 }
 
-void Emporium::retire_person(Person person, int id){
-	int type = person.get_type();
-	if (type == 2)
+void Emporium::retire_person(int type, int id){
+	
+	if (type == 0)
 	{
 		_retired_managers.push_back(_managers[id]);
 		_managers.erase(_managers.begin()+id);
 	}
-	else if (type == 3)
+	else if (type == 1)
 	{
 		_retired_servers.push_back(_servers[id]);
 		_servers.erase(_servers.begin()+id);
 	}
-	else if (type == 4)
+	else if (type == 2)
 	{
 		_retired_customers.push_back(_customers[id]);
 		_customers.erase(_customers.begin()+id);
@@ -411,19 +411,19 @@ void Emporium::restore_item(Items item, int id){
 }
 
 //restore person
-void Emporium::restore_person(Person person, int id){
-	int type = person.get_type();
-	if (type == 2)
+void Emporium::restore_person(int type, int id){
+	
+	if (type == 0)
 	{
 		_managers.push_back(_retired_managers[id]);
 		_retired_managers.erase(_retired_managers.begin()+id);
 	}
-	else if (type == 3)
+	else if (type == 1)
 	{
 		_servers.push_back(_retired_servers[id]);
 		_retired_servers.erase(_retired_servers.begin()+id);
 	}
-	else 
+	else if (type == 2)
 	{
 		_customers.push_back(_retired_customers[id]);
 		_retired_customers.erase(_retired_customers.begin()+id);

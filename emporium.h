@@ -38,9 +38,9 @@ class Emporium{
 		void add_manager(Manager manager);
 
 		void retire_item(int item, int id);
-		void retire_person(Person person, int id);
+		void retire_person(int type, int id);
 		void restore_item(Items item, int id);
-		void restore_person(Person person, int id);
+		void restore_person(int type, int id);
 
 		void add_order(Order order);
 		bool set_order_state(int id, string state, Server server);
