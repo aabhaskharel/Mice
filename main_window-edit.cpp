@@ -2,9 +2,8 @@
 
 void Main_window::on_happy_hour_click() {
 
-    if (p_banner) vbox->remove(*banner);
-
     bool hour = emp.happy_hour();
+    if (p_banner && !hour) vbox->remove(*banner);
 
     if(hour) {
         banner = Gtk::manage(new Gtk::Image("data/pictures/banner.png"));
@@ -334,8 +333,7 @@ void Main_window::on_edit_manager_click() {
 
     if(result == 1) {
         //TODO
-        //double m = e_wage.get_value();
-        //emp.change_salary(s_c, m);
+
     }
 
 	if(result == 2) {
@@ -479,10 +477,7 @@ void Main_window::on_edit_server_click() {
 	int result = dlg.run();
 
     if(result == 1) {
-        //TODO
 
-        //double m = e_wage.get_value();
-        //emp.change_salary(s_c, m);
     }
 
 	if(result == 2) {
@@ -558,10 +553,28 @@ void Main_window::on_restore_person_click() {
 	vector<string> names;
 	names.push_back("Manager");
 	names.push_back("Server");
+    names.push_back("Customer");
 
 	int mos = select_from_vector(names, "Person");
 
 	if(mos==-1) return;
+
+    if (mos == 2) {
+		vector<Customer> rcustomers = emp.get_retired_customers();
+		if(rcustomers.size() == 0) {
+			Gtk::MessageDialog dialog{*this, "No customer eligible to Restore"};
+		    dialog.run();
+		    dialog.close();
+			return;
+		}
+		names.clear();
+		for(Customer s: rcustomers) names.push_back(s.get_name());
+
+		int sc = select_from_vector(names, "Customer");
+		if(sc == -1) return;
+
+		emp.restore_person(rcustomers[sc], sc);
+	}
 
 	if (mos == 1) {
 		vector<Server> rservers = emp.get_retired_servers();

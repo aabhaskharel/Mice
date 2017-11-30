@@ -474,7 +474,7 @@ void Main_window::on_load_click() {
 
 void Main_window::on_new_role() {
 
-	Glib::ustring s = "";
+	Glib::ustring s = "Active Person: ";
 
 	vector<string> names;
 	names.push_back("Owner");
@@ -488,7 +488,7 @@ void Main_window::on_new_role() {
 
 	switch (role) {
 		case 0: {
-			s = "Owner";
+			s += "Owner";
 
 			menuitem_new->show();
 			menuitem_save->show();
@@ -516,7 +516,7 @@ void Main_window::on_new_role() {
 			break;
 		}
 		case 1: {
-			s = "Manager";
+			s += "Manager";
 
 			menuitem_new->hide();
 			menuitem_save->hide();
@@ -543,7 +543,7 @@ void Main_window::on_new_role() {
 			break;
 		}
 		case 2: {
-			s = "Server";
+			s += "Server";
 
 			menuitem_new->hide();
 			menuitem_save->hide();
@@ -592,7 +592,14 @@ void Main_window::on_new_role() {
 		}
 		default : std::cerr << "Invalid Choice" << '\n'; break;
 	}
-
+/*
+	try{
+		s_bar->remove_all_messages();
+		s_bar->push(s);
+	} catch(std::exception e) {
+		std::cerr << e.what() << '\n';
+	}
+*/
 	msg->set_markup(s);
 }
 

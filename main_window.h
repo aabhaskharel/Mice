@@ -76,6 +76,7 @@ class Main_window : public Gtk::Window
         Gtk::Box *vbox;
 
         Gtk::Label *msg;
+        Gtk::Statusbar *s_bar;
 
         Gtk::ScrolledWindow *s_window;
         Gtk::Image *banner;
