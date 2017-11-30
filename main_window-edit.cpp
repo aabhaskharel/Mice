@@ -332,15 +332,19 @@ void Main_window::on_edit_manager_click() {
 	int result = dlg.run();
 
     if(result == 1) {
-        emp.edit_manager(_managers[s_c], s_c);
+        if(e_name.get_text() == "" || e_phone.get_text() == "") {
+            Gtk::MessageDialog dialog{*this, "Unable to Edit!"};
+    	    dialog.run();
+    	    dialog.close();
+            return;
+        }
+        //emp.edit_manager(e_name.get_text(), e_phone.get_text(), s_c);
     }
 
 	if(result == 2) {
         //SUSPEND
-		emp.retire_person(_managers[s_c], s_c);
-	}
-
-    dlg.close();
+        emp.retire_person(_managers[s_c], s_c);
+    }
 }
 
 void Main_window::on_edit_customer_click() {
@@ -395,8 +399,13 @@ void Main_window::on_edit_customer_click() {
 	int result = dlg.run();
 
     if(result == 1) {
-        std::cout << "EDIT CUSTOMER" << '\n';
-        emp.edit_customer(_customers[s_c], s_c);
+        if(e_name.get_text() == "" || e_phone.get_text() == "") {
+            Gtk::MessageDialog dialog{*this, "Unable to Edit!"};
+    	    dialog.run();
+    	    dialog.close();
+            return;
+        }
+        //emp.edit_customer(e_name.get_text(), e_phone.get_text(), s_c);
     }
 
 	if(result == 2) {
@@ -475,7 +484,13 @@ void Main_window::on_edit_server_click() {
 	int result = dlg.run();
 
     if(result == 1) {
-        emp.edit_server(_servers[s_c], s_c);
+        if(e_name.get_text() == "" || e_phone.get_text() == "") {
+            Gtk::MessageDialog dialog{*this, "Unable to Edit!"};
+    	    dialog.run();
+    	    dialog.close();
+            return;
+        }
+        //emp.edit_server(e_name.get_text(), e_phone.get_text(), e_wage.get_value(), s_c);
     }
 
 	if(result == 2) {
